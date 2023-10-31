@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:solving_recruitment_flutter/costants.dart';
+import 'package:solving_recruitment_flutter/data/drawer_items.dart';
 
 class Home extends StatelessWidget {
+    static const String routeName = '/home-screen';
+
   const Home({super.key});
 
   @override
@@ -25,13 +27,16 @@ class Home extends StatelessWidget {
                     ? Icon(item['icon'], color: Colors.red)
                     : Icon(item['icon']),
                 title: Text(item['title']),
-                onTap: item['onTap'],
+                onTap: () {
+                  item['onTap'](context);
+                },
                 tileColor: item['color'],
               );
             }
           }).toList(),
         ),
       ),
+      body: const Placeholder(),
     );
   }
 }
