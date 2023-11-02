@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solving_recruitment_flutter/widgets/custom_page_widget.dart';
 
 class ColloquioScreen extends StatelessWidget{
     static const String routeName = '/colloquio-screen';
@@ -7,8 +8,8 @@ class ColloquioScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+        return const CustomPageWidget(title: 'Gestione Colloqui', body: Placeholder());
+
   }
 
 }

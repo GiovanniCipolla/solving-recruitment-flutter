@@ -1,18 +1,28 @@
 
+import 'package:solving_recruitment_flutter/models/area.dart';
+import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
+
 class Annuncio {
   Annuncio(
       {this.id,
       required this.titolo,
       required this.descrizione,
       required this.dataInizio,
-      required this.ddataFine});
+      required this.dataFine,
+      required this.tipologia,
+      required this.area,
+      this.candidati});
 
       
   final String? id;
   final String titolo;
   final String descrizione;
   final DateTime dataInizio;
-  final DateTime ddataFine;
+  final DateTime dataFine;
+  final TipologiaAnnuncio tipologia;
+  final Area area;
+  final List<Candidato>? candidati;
 
   factory Annuncio.fromJson(Map<String, dynamic> json) {
     return Annuncio(
@@ -20,7 +30,9 @@ class Annuncio {
       titolo: json['titolo'],
       descrizione: json['descrizione'],
       dataInizio: json['dataInizio'],
-      ddataFine: json['ddataFine'],
+      dataFine: json['dataFine'],
+      tipologia: TipologiaAnnuncio.fromJson(json['tipologiaAnnuncio']),
+      area: Area.fromJson(json['area']),
     );
   }
 
@@ -30,7 +42,9 @@ class Annuncio {
       'titolo': titolo,
       'descrizione': descrizione,
       'dataInizio': dataInizio,
-      'ddataFine': ddataFine,
+      'dataFine': dataFine,
+      'tipologiaAnnuncio': tipologia.toJson(),
+      'area': area.toJson(),
     };
   }
 

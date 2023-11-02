@@ -94,10 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _passwordController.text,
                       );
                       if (authProvider.token != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Home()));
+                      Navigator.pushNamed(context, Home.routeName);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

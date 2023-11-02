@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:solving_recruitment_flutter/widgets/custom_page_widget.dart';
 
 class AreaScreen extends StatelessWidget{
     static const String routeName = '/area-screen';
@@ -7,8 +8,7 @@ class AreaScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return CustomPageWidget(title: 'Gestione Aree', body: const Placeholder());
   }
 
 }

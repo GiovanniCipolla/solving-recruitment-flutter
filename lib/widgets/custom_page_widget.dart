@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/drawer_items.dart';
 
-class Home extends StatelessWidget {
-  static const String routeName = '/home-screen';
+class CustomPageWidget extends StatelessWidget {
+  const CustomPageWidget({super.key, required this.title, required this.body});
 
-  const Home({super.key});
+  final String title;
+  final Widget body;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Solving Recruitment'),
-        leading: IconButton(
-          icon: Image.asset("assets/images/logoNavbarCoge.png"),
-          onPressed: () {
-            // Navigator.pushNamedAndRemoveUntil(
-            //     context, Home.routeName, (route) => false);
-          },
-        ),
+        title: Text(title),
+        leading: Image.asset("assets/images/logoNavbarCoge.png"),
       ),
       endDrawer: Drawer(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -42,7 +37,7 @@ class Home extends StatelessWidget {
           }).toList(),
         ),
       ),
-      body: const Placeholder(),
+      body: body,
     );
   }
 }
