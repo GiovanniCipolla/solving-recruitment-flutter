@@ -95,10 +95,13 @@ class AnnuncioDetailScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(heightSize(context) * 0.01),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
                               Text(
-                                'Inizio Annuncio :',
+                                'Inizio Annuncio : ',
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -115,9 +118,11 @@ class AnnuncioDetailScreen extends StatelessWidget {
                             SizedBox(
                               height: heightSize(context) * 0.01,
                             ),
-                            Row(children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
                               Text(
-                                'Fine Annuncio :',
+                                'Fine Annuncio : ',
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
