@@ -20,7 +20,7 @@ class AnnuncioItem extends StatelessWidget {
         }));
       },
       child: Container(
-        margin: EdgeInsets.all(heightSize(context) * 0.0130),
+        margin: EdgeInsets.all(heightSize(context) * 0.01),
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -37,10 +37,15 @@ class AnnuncioItem extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   Text(
-                    annuncio.titolo,
+                    annuncio.titolo.length > 20
+                        ? '${annuncio.titolo.substring(0, 18)}...'
+                        : annuncio.titolo,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
+                    overflow: TextOverflow
+                        .ellipsis, // Aggiungi ellissi se il testo è troppo lungo
+                    maxLines: 1, // Limita il testo a 1 riga
                   ),
                 ],
               ),
@@ -59,10 +64,15 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.area.denominazione,
+                  annuncio.area.denominazione.length > 20
+                      ? '${annuncio.area.denominazione.substring(0, 18)}...'
+                      : annuncio.area.denominazione,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
+                  overflow: TextOverflow
+                      .ellipsis, // Aggiungi ellissi se il testo è troppo lungo
+                  maxLines: 1, // Limita il testo a 1 riga
                 ),
               ],
             ),
@@ -80,10 +90,15 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.tipologia.descrizione,
+                  annuncio.tipologia.descrizione.length > 20
+                      ? '${annuncio.tipologia.descrizione.substring(0, 10)}...'
+                      : annuncio.tipologia.descrizione,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
+                  overflow: TextOverflow
+                      .ellipsis, // Aggiungi ellissi se il testo è troppo lungo
+                  maxLines: 1, // Limita il testo a 1 riga
                 ),
               ],
             ),

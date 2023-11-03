@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/drawer_items.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio/annuncio_update_screen.dart';
 import 'package:solving_recruitment_flutter/screens/home.dart';
 
 class AnnuncioDetailScreen extends StatelessWidget {
@@ -56,6 +58,14 @@ class AnnuncioDetailScreen extends StatelessWidget {
           SizedBox(
             height: heightSize(context) * 0.10,
           ),
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Row(
+                children: [
+                  Icon(Icons.arrow_back),
+                  Text('Torna agli annunci'),
+                ],
+              )),
           Container(
             margin:
                 EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
@@ -74,7 +84,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(heightSize(context) * 0.01),
                   height: heightSize(context) * 0.14,
-                  margin: EdgeInsets.all(heightSize(context) * 0.01),
+                  margin: EdgeInsets.all(heightSize(context) * 0.1),
                   color: Theme.of(context).colorScheme.onPrimary,
                   child: Text(
                     annuncio.descrizione,
@@ -98,44 +108,44 @@ class AnnuncioDetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                              Text(
-                                'Inizio Annuncio : ',
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary),
-                              ),
-                              Text(
-                                dateFormatter.format(annuncio.dataInizio),
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary),
-                              ),
-                            ]),
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Inizio Annuncio : ',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary),
+                                  ),
+                                  Text(
+                                    dateFormatter.format(annuncio.dataInizio),
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary),
+                                  ),
+                                ]),
                             SizedBox(
                               height: heightSize(context) * 0.01,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                              Text(
-                                'Fine Annuncio : ',
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary),
-                              ),
-                              Text(
-                                dateFormatter.format(annuncio.dataFine),
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary),
-                              ),
-                            ]),
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Fine Annuncio : ',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary),
+                                  ),
+                                  Text(
+                                    dateFormatter.format(annuncio.dataFine),
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary),
+                                  ),
+                                ]),
                           ],
                         ),
                       ),
@@ -193,7 +203,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                     height: heightSize(context) * 0.01,
                   ),
                   Padding(
-                    padding:  EdgeInsets.all(heightSize(context) * 0.01),
+                    padding: EdgeInsets.all(heightSize(context) * 0.01),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -211,10 +221,9 @@ class AnnuncioDetailScreen extends StatelessWidget {
                           ),
                         ]),
                   ),
-                       SizedBox(
+                  SizedBox(
                     height: heightSize(context) * 0.02,
                   ),
-
                 ],
               ),
             ]),
@@ -229,7 +238,21 @@ class AnnuncioDetailScreen extends StatelessWidget {
                 foregroundColor: Theme.of(context).colorScheme.onPrimary,
               ),
               onPressed: () {
-                // Aggiungi l'azione da eseguire quando il pulsante "Applica filtri" viene premuto.
+                showConfirmationDialog(
+                  context,
+                  'Modifica Annuncio',
+                  'Sicuro di voler modificare questo annuncio?',
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return  AnnuncioUpdate(annuncio: annuncio,);
+                        },
+                      ),
+                    );
+                  },
+                );
               },
               child: const Text('Modifica Annuncio'),
             ),
@@ -239,7 +262,21 @@ class AnnuncioDetailScreen extends StatelessWidget {
                 foregroundColor: Theme.of(context).colorScheme.onPrimary,
               ),
               onPressed: () {
-                // Aggiungi l'azione da eseguire quando il pulsante "Ordina per" viene premuto.
+                showConfirmationDialog(
+                  context,
+                  'Conferma eliminazione',
+                  'Sicuro di voler eliminare questo annuncio, non potrò più essere usato!',
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return  AnnuncioUpdate(annuncio: annuncio,);
+                        },
+                      ),
+                    );
+                  },
+                );
               },
               child: const Text('Elimina annuncio'),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/data_mock.dart';
 import 'package:solving_recruitment_flutter/data/drawer_items.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
@@ -110,14 +111,27 @@ class AnnuncioScreen extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.add,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            iconSize: heightSize(context) * 0.06,
-            padding: const EdgeInsets.all(16.0),
+          Row(
+            children: [
+              const Spacer(),
+              FloatingActionButton(
+                onPressed: () {
+                  showConfirmationDialog(context, 'Aggiungi annuncio',
+                      'Sicuro di voler aggiungere un annuncio?', () {});
+                },
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white, // Colore dell'icona
+                ), // Colore di sfondo
+              ),
+              SizedBox(
+            width: heightSize(context) * 0.02,
+          )
+            ],
+          ),
+          SizedBox(
+            height: heightSize(context) * 0.02,
           )
         ],
       ),

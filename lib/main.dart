@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio/annuncio_detail_screen.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screen.dart';
