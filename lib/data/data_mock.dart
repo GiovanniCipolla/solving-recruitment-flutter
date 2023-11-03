@@ -1,5 +1,6 @@
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
+import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 
@@ -66,4 +67,69 @@ List<Selezionatore> selezionatoriMock = [
   selezionatore1,
   selezionatore2,
   selezionatore3
+];
+
+class CandidatoProva {
+CandidatoProva({
+  required this.nome,
+  required this.cognome,
+  required this.stato
+});
+
+  final String nome;
+  final String cognome;
+  final Stato stato;
+}
+
+
+CandidatoProva candidato1 = CandidatoProva(
+  nome: 'Lorenzo',
+  cognome: 'Granata',
+  stato: Stato.in_attesa
+);
+CandidatoProva candidato2 = CandidatoProva(
+  nome: 'David',
+  cognome: 'Leone',
+  stato: Stato.in_attesa
+);
+CandidatoProva candidato3 = CandidatoProva(
+  nome: 'Giulia',
+  cognome: 'Cimino',
+  stato: Stato.in_attesa
+);
+CandidatoProva candidato4 = CandidatoProva(
+  nome: 'Cristian',
+  cognome: 'Piarulli',
+  stato: Stato.in_attesa
+);
+CandidatoProva candidato5 = CandidatoProva(
+  nome: 'Alexadnru',
+  cognome: 'Stefu',
+  stato: Stato.in_attesa
+);
+CandidatoProva candidato6 = CandidatoProva(
+  nome: 'Gabriel',
+  cognome: 'Scarlat',
+  stato: Stato.in_attesa
+);
+CandidatoProva candidato7 = CandidatoProva(
+  nome: 'Simone',
+  cognome: 'Riillo',
+  stato: Stato.in_attesa
+);
+CandidatoProva candidato8 = CandidatoProva(
+  nome: 'Ludovica',
+  cognome: 'Guiducci',
+  stato: Stato.in_attesa
+);
+
+List<CandidatoProva> candidatiMock = [
+  candidato1,
+  candidato2,
+  candidato3,
+  candidato4,
+  candidato5,
+  candidato6,
+  candidato7,
+  candidato8
 ];
