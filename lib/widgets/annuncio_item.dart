@@ -27,6 +27,7 @@ class AnnuncioItem extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               color: Theme.of(context).colorScheme.onPrimary,
