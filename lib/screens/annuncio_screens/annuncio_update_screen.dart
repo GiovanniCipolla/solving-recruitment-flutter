@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 
 class AnnuncioUpdate extends StatelessWidget {
   final Annuncio annuncio;
@@ -10,17 +11,18 @@ class AnnuncioUpdate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Modifica Annuncio'),
-      ),
+      appBar: const CustomAppbar(title: 'Modifica Annuncio'),
       body: Padding(
-        padding:  EdgeInsets.all(heightSize(context) * 0.02),  
+        padding: EdgeInsets.all(heightSize(context) * 0.02),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(
+            Text(
               'Titolo:',
-              style: TextStyle(fontSize: heightSize(context) * 0.025, fontWeight: FontWeight.bold, color:  Theme.of(context).colorScheme.primary),
+              style: TextStyle(
+                  fontSize: heightSize(context) * 0.025,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary),
             ),
             TextField(
               controller: TextEditingController(text: annuncio.titolo),
@@ -31,11 +33,14 @@ class AnnuncioUpdate extends StatelessWidget {
             SizedBox(height: heightSize(context) * 0.02),
             Text(
               'Descrizione:',
-              style: TextStyle(fontSize: heightSize(context) * 0.025, fontWeight: FontWeight.bold, color:  Theme.of(context).colorScheme.primary),
+              style: TextStyle(
+                  fontSize: heightSize(context) * 0.025,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary),
             ),
             TextField(
               controller: TextEditingController(text: annuncio.descrizione),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Inserisci la descrizione dell\'annuncio',
               ),
             ),

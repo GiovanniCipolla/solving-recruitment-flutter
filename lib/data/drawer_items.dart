@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio/annuncio_screen.dart';
-import 'package:solving_recruitment_flutter/screens/area_screen.dart';
-import 'package:solving_recruitment_flutter/screens/candidato_screen.dart';
-import 'package:solving_recruitment_flutter/screens/colloquio_screen.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
+import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
+import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 import 'package:solving_recruitment_flutter/screens/home.dart';
-import 'package:solving_recruitment_flutter/screens/selezionatore_screen.dart';
+import 'package:solving_recruitment_flutter/screens/login_screen.dart';
+import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
 
 final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.dashboard,
     'title': 'Dashboard',
-     'onTap': (context) { 
+    'onTap': (context) {
       // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, Home.routeName);
+      Navigator.pushNamed(context, Home.routeName);
     },
   },
   {
@@ -24,10 +22,11 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.group,
     'title': 'Gestione Candidati',
- 'onTap': (context) { 
-  // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, CandidatoScreen.routeName);
-    },  },
+    'onTap': (context) {
+      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      Navigator.pushNamed(context, CandidatoScreen.routeName);
+    },
+  },
   {
     'divider': true,
     'thickness': 2.0,
@@ -35,10 +34,11 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.category,
     'title': 'Gestione Aree',
- 'onTap': (context) {
-  //  Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, AreaScreen.routeName);
-    },  },
+    'onTap': (context) {
+      //  Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      Navigator.pushNamed(context, AreaScreen.routeName);
+    },
+  },
   {
     'divider': true,
     'thickness': 2.0,
@@ -46,10 +46,11 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.date_range,
     'title': 'Gestione Colloqui',
- 'onTap': (context) { 
-  // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, ColloquioScreen.routeName);
-    },  },
+    'onTap': (context) {
+      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      //  Navigator.pushNamed(context, ColloquioScreen.routeName);
+    },
+  },
   {
     'divider': true,
     'thickness': 2.0,
@@ -57,9 +58,9 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.person_search,
     'title': 'Gestione Selezionatori',
-    'onTap': (context) { 
+    'onTap': (context) {
       // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, SelezionatoreScreen.routeName);
+      Navigator.pushNamed(context, SelezionatoreScreen.routeName);
     },
   },
   {
@@ -69,9 +70,9 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.announcement,
     'title': 'Gestione Annunci',
-     'onTap': (context) { 
+    'onTap': (context) {
       // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, AnnuncioScreen.routeName);
+      Navigator.pushNamed(context, AnnuncioScreen.routeName);
     },
   },
   {
@@ -81,10 +82,11 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.school,
     'title': 'Gestione Academy',
- 'onTap': (context) { 
-  // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, AreaScreen.routeName);
-    },  },
+    'onTap': (context) {
+      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      Navigator.pushNamed(context, AreaScreen.routeName);
+    },
+  },
   {
     'divider': true,
     'thickness': 2.0,
@@ -92,8 +94,9 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.logout,
     'title': 'Logout',
- 'onTap': (context) { 
-  // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-     Navigator.pushNamed(context, Home.routeName);
-    },  },
+    'onTap': (context) {
+      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      Navigator.pushNamed(context, LoginScreen.routeName);
+    },
+  },
 ];

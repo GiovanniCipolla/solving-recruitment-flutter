@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio/annuncio_screen.dart';
-import 'package:solving_recruitment_flutter/screens/area_screen.dart';
-import 'package:solving_recruitment_flutter/screens/candidato_screen.dart';
-import 'package:solving_recruitment_flutter/screens/colloquio_screen.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
+import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
+import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 import 'package:solving_recruitment_flutter/screens/home.dart';
 import 'package:solving_recruitment_flutter/screens/login_screen.dart';
-import 'package:solving_recruitment_flutter/screens/selezionatore_screen.dart';
-import 'package:solving_recruitment_flutter/screens/tipologia_annuncio.dart';
+import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
 
 
 void main() {
@@ -41,10 +39,10 @@ class MyApp extends StatelessWidget {
               LoginScreen.routeName: (ctx) => const LoginScreen(),
               AreaScreen.routeName: (ctx) => const AreaScreen(),
               CandidatoScreen.routeName: (ctx) => const CandidatoScreen(),
-              ColloquioScreen.routeName: (ctx) => const ColloquioScreen(),
+              // ColloquioScreen.routeName: (ctx) => const ColloquioScreen(),
               AnnuncioScreen.routeName: (ctx) => const AnnuncioScreen(),
               SelezionatoreScreen.routeName: (ctx) => const SelezionatoreScreen(),
-              TipologiaAnnuncioScreen.routeName: (ctx) => const TipologiaAnnuncioScreen(),
+              // TipologiaAnnuncioScreen.routeName: (ctx) => const TipologiaAnnuncioScreen(),
               Home.routeName: (ctx) => const Home(),
             }
           );

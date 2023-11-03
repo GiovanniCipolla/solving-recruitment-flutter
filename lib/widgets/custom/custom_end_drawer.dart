@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/drawer_items.dart';
 
-class CustomPageWidget extends StatelessWidget {
-  const CustomPageWidget({super.key, required this.title, required this.body});
-
-  final String title;
-  final Widget body;
+class CustomEndDrawer extends StatelessWidget implements PreferredSizeWidget {
+  const CustomEndDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        leading: Image.asset("assets/images/logoNavbarCoge.png"),
-      ),
-      endDrawer: Drawer(
+  Size get preferredSize =>
+      const Size.fromHeight(kToolbarHeight); // Definisci l'altezza desiderata
+
+  @override
+  Widget build(BuildContext context) => Drawer(
         backgroundColor: Theme.of(context).colorScheme.background,
         child: ListView(
           children: drawerItems.map((item) {
@@ -36,8 +31,5 @@ class CustomPageWidget extends StatelessWidget {
             }
           }).toList(),
         ),
-      ),
-      body: body,
-    );
-  }
+      );
 }

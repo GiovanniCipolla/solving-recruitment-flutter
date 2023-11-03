@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/data_mock.dart';
-import 'package:solving_recruitment_flutter/data/drawer_items.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
-import 'package:solving_recruitment_flutter/screens/home.dart';
-import 'package:solving_recruitment_flutter/widgets/annuncio_item.dart';
+import 'package:solving_recruitment_flutter/widgets/annuncio_widgets/annuncio_item.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class AnnuncioScreen extends StatelessWidget {
   static const String routeName = '/annuncio-screen';
@@ -13,39 +13,8 @@ class AnnuncioScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gestione annunci'),
-        leading: IconButton(
-          icon: Image.asset("assets/images/logoNavbarCoge.png"),
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, Home.routeName, (route) => false);
-          },
-        ),
-      ),
-      endDrawer: Drawer(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        child: ListView(
-          children: drawerItems.map((item) {
-            if (item.containsKey('divider')) {
-              return Divider(
-                thickness: item['thickness'] ?? 1.0,
-              );
-            } else {
-              return ListTile(
-                leading: item['icon'] == Icons.logout
-                    ? Icon(item['icon'], color: Colors.red)
-                    : Icon(item['icon']),
-                title: Text(item['title']),
-                onTap: () {
-                  item['onTap'](context);
-                },
-                tileColor: item['color'],
-              );
-            }
-          }).toList(),
-        ),
-      ),
+      appBar: const CustomAppbar(title: 'Gestione annunci'),
+      endDrawer: const CustomEndDrawer(),
       body: Column(
         children: [
           SizedBox(
@@ -111,28 +80,10 @@ class AnnuncioScreen extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            children: [
-              const Spacer(),
-              FloatingActionButton(
-                onPressed: () {
-                  showConfirmationDialog(context, 'Aggiungi annuncio',
-                      'Sicuro di voler aggiungere un annuncio?', () {});
-                },
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white, // Colore dell'icona
-                ), // Colore di sfondo
-              ),
-              SizedBox(
-            width: heightSize(context) * 0.02,
-          )
-            ],
-          ),
-          SizedBox(
-            height: heightSize(context) * 0.02,
-          )
+          CustomButtonAdd(
+              titleShowDialog: 'Aggiungi annuncio',
+              descrizioneShowDialog: 'Sicuro di voler aggiungere un annuncio?',
+              metodoShowDialog: () {}),
         ],
       ),
     );

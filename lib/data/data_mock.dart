@@ -1,5 +1,6 @@
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
+import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 
 Annuncio annuncio1 = Annuncio(
@@ -46,4 +47,23 @@ List<TipologiaAnnuncio> tipologieAnnuncioMock = [
   tipologiaAnnuncio1,
   tipologiaAnnuncio2,
   tipologiaAnnuncio3
+];
+
+Selezionatore selezionatore1 = Selezionatore(
+  nome: 'Alberto',
+  cognome: 'Multari',
+);
+Selezionatore selezionatore2 = Selezionatore(
+  nome: 'Mariangela',
+  cognome: 'Piccinini',
+);
+Selezionatore selezionatore3 = Selezionatore(
+  nome: 'Caterina',
+  cognome: 'Avenali',
+);
+
+List<Selezionatore> selezionatoriMock = [
+  selezionatore1,
+  selezionatore2,
+  selezionatore3
 ];

@@ -5,7 +5,7 @@ import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:solving_recruitment_flutter/screens/home.dart';
 
 class LoginScreen extends StatefulWidget {
-    static const String routeName = '/login-screen';
+  static const String routeName = '/login-screen';
 
   const LoginScreen({super.key});
 
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _passwordController.text,
                       );
                       if (authProvider.token != null) {
-                      Navigator.pushNamed(context, Home.routeName);
+                        Navigator.pushNamed(context, Home.routeName);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -113,7 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     'Recruitment',
-                    style: TextStyle(color: Colors.red, fontSize: height * 0.03),
+                    style:
+                        TextStyle(color: Colors.red, fontSize: height * 0.03),
                   ),
                 ],
               ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:intl/intl.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio/annuncio_detail_screen.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 
 class AnnuncioItem extends StatelessWidget {
   const AnnuncioItem({super.key, required this.annuncio});

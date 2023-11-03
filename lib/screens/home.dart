@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solving_recruitment_flutter/data/drawer_items.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class Home extends StatelessWidget {
   static const String routeName = '/home-screen';
@@ -9,40 +10,18 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Solving Recruitment'),
-        leading: IconButton(
-          icon: Image.asset("assets/images/logoNavbarCoge.png"),
-          onPressed: () {
-            // Navigator.pushNamedAndRemoveUntil(
-            //     context, Home.routeName, (route) => false);
-          },
+      appBar: const CustomAppbar(title: 'Solving Recruitment'),
+      endDrawer: const CustomEndDrawer(),
+      body: Container(
+        margin: const EdgeInsets.all(20),
+        child: Center(
+          child: Text(
+            'QUI ANDRANNO GRAFICI CON STATISCHICHE',
+            style: TextStyle(
+                fontSize: 50, color: Theme.of(context).colorScheme.primary),
+          ),
         ),
       ),
-      endDrawer: Drawer(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        child: ListView(
-          children: drawerItems.map((item) {
-            if (item.containsKey('divider')) {
-              return Divider(
-                thickness: item['thickness'] ?? 1.0,
-              );
-            } else {
-              return ListTile(
-                leading: item['icon'] == Icons.logout
-                    ? Icon(item['icon'], color: Colors.red)
-                    : Icon(item['icon']),
-                title: Text(item['title']),
-                onTap: () {
-                  item['onTap'](context);
-                },
-                tileColor: item['color'],
-              );
-            }
-          }).toList(),
-        ),
-      ),
-      body: const Placeholder(),
     );
   }
 }

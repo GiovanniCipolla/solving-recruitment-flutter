@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
-import 'package:solving_recruitment_flutter/data/drawer_items.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio/annuncio_update_screen.dart';
-import 'package:solving_recruitment_flutter/screens/home.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_update_screen.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class AnnuncioDetailScreen extends StatelessWidget {
   static const String routeName = '/annuncio-detail-screen';
@@ -20,39 +20,8 @@ class AnnuncioDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(annuncio.titolo),
-        leading: IconButton(
-          icon: Image.asset("assets/images/logoNavbarCoge.png"),
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, Home.routeName, (route) => false);
-          },
-        ),
-      ),
-      endDrawer: Drawer(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        child: ListView(
-          children: drawerItems.map((item) {
-            if (item.containsKey('divider')) {
-              return Divider(
-                thickness: item['thickness'] ?? 1.0,
-              );
-            } else {
-              return ListTile(
-                leading: item['icon'] == Icons.logout
-                    ? Icon(item['icon'], color: Colors.red)
-                    : Icon(item['icon']),
-                title: Text(item['title']),
-                onTap: () {
-                  item['onTap'](context);
-                },
-                tileColor: item['color'],
-              );
-            }
-          }).toList(),
-        ),
-      ),
+      appBar: CustomAppbar(title: annuncio.titolo),
+      endDrawer: const CustomEndDrawer(),
       body: Column(
         children: [
           SizedBox(
@@ -84,7 +53,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(heightSize(context) * 0.01),
                   height: heightSize(context) * 0.14,
-                  margin: EdgeInsets.all(heightSize(context) * 0.1),
+                  margin: EdgeInsets.all(heightSize(context) * 0.01),
                   color: Theme.of(context).colorScheme.onPrimary,
                   child: Text(
                     annuncio.descrizione,
@@ -247,7 +216,9 @@ class AnnuncioDetailScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return  AnnuncioUpdate(annuncio: annuncio,);
+                          return AnnuncioUpdate(
+                            annuncio: annuncio,
+                          );
                         },
                       ),
                     );
@@ -271,7 +242,9 @@ class AnnuncioDetailScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return  AnnuncioUpdate(annuncio: annuncio,);
+                          return AnnuncioUpdate(
+                            annuncio: annuncio,
+                          );
                         },
                       ),
                     );
