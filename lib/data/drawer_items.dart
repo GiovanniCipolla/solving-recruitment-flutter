@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/home.dart';
 import 'package:solving_recruitment_flutter/screens/login_screen.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
@@ -48,7 +49,7 @@ final List<Map<String, dynamic>> drawerItems = [
     'title': 'Gestione Colloqui',
     'onTap': (context) {
       // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-      //  Navigator.pushNamed(context, ColloquioScreen.routeName);
+       Navigator.pushNamed(context, ColloquioScreen.routeName);
     },
   },
   {
@@ -85,6 +86,18 @@ final List<Map<String, dynamic>> drawerItems = [
     'onTap': (context) {
       // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
       Navigator.pushNamed(context, AreaScreen.routeName);
+    },
+  },
+   {
+    'divider': true,
+    'thickness': 2.0,
+  },
+  {
+    'icon': Icons.work,
+    'title': 'Gestione Tipologia Annunci',
+    'onTap': (context) {
+      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      // Navigator.pushNamed(context, AreaScreen.routeName);
     },
   },
   {

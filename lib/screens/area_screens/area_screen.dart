@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/data_mock.dart';
+import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/widgets/area_widgets/area_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -21,7 +22,33 @@ class AreaScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ...areasMock.map((item) => AreaItem(area: item)).toList()
+                  ...areasMock.map((item) => AreaItem(area: item)).toList(),
+                  SizedBox(
+                    height: heightSize(context) * 0.15,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'Vai alla gestione academy',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward,
+                          color: Colors.red,
+                        ),
+                        SizedBox(
+                          width: widthSize(context) * 0.02,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 2.0,
+                    color: Colors.red,
+                  )
                 ],
               ),
             ),

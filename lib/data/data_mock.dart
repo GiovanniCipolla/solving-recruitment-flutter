@@ -1,6 +1,7 @@
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 
@@ -132,4 +133,36 @@ List<CandidatoProva> candidatiMock = [
   candidato6,
   candidato7,
   candidato8
+];
+
+
+
+Colloquio colloquio1 = Colloquio(
+  data: DateTime.now(),
+  candidato: candidato1,
+  selezionatore: selezionatore1, tipologia: Tipologia.conoscitivo,
+);
+Colloquio colloquio2 = Colloquio(
+  data: DateTime.now(),
+  candidato: candidato2,
+  selezionatore: selezionatore2, tipologia: Tipologia.finale,
+  feedbackColloquio: FeedbackColloquio.non_adeguato
+);
+Colloquio colloquio3 = Colloquio(
+  data: DateTime.now(),
+  candidato: candidato3,
+  selezionatore: selezionatore3, tipologia: Tipologia.conoscitivo,
+);
+Colloquio colloquio4 = Colloquio(
+  data: DateTime.now(),
+  candidato: candidato4,
+  selezionatore: selezionatore1, tipologia: Tipologia.tecnico,
+  feedbackColloquio: FeedbackColloquio.buono
+);
+
+List<Colloquio> colloquiMock = [
+  colloquio1,
+  colloquio2,
+  colloquio3,
+  colloquio4
 ];
