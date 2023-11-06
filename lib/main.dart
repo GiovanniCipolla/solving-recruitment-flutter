@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProxyProvider<AuthProvider, AnnuncioProvider>(
-          create: (ctx) => AnnuncioProvider(authProvider: null, annunci: []),
+          create: (ctx) => AnnuncioProvider(authProvider: null, annunci: [], candidati: [], area: null),
           update: (ctx, authProvider, previous) => AnnuncioProvider(
             authProvider: authProvider,
-            annunci: previous!.annunci,
+            annunci: previous!.annunci, candidati: [], area: null,
           ),
         ),
       ],

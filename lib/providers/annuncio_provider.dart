@@ -3,13 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
+import 'package:solving_recruitment_flutter/models/area.dart';
+import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/httpexception.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
 
 class AnnuncioProvider extends ChangeNotifier {
-  AnnuncioProvider({required this.authProvider, required this.annunci});
+  AnnuncioProvider({required this.authProvider, required this.annunci, required this.candidati, required this.area});
   List<Annuncio> annunci = [];
+  List<Candidato> candidati = [];
+  Area? area;
+  
   final AuthProvider? authProvider;
 
   // // Future<void> getAnnunci() async {
