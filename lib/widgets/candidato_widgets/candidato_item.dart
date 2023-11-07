@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/data_mock.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 
@@ -25,7 +26,7 @@ class CandidatoItem extends StatelessWidget {
               children: [
                 Icon(
                   Icons.person,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: statoCandidatoIconMap[candidato.stato]!.color,
                   size: 50,
                 ),
                 Column(
@@ -44,6 +45,8 @@ class CandidatoItem extends StatelessWidget {
                     ),
                   ],
                 ),
+                const Spacer(),
+                statoCandidatoIconMap[candidato.stato]!,
               ],
             ),
              Divider(
@@ -51,9 +54,22 @@ class CandidatoItem extends StatelessWidget {
               thickness: 2,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Stato : ', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-                Text(candidato.stato.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                Text(candidato.annuncio.titolo , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+              ]
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(candidato.area.denominazione , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+              ]
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(candidato.email , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
               ]
             )
           ]

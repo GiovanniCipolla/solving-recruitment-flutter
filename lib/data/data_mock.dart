@@ -71,58 +71,78 @@ List<Selezionatore> selezionatoriMock = [
 ];
 
 class CandidatoProva {
-CandidatoProva({
-  required this.nome,
-  required this.cognome,
-  required this.stato
-});
+  CandidatoProva(
+      {required this.nome,
+      required this.cognome,
+      required this.stato,
+      required this.area,
+      required this.annuncio,
+      required this.email});
 
+  final String email;
+  final Annuncio annuncio;
+  final Area area;
   final String nome;
   final String cognome;
   final Stato stato;
 }
 
-
 CandidatoProva candidato1 = CandidatoProva(
-  nome: 'Lorenzo',
-  cognome: 'Granata',
-  stato: Stato.in_attesa
-);
+    nome: 'Lorenzo',
+    cognome: 'Granata',
+    stato: Stato.superato,
+    area: areaA1,
+    annuncio: annuncio1,
+    email: 'lore@lore.it');
 CandidatoProva candidato2 = CandidatoProva(
-  nome: 'David',
-  cognome: 'Leone',
-  stato: Stato.in_attesa
-);
+    nome: 'David',
+    cognome: 'Leone',
+    stato: Stato.in_attesa,
+    area: areaA2,
+    annuncio: annuncio2,
+    email: 'dav@davit');
 CandidatoProva candidato3 = CandidatoProva(
-  nome: 'Giulia',
-  cognome: 'Cimino',
-  stato: Stato.in_attesa
-);
+    nome: 'Giulia',
+    cognome: 'Cimino',
+    stato: Stato.rifiutato,
+    area: area1,
+    annuncio: annuncio3,
+    email: 'giu@giu.it');
 CandidatoProva candidato4 = CandidatoProva(
-  nome: 'Cristian',
-  cognome: 'Piarulli',
-  stato: Stato.in_attesa
-);
+    nome: 'Cristian',
+    cognome: 'Piarulli',
+    stato: Stato.in_attesa,
+    area: areaA1,
+    annuncio: annuncio1,
+    email: 'cri@criit');
 CandidatoProva candidato5 = CandidatoProva(
-  nome: 'Alexadnru',
-  cognome: 'Stefu',
-  stato: Stato.in_attesa
-);
+    nome: 'Alexadnru',
+    cognome: 'Stefu',
+    stato: Stato.in_attesa,
+    area: areaA2,
+    annuncio: annuncio3,
+    email: 'ale@ale.it');
 CandidatoProva candidato6 = CandidatoProva(
-  nome: 'Gabriel',
-  cognome: 'Scarlat',
-  stato: Stato.in_attesa
-);
+    nome: 'Gabriel',
+    cognome: 'Scarlat',
+    stato: Stato.superato,
+    area: areaA2,
+    annuncio: annuncio2,
+    email: 'gab@gab');
 CandidatoProva candidato7 = CandidatoProva(
-  nome: 'Simone',
-  cognome: 'Riillo',
-  stato: Stato.in_attesa
-);
+    nome: 'Simone',
+    cognome: 'Riillo',
+    stato: Stato.superato,
+    area: areaA1,
+    annuncio: annuncio1,
+    email: 'sim@sim.it');
 CandidatoProva candidato8 = CandidatoProva(
-  nome: 'Ludovica',
-  cognome: 'Guiducci',
-  stato: Stato.in_attesa
-);
+    nome: 'Ludovica',
+    cognome: 'Guiducci',
+    stato: Stato.rifiutato,
+    area: areaA1,
+    annuncio: annuncio2,
+    email: 'lud@lud.it');
 
 List<CandidatoProva> candidatiMock = [
   candidato1,
@@ -135,34 +155,29 @@ List<CandidatoProva> candidatiMock = [
   candidato8
 ];
 
-
-
 Colloquio colloquio1 = Colloquio(
   data: DateTime.now(),
   candidato: candidato1,
-  selezionatore: selezionatore1, tipologia: Tipologia.conoscitivo,
+  selezionatore: selezionatore1,
+  tipologia: Tipologia.conoscitivo,
 );
 Colloquio colloquio2 = Colloquio(
-  data: DateTime.now(),
-  candidato: candidato2,
-  selezionatore: selezionatore2, tipologia: Tipologia.finale,
-  feedbackColloquio: FeedbackColloquio.non_adeguato
-);
+    data: DateTime.now(),
+    candidato: candidato2,
+    selezionatore: selezionatore2,
+    tipologia: Tipologia.finale,
+    feedbackColloquio: FeedbackColloquio.non_adeguato);
 Colloquio colloquio3 = Colloquio(
   data: DateTime.now(),
   candidato: candidato3,
-  selezionatore: selezionatore3, tipologia: Tipologia.conoscitivo,
+  selezionatore: selezionatore3,
+  tipologia: Tipologia.conoscitivo,
 );
 Colloquio colloquio4 = Colloquio(
-  data: DateTime.now(),
-  candidato: candidato4,
-  selezionatore: selezionatore1, tipologia: Tipologia.tecnico,
-  feedbackColloquio: FeedbackColloquio.buono
-);
+    data: DateTime.now(),
+    candidato: candidato4,
+    selezionatore: selezionatore1,
+    tipologia: Tipologia.tecnico,
+    feedbackColloquio: FeedbackColloquio.buono);
 
-List<Colloquio> colloquiMock = [
-  colloquio1,
-  colloquio2,
-  colloquio3,
-  colloquio4
-];
+List<Colloquio> colloquiMock = [colloquio1, colloquio2, colloquio3, colloquio4];

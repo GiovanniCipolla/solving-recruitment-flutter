@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 
 const urlAPI = 'http://localhost:8080/api';
@@ -51,11 +52,11 @@ void showConfirmationDialog(BuildContext context, String title,
 }
 
 Map<FeedbackColloquio, String> feedbackLabelMap = {
-  FeedbackColloquio.ottimo: "ottimo",
+  FeedbackColloquio.ottimo: "Ottimo",
   FeedbackColloquio.buono: "buono",
-  FeedbackColloquio.soddisfacente: "soddisfacente",
-  FeedbackColloquio.dubbio: "dubbio",
-  FeedbackColloquio.non_adeguato: "non adeguato",
+  FeedbackColloquio.soddisfacente: "Soddisfacente",
+  FeedbackColloquio.dubbio: "Dubbio",
+  FeedbackColloquio.non_adeguato: "Non adeguato",
 };
 
 Map<FeedbackColloquio, Color> feedbackColorMap = {
@@ -67,7 +68,20 @@ Map<FeedbackColloquio, Color> feedbackColorMap = {
 };
 
 Map<Tipologia, String> tipologiaMap = {
-  Tipologia.conoscitivo: "conoscitivo",
-  Tipologia.tecnico: "tecnico",
-  Tipologia.finale: "finale",
+  Tipologia.conoscitivo: "Conoscitivo",
+  Tipologia.tecnico: "Tecnico",
+  Tipologia.finale: "Finale",
+};
+
+Map<Stato, String> statoCandidatoMap = {
+  Stato.superato: "Superato",
+  Stato.rifiutato: "Rifiutato",
+  Stato.in_attesa: "In attesa",
+};
+Map<Stato, Icon> statoCandidatoIconMap = {
+  Stato.superato:
+      const Icon(Icons.check, color: Color.fromARGB(255, 20, 218, 27)),
+  Stato.rifiutato:
+      const Icon(Icons.close, color: Color.fromARGB(255, 209, 65, 55)),
+  Stato.in_attesa: const Icon(Icons.watch_later, color: Colors.white),
 };
