@@ -5,7 +5,7 @@ class TipologiaAnnuncio {
     required this.descrizione,
   });
 
-  final String? id;
+  final int? id;
   final String descrizione;
   // annunci
 

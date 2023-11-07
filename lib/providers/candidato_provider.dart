@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
-import 'package:solving_recruitment_flutter/models/httpexception.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,6 +12,7 @@ class CandidatoProvider extends ChangeNotifier {
   List<Candidato> candidati = [];
   final AuthProvider? authProvider;
   List<Colloquio> colloqui = [];
+
 
   CandidatoProvider({required this.authProvider, required this.candidati});
 

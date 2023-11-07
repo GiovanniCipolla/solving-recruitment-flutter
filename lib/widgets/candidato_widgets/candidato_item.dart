@@ -56,13 +56,13 @@ class CandidatoItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Text(candidato.annuncio.titolo , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                Text(candidato.annuncio.titolo , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
               ]
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Text(candidato.area.denominazione , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                Text(candidato.annuncio.area.denominazione , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
               ]
             ),
             const Spacer(),

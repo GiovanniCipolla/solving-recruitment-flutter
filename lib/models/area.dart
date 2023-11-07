@@ -3,7 +3,7 @@ class Area {
 
 Area({ this.id, required this.denominazione,  this.annunciLenght});
 
-  final String? id;
+  final int? id;
   final String denominazione;
   final int? annunciLenght;
  

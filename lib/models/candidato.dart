@@ -1,4 +1,6 @@
 
+import 'package:solving_recruitment_flutter/models/annuncio.dart';
+
 enum Stato {
   SUPERATO,
   RIFIUTATO,
@@ -6,13 +8,13 @@ enum Stato {
 }
 
 
-enum LinguaInglese { a1, a2, b1, b2, c1, c2 }
+enum LinguaInglese { A1, A2, B1, B2, C1, C2 }
 
 enum PercorsoAcademy { in_attesa, in_corso, ritirato, terminato }
 
-enum Seniority { junior, medium, senior }
+enum Seniority { JUNIOR, MEDIUM, SENIOR }
 
-enum DisponibiltaLavoro { presenza, ibrida, remoto }
+enum DisponibiltaLavoro { PRESENZA, IBRIDA, REMOTO }
 
 class Candidato {
   Candidato({
@@ -40,11 +42,11 @@ class Candidato {
     this.note,
     required this.dareRiscontro,
     required this.riscontroInviato,
-    // required this.annuncio,
+    required this.annuncio,
     // required this.area
   });
 
-  // final Annuncio annuncio;
+  final Annuncio annuncio;
   // final Area area;
   final int? id;
   final Stato stato;
@@ -72,19 +74,31 @@ class Candidato {
   final bool riscontroInviato;
 
   factory Candidato.fromJson(Map<String, dynamic> json) {
+    Stato stato = Stato.values
+          .firstWhere((element) => element.toString() == 'Stato.${json['stato']}');
+
+          LinguaInglese linguaInglese = LinguaInglese.values
+          .firstWhere((element) => element.toString() == 'LinguaInglese.${json['linguaInglese']}');
+
+          Seniority seniority = Seniority.values
+          .firstWhere((element) => element.toString() == 'Seniority.${json['seniority']}');
+
+          DisponibiltaLavoro disponibilitaLavoro = DisponibiltaLavoro.values
+          .firstWhere((element) => element.toString() == 'DisponibiltaLavoro.${json['disponibilitaLavoro']}');
+
     return Candidato(
       id: json['id'],
-      stato: json['stato'],
+      stato: stato,
       nome: json['nome'],
       cognome: json['cognome'],
       email: json['email'],
-      luogoDiNascita: json['luogoDiNascita'],
-      dataDiNascita: DateTime.parse(json['dataDiNascita']),
+      luogoDiNascita: json['luogoNascita'],
+      dataDiNascita: DateTime.parse(json['dataNascita']),
       residenza: json['residenza'],
       recapitoTelefonico: json['recapitoTelefonico'],
       recapitoExtra: json['recapitoExtra'],
       cap: json['cap'],
-      linguaInglese: json['linguaInglese'],
+      linguaInglese: linguaInglese,
       tecnologieConosciute: List<String>.from(json['tecnologieConosciute']),
       softSkills: json['softSkills'] != null
           ? List<String>.from(json['softSkills'])
@@ -94,13 +108,13 @@ class Candidato {
           : null,
       categoriaProtetta: json['categoriaProtetta'],
       ral: json['ral'],
-      seniority: json['seniority'],
-      disponibilitaLavoro: json['disponibilitaLavoro'],
+      seniority: seniority,
+      disponibilitaLavoro: disponibilitaLavoro,
       dataPrimoContatto: DateTime.parse(json['dataPrimoContatto']),
       percorsoAcademy: json['percorsoAcademy'],
       note: json['note'],
       dareRiscontro: json['dareRiscontro'],
-      riscontroInviato: json['riscontroInviato'],
+      riscontroInviato: json['riscontroInviato'], annuncio: Annuncio.fromJson(json['annuncio']),
       // annuncio: Annuncio.fromJson(json['annuncio']),
       // area: Area.fromJson(json['area']),
     );

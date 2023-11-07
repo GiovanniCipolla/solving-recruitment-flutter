@@ -15,7 +15,7 @@ class Annuncio {
       this.candidati});
 
       
-  final String? id;
+  final int? id;
   final String titolo;
   final String descrizione;
   final DateTime dataInizio;
@@ -29,8 +29,8 @@ class Annuncio {
       id: json['id'],
       titolo: json['titolo'],
       descrizione: json['descrizione'],
-      dataInizio: json['dataInizio'],
-      dataFine: json['dataFine'],
+      dataInizio: DateTime.parse(json['dataInizio']),
+      dataFine: DateTime.parse(json['dataFine']),
       tipologia: TipologiaAnnuncio.fromJson(json['tipologiaAnnuncio']),
       area: Area.fromJson(json['area']),
     );
