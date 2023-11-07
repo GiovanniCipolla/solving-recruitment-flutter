@@ -1,5 +1,10 @@
 
-enum Stato { superato, rifiutato, in_attesa }
+enum Stato {
+  SUPERATO,
+  RIFIUTATO,
+  IN_ATTESA
+}
+
 
 enum LinguaInglese { a1, a2, b1, b2, c1, c2 }
 
@@ -35,9 +40,13 @@ class Candidato {
     this.note,
     required this.dareRiscontro,
     required this.riscontroInviato,
+    // required this.annuncio,
+    // required this.area
   });
 
-  final String? id;
+  // final Annuncio annuncio;
+  // final Area area;
+  final int? id;
   final Stato stato;
   final String nome;
   final String cognome;
@@ -49,9 +58,9 @@ class Candidato {
   final String? recapitoExtra;
   final String cap;
   final LinguaInglese linguaInglese;
-  final String tecnologieConosciute;
-  final String? softSkills;
-  final String? altreCompetenzeMaturate;
+  final List<String> tecnologieConosciute;
+  final List<String>? softSkills;
+  final List<String>? altreCompetenzeMaturate;
   final bool categoriaProtetta;
   final double? ral;
   final Seniority seniority;
@@ -70,24 +79,30 @@ class Candidato {
       cognome: json['cognome'],
       email: json['email'],
       luogoDiNascita: json['luogoDiNascita'],
-      dataDiNascita: json['dataDiNascita'],
+      dataDiNascita: DateTime.parse(json['dataDiNascita']),
       residenza: json['residenza'],
       recapitoTelefonico: json['recapitoTelefonico'],
       recapitoExtra: json['recapitoExtra'],
       cap: json['cap'],
       linguaInglese: json['linguaInglese'],
-      tecnologieConosciute: json['tecnologieConosciute'],
-      softSkills: json['softSkills'],
-      altreCompetenzeMaturate: json['altreCompetenzeMaturate'],
+      tecnologieConosciute: List<String>.from(json['tecnologieConosciute']),
+      softSkills: json['softSkills'] != null
+          ? List<String>.from(json['softSkills'])
+          : null,
+      altreCompetenzeMaturate: json['altreCompetenzeMaturate'] != null
+          ? List<String>.from(json['altreCompetenzeMaturate'])
+          : null,
       categoriaProtetta: json['categoriaProtetta'],
       ral: json['ral'],
       seniority: json['seniority'],
       disponibilitaLavoro: json['disponibilitaLavoro'],
-      dataPrimoContatto: json['dataPrimoContatto'],
+      dataPrimoContatto: DateTime.parse(json['dataPrimoContatto']),
       percorsoAcademy: json['percorsoAcademy'],
       note: json['note'],
       dareRiscontro: json['dareRiscontro'],
       riscontroInviato: json['riscontroInviato'],
+      // annuncio: Annuncio.fromJson(json['annuncio']),
+      // area: Area.fromJson(json['area']),
     );
   }
 
@@ -99,7 +114,7 @@ class Candidato {
       'cognome': cognome,
       'email': email,
       'luogoDiNascita': luogoDiNascita,
-      'dataDiNascita': dataDiNascita,
+      'dataDiNascita': dataDiNascita.toIso8601String(),
       'residenza': residenza,
       'recapitoTelefonico': recapitoTelefonico,
       'recapitoExtra': recapitoExtra,
@@ -112,13 +127,13 @@ class Candidato {
       'ral': ral,
       'seniority': seniority,
       'disponibilitaLavoro': disponibilitaLavoro,
-      'dataPrimoContatto': dataPrimoContatto,
+      'dataPrimoContatto': dataPrimoContatto.toIso8601String(),
       'percorsoAcademy': percorsoAcademy,
       'note': note,
       'dareRiscontro': dareRiscontro,
       'riscontroInviato': riscontroInviato,
+      // 'annuncio': annuncio.toJson(),
+      // 'area': area.toJson(),
     };
   }
-
-  // area,annuncio,colloqui
 }

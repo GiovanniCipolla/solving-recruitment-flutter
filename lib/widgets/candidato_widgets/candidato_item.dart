@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
-import 'package:solving_recruitment_flutter/data/data_mock.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/models/candidato.dart';
 
 class CandidatoItem extends StatelessWidget {
   const CandidatoItem({super.key, required this.candidato});
 
-  final CandidatoProva candidato;
+  final Candidato candidato;
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +56,13 @@ class CandidatoItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(candidato.annuncio.titolo , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                // Text(candidato.annuncio.titolo , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
               ]
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(candidato.area.denominazione , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                // Text(candidato.area.denominazione , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
               ]
             ),
             const Spacer(),

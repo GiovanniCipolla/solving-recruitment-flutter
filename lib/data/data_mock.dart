@@ -90,56 +90,56 @@ class CandidatoProva {
 CandidatoProva candidato1 = CandidatoProva(
     nome: 'Lorenzo',
     cognome: 'Granata',
-    stato: Stato.superato,
+    stato: Stato.SUPERATO,
     area: areaA1,
     annuncio: annuncio1,
     email: 'lore@lore.it');
 CandidatoProva candidato2 = CandidatoProva(
     nome: 'David',
     cognome: 'Leone',
-    stato: Stato.in_attesa,
+    stato: Stato.IN_ATTESA,
     area: areaA2,
     annuncio: annuncio2,
     email: 'dav@davit');
 CandidatoProva candidato3 = CandidatoProva(
     nome: 'Giulia',
     cognome: 'Cimino',
-    stato: Stato.rifiutato,
+    stato: Stato.RIFIUTATO,
     area: area1,
     annuncio: annuncio3,
     email: 'giu@giu.it');
 CandidatoProva candidato4 = CandidatoProva(
     nome: 'Cristian',
     cognome: 'Piarulli',
-    stato: Stato.in_attesa,
+    stato: Stato.IN_ATTESA,
     area: areaA1,
     annuncio: annuncio1,
     email: 'cri@criit');
 CandidatoProva candidato5 = CandidatoProva(
     nome: 'Alexadnru',
     cognome: 'Stefu',
-    stato: Stato.in_attesa,
+    stato: Stato.IN_ATTESA,
     area: areaA2,
     annuncio: annuncio3,
     email: 'ale@ale.it');
 CandidatoProva candidato6 = CandidatoProva(
     nome: 'Gabriel',
     cognome: 'Scarlat',
-    stato: Stato.superato,
+    stato: Stato.SUPERATO,
     area: areaA2,
     annuncio: annuncio2,
     email: 'gab@gab');
 CandidatoProva candidato7 = CandidatoProva(
     nome: 'Simone',
     cognome: 'Riillo',
-    stato: Stato.superato,
+    stato: Stato.SUPERATO,
     area: areaA1,
     annuncio: annuncio1,
     email: 'sim@sim.it');
 CandidatoProva candidato8 = CandidatoProva(
     nome: 'Ludovica',
     cognome: 'Guiducci',
-    stato: Stato.rifiutato,
+    stato: Stato.RIFIUTATO,
     area: areaA1,
     annuncio: annuncio2,
     email: 'lud@lud.it');

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/data_mock.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -13,6 +15,8 @@ class CandidatoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final candidatoProvider = Provider.of<CandidatoProvider>(context);
+    final candidati = candidatoProvider.candidati;
     return  Scaffold(
       appBar: const CustomAppbar(
         title: 'Gestione Candidati',
@@ -73,12 +77,12 @@ class CandidatoScreen extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
-                itemCount: candidatiMock.length,
+                itemCount: candidati.length,
                 shrinkWrap: true,
                 physics:
                     const ClampingScrollPhysics(), // Questa opzione impedisce il rollio eccessivo
                 itemBuilder: (context, index) {
-                  return CandidatoItem(candidato: candidatiMock[index]);
+                  return CandidatoItem(candidato: candidati[index]);
                 },
               ),
             ),

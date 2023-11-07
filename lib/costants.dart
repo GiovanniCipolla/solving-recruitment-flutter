@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 
-const urlAPI = 'http://localhost:8080/api';
+const urlAPI = 'http://192.168.5.220:8080/api';
 
 void showConfirmationDialog(BuildContext context, String title,
     String description, VoidCallback onConfirm) {
@@ -74,14 +74,14 @@ Map<Tipologia, String> tipologiaMap = {
 };
 
 Map<Stato, String> statoCandidatoMap = {
-  Stato.superato: "Superato",
-  Stato.rifiutato: "Rifiutato",
-  Stato.in_attesa: "In attesa",
+  Stato.SUPERATO: "Superato",
+  Stato.RIFIUTATO: "Rifiutato",
+  Stato.IN_ATTESA: "In attesa",
 };
 Map<Stato, Icon> statoCandidatoIconMap = {
-  Stato.superato:
+  Stato.SUPERATO:
       const Icon(Icons.check, color: Color.fromARGB(255, 20, 218, 27)),
-  Stato.rifiutato:
+  Stato.RIFIUTATO:
       const Icon(Icons.close, color: Color.fromARGB(255, 209, 65, 55)),
-  Stato.in_attesa: const Icon(Icons.watch_later, color: Colors.white),
+  Stato.IN_ATTESA: const Icon(Icons.watch_later, color: Colors.white),
 };

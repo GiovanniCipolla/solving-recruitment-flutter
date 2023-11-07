@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
@@ -30,6 +31,12 @@ class MyApp extends StatelessWidget {
             annunci: previous!.annunci, candidati: [], area: null,
           ),
         ),
+        ChangeNotifierProxyProvider<AuthProvider, CandidatoProvider>(
+          create: (ctx) => CandidatoProvider(authProvider: null, candidati: []),
+          update: (ctx, authProvider, previous) => CandidatoProvider(
+            authProvider: authProvider, candidati: previous!.candidati
+          )
+        )
       ],
       child: Consumer<AuthProvider>(
         builder: (ctx, authProvider, child) {

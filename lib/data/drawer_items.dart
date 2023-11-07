@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
@@ -24,7 +26,7 @@ final List<Map<String, dynamic>> drawerItems = [
     'icon': Icons.group,
     'title': 'Gestione Candidati',
     'onTap': (context) {
-      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      Provider.of<CandidatoProvider>(context, listen: false).getCandidati();
       Navigator.pushNamed(context, CandidatoScreen.routeName);
     },
   },
