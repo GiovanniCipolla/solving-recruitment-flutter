@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:solving_recruitment_flutter/data/data_mock.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/colloquio_widgets/colloquio_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -12,7 +13,9 @@ class ColloquioScreen extends StatelessWidget {
   const ColloquioScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) { 
+    final colloqui = Provider.of<ColloquioProvider>(context).colloqui;
+    return Scaffold(
         appBar: const CustomAppbar(title: 'Gestione Colloqui'),
         endDrawer: const CustomEndDrawer(),
         body: Column(children: [
@@ -66,7 +69,7 @@ class ColloquioScreen extends StatelessWidget {
            Expanded(
               child: SingleChildScrollView(
             child: Column(children: [
-              ...colloquiMock
+              ...colloqui
                   .map((item) => ColloquioItem(colloquio: item))
                   .toList(),
             ]),
@@ -77,5 +80,5 @@ class ColloquioScreen extends StatelessWidget {
             metodoShowDialog: () {},
           )
         ]),
-      );
+      );}
 }

@@ -21,7 +21,6 @@ class AreaProvider extends ChangeNotifier {
 
  
  Future<void> getAreas() async {
-  print('aaaaaaaaaaaaa');
    String url = '$urlAPI/area/getMobile';
    final response = await http.get(Uri.parse(url), headers: {
      'Content-Type': 'application/json',

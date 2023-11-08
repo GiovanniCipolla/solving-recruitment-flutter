@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:intl/intl.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 
 class AnnuncioItem extends StatelessWidget {
   const AnnuncioItem({super.key, required this.annuncio});
@@ -11,13 +10,19 @@ class AnnuncioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateFormatter = DateFormat('yyyy-MM-dd');
-    final formattedDataFine = dateFormatter.format(annuncio.dataFine!);
+
+    final dynamic? formattedDataFine;       
+    
+    if (annuncio.dataFine != null) {
+      formattedDataFine = dateFormatter.format(annuncio.dataFine!);
+    } else {
+      formattedDataFine = null;
+    }
+
 
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return AnnuncioDetailScreen(annuncio: annuncio);
-        }));
+       
       },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
@@ -115,7 +120,7 @@ class AnnuncioItem extends StatelessWidget {
                 ),
               ),
               Text(
-                formattedDataFine,
+                formattedDataFine ?? 'Data mancante',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),

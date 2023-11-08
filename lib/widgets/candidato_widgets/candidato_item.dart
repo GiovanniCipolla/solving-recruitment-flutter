@@ -67,9 +67,9 @@ class CandidatoItem extends StatelessWidget {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                candidato.area != null
-                    ? candidato.area!.denominazione ??
-                        "Denomeinazione area mancante"
+                candidato.annuncio!.area != null
+                    ? candidato.annuncio!.area!.denominazione ??
+                        "Denominazione area mancante"
                     : "Area mancante",
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),

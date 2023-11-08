@@ -16,7 +16,7 @@ class CandidatoProvider extends ChangeNotifier {
   CandidatoProvider({required this.authProvider, required this.candidati});
 
   Future<void> getCandidati() async {
-    String url = '$urlAPI/candidato/getMobile';
+    String url = '$urlAPI/candidato/get';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
     });

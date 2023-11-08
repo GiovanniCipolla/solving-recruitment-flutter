@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:solving_recruitment_flutter/data/data_mock.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/annuncio_widgets/annuncio_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -12,6 +13,7 @@ class AnnuncioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final annunci = Provider.of<AnnuncioProvider>(context).annunci;
     return Scaffold(
       appBar: const CustomAppbar(title: 'Gestione annunci'),
       endDrawer: const CustomEndDrawer(),
@@ -22,7 +24,7 @@ class AnnuncioScreen extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment
-                .spaceEvenly, // Allinea i pulsanti orizzontalmente
+                .spaceEvenly,
             children: [
               TextButton(
                 style: TextButton.styleFrom(
@@ -30,7 +32,7 @@ class AnnuncioScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () {
-                  // Aggiungi l'azione da eseguire quando il pulsante "Applica filtri" viene premuto.
+                  
                 },
                 child: const Row(
                   children: [
@@ -47,7 +49,6 @@ class AnnuncioScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () {
-                  // Aggiungi l'azione da eseguire quando il pulsante "Ordina per" viene premuto.
                 },
                 child: const Row(
                   children: [
@@ -70,12 +71,12 @@ class AnnuncioScreen extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
-                itemCount: annunciMock.length,
+                itemCount: annunci.length,
                 shrinkWrap: true,
                 physics:
                     const ClampingScrollPhysics(), // Questa opzione impedisce il rollio eccessivo
                 itemBuilder: (context, index) {
-                  return AnnuncioItem(annuncio: annunciMock[index]);
+                  return AnnuncioItem(annuncio: annunci[index]);
                 },
               ),
             ),

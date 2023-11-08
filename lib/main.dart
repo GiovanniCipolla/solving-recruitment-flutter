@@ -4,6 +4,8 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
+import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
+import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
@@ -49,6 +51,18 @@ class MyApp extends StatelessWidget {
             annunci: previous.annunci,
           ),
         ),
+        ChangeNotifierProxyProvider<AuthProvider, SelezionatoreProvider>(
+          create: (ctx) =>
+              SelezionatoreProvider(authProvider: null, selezionatori: []),
+          update: (ctx, authProvider, previous) => SelezionatoreProvider(
+              authProvider: authProvider,
+              selezionatori: previous!.selezionatori),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, ColloquioProvider>(
+          create: (ctx) => ColloquioProvider(authProvider: null, colloqui: []),
+          update: (ctx, authProvider, previous) => ColloquioProvider(
+              authProvider: authProvider, colloqui: previous!.colloqui),
+        )
       ],
       child: Consumer<AuthProvider>(
         builder: (ctx, authProvider, child) {

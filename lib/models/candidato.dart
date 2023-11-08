@@ -3,13 +3,13 @@ import 'package:solving_recruitment_flutter/models/area.dart';
 
 enum Stato { SUPERATO, RIFIUTATO, IN_ATTESA }
 
-enum LinguaInglese { A1, A2, B1, B2, C1, C2 }
+enum LinguaInglese { ND, SCARSO, SUFFICIENTE, BUONO, OTTIMO }
 
 enum PercorsoAcademy { in_attesa, in_corso, ritirato, terminato }
 
 enum Seniority { JUNIOR, MEDIUM, SENIOR }
 
-enum DisponibiltaLavoro { PRESENZA, IBRIDA, REMOTO }
+enum DisponibilitaLavoro { ND, PRESENZA, REMOTO, IBRIDA }
 
 class Candidato {
   Candidato(
@@ -58,7 +58,7 @@ class Candidato {
   final bool? categoriaProtetta;
   final double? ral;
   final Seniority? seniority;
-  final DisponibiltaLavoro? disponibilitaLavoro;
+  final DisponibilitaLavoro? disponibilitaLavoro;
   final DateTime? dataPrimoContatto;
   final PercorsoAcademy? percorsoAcademy;
   final String? note;
@@ -83,9 +83,9 @@ class Candidato {
             (element) => element.toString() == 'Seniority.${json['seniority']}')
         : null;
 
-    DisponibiltaLavoro? disponibilitaLavoro =
+    DisponibilitaLavoro? disponibilitaLavoro =
         json['disponibilitaLavoro'] != null
-            ? DisponibiltaLavoro.values.firstWhere((element) =>
+            ? DisponibilitaLavoro.values.firstWhere((element) =>
                 element.toString() ==
                 'DisponibilitaLavoro.${json['disponibilitaLavoro']}')
             : null;
@@ -125,8 +125,8 @@ class Candidato {
       note: json['note'],
       dareRiscontro: json['dareRiscontro'],
       riscontroInviato: json['riscontroInviato'],
-      annuncio: Annuncio.fromJson(json['annuncio']),
-      area: Area.fromJson(json['area']),
+      annuncio: json['annuncio'] != null ? Annuncio.fromJson(json['annuncio']) : null,
+      area: json['area'] != null ? Area.fromJson(json['area']) : null,
     );
   }
 

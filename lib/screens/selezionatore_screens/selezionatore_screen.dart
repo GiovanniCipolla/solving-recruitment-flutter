@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solving_recruitment_flutter/data/data_mock.dart';
+import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
@@ -12,6 +13,9 @@ class SelezionatoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final selezionatori = Provider.of<SelezionatoreProvider>(context).selezionatori;
+    
     return Scaffold(
         appBar: const CustomAppbar(title: 'Gestione Selezionatori'),
         endDrawer: const CustomEndDrawer(),
@@ -20,7 +24,7 @@ class SelezionatoreScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ...selezionatoriMock.map(
+                  ...selezionatori.map(
                     (item) => SelezionatoreItem(
                       selezionatore: item,
                     ),

@@ -37,7 +37,7 @@ class ColloquioItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(colloquio.candidato.nome,
+                      Text(colloquio.candidato!.nome!,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                           )),
@@ -46,7 +46,7 @@ class ColloquioItem extends StatelessWidget {
                           SizedBox(
                             width: widthSize(context) * 0.015,
                           ),
-                          Text(colloquio.candidato.cognome,
+                          Text(colloquio.candidato!.cognome!,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               )),
@@ -71,10 +71,37 @@ class ColloquioItem extends StatelessWidget {
                   )
                 ]),
                 Row(children: [
-                  Text(colloquio.selezionatore.cognome,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      )),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            colloquio.selezionatore!.cognome!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          SizedBox(
+                            width: widthSize(context) * 0.015,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            colloquio.selezionatore!.nome!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          SizedBox(
+                            width: widthSize(context) * 0.03,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                   Icon(
                     Icons.person_search,
                     color: Theme.of(context).colorScheme.primary,
@@ -86,15 +113,14 @@ class ColloquioItem extends StatelessWidget {
               height: heightSize(context) * 0.017,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(dateFormatter.format(colloquio.data),
+              Text(dateFormatter.format(colloquio.data!),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   )),
-              Text(
-                  feedbackLabelMap[colloquio.feedbackColloquio] ??
-                      'Da svolgere',
+              Text(feedbackLabelMap[colloquio.feedback] ?? 'Da svolgere',
                   style: TextStyle(
-                    color: feedbackColorMap[colloquio.feedbackColloquio] ?? Theme.of(context).colorScheme.primary,
+                    color: feedbackColorMap[colloquio.feedback] ??
+                        Theme.of(context).colorScheme.primary,
                   ))
             ]),
             Divider(

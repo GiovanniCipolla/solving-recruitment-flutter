@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
+import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
+import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
@@ -50,8 +53,8 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.date_range,
     'title': 'Gestione Colloqui',
-    'onTap': (context) {
-      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+    'onTap': (context) async {
+       await Provider.of<ColloquioProvider>(context, listen: false).getColloqui();
        Navigator.pushNamed(context, ColloquioScreen.routeName);
     },
   },
@@ -62,8 +65,8 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.person_search,
     'title': 'Gestione Selezionatori',
-    'onTap': (context) {
-      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+    'onTap': (context) async {
+      await Provider.of<SelezionatoreProvider>(context, listen: false).getSelezionatori();
       Navigator.pushNamed(context, SelezionatoreScreen.routeName);
     },
   },
@@ -74,8 +77,8 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.announcement,
     'title': 'Gestione Annunci',
-    'onTap': (context) {
-      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+    'onTap': (context) async {
+      await Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
       Navigator.pushNamed(context, AnnuncioScreen.routeName);
     },
   },

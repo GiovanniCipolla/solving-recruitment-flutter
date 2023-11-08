@@ -1,19 +1,17 @@
 
 class Selezionatore {
   Selezionatore(
-      {this.id, required this.nome, required this.cognome, this.colloqui});
+      {this.id,  this.nome,  this.cognome, });
 
-  String? id;
-  String nome;
-  String cognome;
-  List? colloqui;
+  int? id;
+  String? nome;
+  String? cognome;
 
   factory Selezionatore.fromJson(Map<String, dynamic> json) {
-    return Selezionatore(
-      id: json['id'],
-      nome: json['nome'],
-      cognome: json['cognome'],
-      colloqui: json['colloqui'],
+    return  Selezionatore(
+      id: json['id'] != null ? json['id'] as int : null,
+      nome: json['nome'] != null ? json['nome'] as String : null,
+      cognome: json['cognome'] != null ? json['cognome'] as String : null,
     );
   }
 
@@ -22,7 +20,6 @@ class Selezionatore {
       'id': id,
       'nome': nome,
       'cognome': cognome,
-      'colloqui': colloqui,
     };
   }
 }

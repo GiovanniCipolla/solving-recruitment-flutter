@@ -35,7 +35,7 @@ class SelezionatoreItem extends StatelessWidget {
                             width: widthSize(context) * 0.05,
                           ),
                           Text(
-                            selezionatore.nome,
+                            selezionatore.nome ?? "Nome mancante",
                             style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context).colorScheme.primary,
@@ -49,7 +49,7 @@ class SelezionatoreItem extends StatelessWidget {
                             width: widthSize(context) * 0.2,
                           ),
                           Text(
-                            selezionatore.cognome,
+                            selezionatore.cognome ?? "Cognome mancante",
                             style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context).colorScheme.primary,

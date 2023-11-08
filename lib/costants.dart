@@ -51,26 +51,26 @@ void showConfirmationDialog(BuildContext context, String title,
   );
 }
 
-Map<FeedbackColloquio, String> feedbackLabelMap = {
-  FeedbackColloquio.ottimo: "Ottimo",
-  FeedbackColloquio.buono: "buono",
-  FeedbackColloquio.soddisfacente: "Soddisfacente",
-  FeedbackColloquio.dubbio: "Dubbio",
-  FeedbackColloquio.non_adeguato: "Non adeguato",
+Map<FeedBackColloquio, String> feedbackLabelMap = {
+  FeedBackColloquio.OTTIMO: "Ottimo",
+  FeedBackColloquio.BUONO: "buono",
+  FeedBackColloquio.SODDISFACENTE: "Soddisfacente",
+  FeedBackColloquio.DUBBIO: "Dubbio",
+  FeedBackColloquio.NON_ADEGUATO: "Non adeguato",
 };
 
-Map<FeedbackColloquio, Color> feedbackColorMap = {
-  FeedbackColloquio.ottimo: Colors.green,
-  FeedbackColloquio.buono: Colors.lime,
-  FeedbackColloquio.soddisfacente: Colors.yellow,
-  FeedbackColloquio.dubbio: Colors.orange,
-  FeedbackColloquio.non_adeguato: Colors.red,
+Map<FeedBackColloquio, Color> feedbackColorMap = {
+  FeedBackColloquio.OTTIMO: Colors.green,
+  FeedBackColloquio.BUONO: Colors.lime,
+  FeedBackColloquio.SODDISFACENTE: Colors.yellow,
+  FeedBackColloquio.DUBBIO: Colors.orange,
+  FeedBackColloquio.NON_ADEGUATO: Colors.red,
 };
 
 Map<Tipologia, String> tipologiaMap = {
-  Tipologia.conoscitivo: "Conoscitivo",
-  Tipologia.tecnico: "Tecnico",
-  Tipologia.finale: "Finale",
+  Tipologia.CONOSCITIVO: "Conoscitivo",
+  Tipologia.TECNICO: "Tecnico",
+  Tipologia.FINALE: "Finale",
 };
 
 Map<Stato, String> statoCandidatoMap = {
