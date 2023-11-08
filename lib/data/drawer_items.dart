@@ -26,8 +26,8 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.group,
     'title': 'Gestione Candidati',
-    'onTap': (context) {
-      Provider.of<CandidatoProvider>(context, listen: false).getCandidati();
+    'onTap': (context) async {
+       await Provider.of<CandidatoProvider>(context, listen: false).getCandidati();
       Navigator.pushNamed(context, CandidatoScreen.routeName);
     },
   },
