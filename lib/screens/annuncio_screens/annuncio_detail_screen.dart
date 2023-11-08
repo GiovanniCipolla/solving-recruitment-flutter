@@ -20,7 +20,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(title: annuncio.titolo),
+      appBar: CustomAppbar(title: annuncio.titolo!),
       endDrawer: const CustomEndDrawer(),
       body: Column(
         children: [
@@ -44,7 +44,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                 height: heightSize(context) * 0.020,
               ),
               Text(
-                annuncio.titolo,
+                annuncio.titolo!,
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: heightSize(context) * 0.02),
@@ -56,7 +56,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                   margin: EdgeInsets.all(heightSize(context) * 0.01),
                   color: Theme.of(context).colorScheme.onPrimary,
                   child: Text(
-                    annuncio.descrizione,
+                    annuncio.descrizione!,
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontSize: heightSize(context) * 0.017),
@@ -87,7 +87,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                                             .onPrimary),
                                   ),
                                   Text(
-                                    dateFormatter.format(annuncio.dataInizio),
+                                    dateFormatter.format(annuncio.dataInizio!),
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -108,7 +108,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                                             .onPrimary),
                                   ),
                                   Text(
-                                    dateFormatter.format(annuncio.dataFine),
+                                    dateFormatter.format(annuncio.dataFine!),
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -133,7 +133,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                                             .onPrimary),
                                   ),
                                   Text(
-                                    annuncio.area.denominazione,
+                                    annuncio.area!.denominazione!,
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -153,7 +153,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                                           .onPrimary),
                                 ),
                                 Text(
-                                  annuncio.tipologia.descrizione,
+                                  annuncio.tipologia!.descrizione,
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme

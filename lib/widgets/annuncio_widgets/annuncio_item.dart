@@ -11,7 +11,7 @@ class AnnuncioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateFormatter = DateFormat('yyyy-MM-dd');
-    final formattedDataFine = dateFormatter.format(annuncio.dataFine);
+    final formattedDataFine = dateFormatter.format(annuncio.dataFine!);
 
     return InkWell(
       onTap: () {
@@ -38,9 +38,9 @@ class AnnuncioItem extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   Text(
-                    annuncio.titolo.length > 20
-                        ? '${annuncio.titolo.substring(0, 18)}...'
-                        : annuncio.titolo,
+                    annuncio.titolo!.length > 20
+                        ? '${annuncio.titolo!.substring(0, 18)}...'
+                        : annuncio.titolo!,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -65,9 +65,9 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.area.denominazione.length > 20
-                      ? '${annuncio.area.denominazione.substring(0, 18)}...'
-                      : annuncio.area.denominazione,
+                  annuncio.area!.denominazione!.length > 20
+                      ? '${annuncio.area!.denominazione!.substring(0, 18)}...'
+                      : annuncio.area!.denominazione!,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
@@ -91,9 +91,9 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.tipologia.descrizione.length > 20
-                      ? '${annuncio.tipologia.descrizione.substring(0, 10)}...'
-                      : annuncio.tipologia.descrizione,
+                  annuncio.tipologia!.descrizione.length > 20
+                      ? '${annuncio.tipologia!.descrizione.substring(0, 10)}...'
+                      : annuncio.tipologia!.descrizione,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),

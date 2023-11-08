@@ -10,9 +10,8 @@ class CandidatoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return InkWell(
-      onTap: () {
-      },
+    return InkWell(
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
         padding: const EdgeInsets.all(8),
@@ -32,13 +31,13 @@ class CandidatoItem extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      candidato.nome,
+                      candidato.nome ?? "Nome mancante",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
                     Text(
-                      candidato.cognome,
+                      candidato.cognome ?? "Cognome mancante",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),
@@ -46,34 +45,49 @@ class CandidatoItem extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                statoCandidatoIconMap[candidato.stato]!,
+                statoCandidatoIconMap[candidato.stato] ??
+                    const Text(
+                      'Stato mancante',
+                    ),
               ],
             ),
-             Divider(
+            Divider(
               color: Theme.of(context).colorScheme.onPrimary,
               thickness: 2,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(candidato.annuncio.titolo , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-              ]
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                candidato.annuncio!.titolo ?? "Titolo mancante",
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+            ]),
+            SizedBox(
+              height: heightSize(context) * 0.005,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(candidato.annuncio.area.denominazione , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-              ]
-            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                candidato.area != null
+                    ? candidato.area!.denominazione ??
+                        "Denomeinazione area mancante"
+                    : "Area mancante",
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+            ]),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(candidato.email , style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-              ]
+                Text(
+                  candidato.email ?? "Email mancante",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                ),
+              ],
             )
-          ]
-        )
+          ],
+        ),
       ),
     );
   }

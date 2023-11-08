@@ -4,11 +4,12 @@ import 'package:solving_recruitment_flutter/models/area.dart';
 
 class AreaItem extends StatelessWidget {
   const AreaItem({super.key, required this.area});
-
   final Area area;
+ 
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () {},
       child: Column(
@@ -31,15 +32,15 @@ class AreaItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        area.denominazione,
+                        area.denominazione ?? "Denominazione mancante",
                         style: TextStyle(
                           fontSize: 20,
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       Text(
-                        area.annunciLenght != 0
-                            ? '${area.annunciLenght.toString()} annunci ancora in corso'
+                        area.countAnnunci != null
+                            ? '${area.countAnnunci} annunci ancora in corso'
                             : 'Nessun annuncio in corso',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,

@@ -39,9 +39,9 @@ TipologiaAnnuncio tipologiaAnnuncio3 =
 
 Area area1 = Area(denominazione: 'Staff Tecnico');
 Area area2 = Area(denominazione: 'Staff interno');
-Area areaA1 = Area(denominazione: 'Staff Tecnico', annunciLenght: 2);
-Area areaA2 = Area(denominazione: 'Staff interno', annunciLenght: 7);
-Area areaA3 = Area(denominazione: 'Altro', annunciLenght: 0);
+Area areaA1 = Area(denominazione: 'Staff Tecnico');
+Area areaA2 = Area(denominazione: 'Staff interno');
+Area areaA3 = Area(denominazione: 'Altro');
 
 List<Annuncio> annunciMock = [annuncio1, annuncio2, annuncio3];
 List<Area> areasMock = [areaA1, areaA2, areaA3];

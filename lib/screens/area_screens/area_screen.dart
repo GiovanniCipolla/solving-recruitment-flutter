@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/data_mock.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/area_widgets/area_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -13,6 +15,7 @@ class AreaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+         final aree = Provider.of<AreaProvider>(context).aree;
     return Scaffold(
       appBar: const CustomAppbar(title: 'Gestione Aree'),
       endDrawer: const CustomEndDrawer(),
@@ -22,7 +25,7 @@ class AreaScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ...areasMock.map((item) => AreaItem(area: item)).toList(),
+                  ...aree.map((item) => AreaItem(area: item)).toList(),
                   SizedBox(
                     height: heightSize(context) * 0.15,
                   ),

@@ -1,24 +1,24 @@
-
 class Area {
-
-Area({ this.id, required this.denominazione,  this.annunciLenght});
+  Area({this.id, this.denominazione, this.countAnnunci});
 
   final int? id;
-  final String denominazione;
-  final int? annunciLenght;
- 
+  final String? denominazione;
+  final int? countAnnunci;
 
   factory Area.fromJson(Map<String, dynamic> json) {
-    return Area(
-      id: json['id'],
-      denominazione: json['denominazione'],
+    Area area = Area(
+      id: json['id'] as int,
+      denominazione: json['denominazione'] as String,
+      countAnnunci: json['countAnnunci'] as int,
     );
+    return area;
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'denominazione': denominazione,
+      'countAnnunci': countAnnunci
     };
   }
 }

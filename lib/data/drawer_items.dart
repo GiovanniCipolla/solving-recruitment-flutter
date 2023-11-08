@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
@@ -37,8 +38,8 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.category,
     'title': 'Gestione Aree',
-    'onTap': (context) {
-      //  Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+    'onTap': (context) async {
+     await  Provider.of<AreaProvider>(context, listen: false).getAreas();
       Navigator.pushNamed(context, AreaScreen.routeName);
     },
   },
