@@ -22,9 +22,6 @@ class AnnuncioProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
 
   Future<void> getAnnunci() async {
-    print(
-        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-
     String url = '$urlAPI/annuncio/get';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',

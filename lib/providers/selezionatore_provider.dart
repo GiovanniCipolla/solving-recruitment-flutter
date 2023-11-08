@@ -15,8 +15,6 @@ class SelezionatoreProvider extends ChangeNotifier {
       {required this.authProvider, required this.selezionatori});
 
   Future<void> getSelezionatori() async {
-    print(
-        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
     String url = '$urlAPI/selezionatore/get';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
