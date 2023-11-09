@@ -5,7 +5,7 @@ enum Stato { SUPERATO, RIFIUTATO, IN_ATTESA }
 
 enum LinguaInglese { ND, SCARSO, SUFFICIENTE, BUONO, OTTIMO }
 
-enum PercorsoAcademy { in_attesa, in_corso, ritirato, terminato }
+enum PercorsoAcademy { IN_ATTESA, IN_CORSO, RITIRATO, TERMINATO }
 
 enum Seniority { JUNIOR, MEDIUM, SENIOR }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_detail_screen.dart';
 
 class CandidatoItem extends StatelessWidget {
   const CandidatoItem({super.key, required this.candidato});
@@ -11,7 +12,16 @@ class CandidatoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return CandidatoDetailScreen(candidato: candidato);
+            },
+          ),
+        );
+      },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
         padding: const EdgeInsets.all(8),

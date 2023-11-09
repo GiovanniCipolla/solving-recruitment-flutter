@@ -3,7 +3,51 @@
 // import 'package:solving_recruitment_flutter/models/candidato.dart';
 // import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 // import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
+class AreaMock {
+  final String denominazione;
+  final double percentuale;
 
+  AreaMock({required this.denominazione, required this.percentuale});
+}
+
+class Candidate {
+  final String name;
+  final String area;
+
+  Candidate({required this.name, required this.area});
+}
+
+List<Candidate> generateMockCandidates = [
+  Candidate(name: 'Alice', area: 'Area A'),
+  Candidate(name: 'Bob', area: 'Area B'),
+  Candidate(name: 'Charlie', area: 'Area C'),
+  Candidate(name: 'David', area: 'Area A'),
+  Candidate(name: 'Eva', area: 'Area B'),
+  Candidate(name: 'Frank', area: 'Area C'),
+  Candidate(name: 'Grace', area: 'Area A'),
+];
+
+List<AreaMock> areasMock = calculatePercentages();
+
+List<AreaMock> calculatePercentages() {
+  final areaCounts = <String, int>{};
+
+  for (final candidate in generateMockCandidates) {
+    final area = candidate.area;
+    areaCounts[area] = (areaCounts[area] ?? 0) + 1;
+  }
+
+  final totalCandidates = generateMockCandidates.length;
+
+  final List<AreaMock> result = [];
+
+  areaCounts.forEach((area, count) {
+    final percentage = (count / totalCandidates) * 100;
+    result.add(AreaMock(denominazione: area, percentuale: percentage));
+  });
+
+  return result;
+}
 // Annuncio annuncio1 = Annuncio(
 //   titolo: 'Sviluppo mobile',
 //   descrizione: 'Siamo alla ricerca di un candidato che sappia usare Flutter',

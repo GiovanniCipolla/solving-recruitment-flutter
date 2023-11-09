@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:intl/intl.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 
 class AnnuncioItem extends StatelessWidget {
   const AnnuncioItem({super.key, required this.annuncio});
@@ -20,7 +21,14 @@ class AnnuncioItem extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return AnnuncioDetailScreen(annuncio: annuncio);
+          }),
+        );
+      },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
         padding: const EdgeInsets.all(8),
