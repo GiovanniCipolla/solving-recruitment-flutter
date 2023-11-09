@@ -29,6 +29,7 @@ class CandidatoItem extends StatelessWidget {
                   size: 50,
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       candidato.nome ?? "Nome mancante",
@@ -57,7 +58,9 @@ class CandidatoItem extends StatelessWidget {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                candidato.annuncio!.titolo ?? "Titolo mancante",
+                (candidato.annuncio!.titolo ?? "Titolo mancante").length > 20
+                    ? "${(candidato.annuncio!.titolo ?? "Titolo mancante").substring(0, 20)}..."
+                    : candidato.annuncio!.titolo ?? "Titolo mancante",
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
@@ -67,10 +70,15 @@ class CandidatoItem extends StatelessWidget {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                candidato.annuncio!.area != null
-                    ? candidato.annuncio!.area!.denominazione ??
-                        "Denominazione area mancante"
-                    : "Area mancante",
+                (candidato.annuncio!.area != null
+                                ? candidato.annuncio!.area!.denominazione ??
+                                    "Denominazione area mancante"
+                                : "Area mancante")
+                            .length >
+                        20
+                    ? "${(candidato.annuncio!.area!.denominazione ?? "Denominazione area mancante").substring(0, 20)}..."
+                    : candidato.annuncio!.area!.denominazione ??
+                        "Denominazione area mancante",
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),

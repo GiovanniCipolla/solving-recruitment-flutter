@@ -11,19 +11,16 @@ class AnnuncioItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateFormatter = DateFormat('yyyy-MM-dd');
 
-    final dynamic? formattedDataFine;       
-    
+    final dynamic? formattedDataFine;
+
     if (annuncio.dataFine != null) {
       formattedDataFine = dateFormatter.format(annuncio.dataFine!);
     } else {
       formattedDataFine = null;
     }
 
-
     return InkWell(
-      onTap: () {
-       
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
         padding: const EdgeInsets.all(8),
@@ -96,7 +93,7 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.tipologia!.descrizione!.length > 20
+                  annuncio.tipologia!.descrizione!.length > 12
                       ? '${annuncio.tipologia!.descrizione!.substring(0, 10)}...'
                       : annuncio.tipologia!.descrizione!,
                   style: TextStyle(
