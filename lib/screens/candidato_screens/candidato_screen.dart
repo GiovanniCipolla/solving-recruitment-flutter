@@ -16,12 +16,12 @@ class CandidatoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final candidatoProvider = Provider.of<CandidatoProvider>(context);
     final candidati = candidatoProvider.candidati;
-    return  Scaffold(
+    return Scaffold(
       appBar: const CustomAppbar(
         title: 'Gestione Candidati',
       ),
       endDrawer: const CustomEndDrawer(),
-       body: Column(
+      body: Column(
         children: [
           SizedBox(
             height: heightSize(context) * 0.02,
@@ -93,6 +93,5 @@ class CandidatoScreen extends StatelessWidget {
         ],
       ),
     );
-    
   }
 }

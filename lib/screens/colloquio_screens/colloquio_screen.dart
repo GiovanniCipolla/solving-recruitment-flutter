@@ -13,72 +13,71 @@ class ColloquioScreen extends StatelessWidget {
   const ColloquioScreen({super.key});
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     final colloqui = Provider.of<ColloquioProvider>(context).colloqui;
     return Scaffold(
-        appBar: const CustomAppbar(title: 'Gestione Colloqui'),
-        endDrawer: const CustomEndDrawer(),
-        body: Column(children: [
-          SizedBox(
-            height: heightSize(context) * 0.02,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment
-                .spaceEvenly, // Allinea i pulsanti orizzontalmente
-            children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                ),
-                onPressed: () {
-                  // Aggiungi l'azione da eseguire quando il pulsante "Applica filtri" viene premuto.
-                },
-                child: const Row(
-                  children: [
-                    Text('Cerca per'),
-                    Icon(
-                      Icons.filter_list,
-                    )
-                  ],
-                ),
+      appBar: const CustomAppbar(title: 'Gestione Colloqui'),
+      endDrawer: const CustomEndDrawer(),
+      body: Column(children: [
+        SizedBox(
+          height: heightSize(context) * 0.02,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment
+              .spaceEvenly, // Allinea i pulsanti orizzontalmente
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
               ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                ),
-                onPressed: () {
-                  // Aggiungi l'azione da eseguire quando il pulsante "Ordina per" viene premuto.
-                },
-                child: const Row(
-                  children: [
-                    Text('Ordina per'),
-                    Icon(
-                      Icons.sort,
-                    )
-                  ],
-                ),
+              onPressed: () {
+                // Aggiungi l'azione da eseguire quando il pulsante "Applica filtri" viene premuto.
+              },
+              child: const Row(
+                children: [
+                  Text('Cerca per'),
+                  Icon(
+                    Icons.filter_list,
+                  )
+                ],
               ),
-            ],
-          ),
-          Divider(
-            color: Theme.of(context).colorScheme.primary,
-            thickness: 1.5,
-          ),
-           Expanded(
-              child: SingleChildScrollView(
-            child: Column(children: [
-              ...colloqui
-                  .map((item) => ColloquioItem(colloquio: item))
-                  .toList(),
-            ]),
-          )),
-          CustomButtonAdd(
-            titleShowDialog: 'Aggiungi Colloquio',
-            descrizioneShowDialog: 'Sicuro di voler aggiungere un colloquio?',
-            metodoShowDialog: () {},
-          )
-        ]),
-      );}
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              ),
+              onPressed: () {
+                // Aggiungi l'azione da eseguire quando il pulsante "Ordina per" viene premuto.
+              },
+              child: const Row(
+                children: [
+                  Text('Ordina per'),
+                  Icon(
+                    Icons.sort,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        Divider(
+          color: Theme.of(context).colorScheme.primary,
+          thickness: 1.5,
+        ),
+        Expanded(
+            child: SingleChildScrollView(
+          child: Column(children: [
+            ...colloqui.map((item) => ColloquioItem(colloquio: item)).toList(),
+          ]),
+        )),
+        CustomButtonAdd(
+          titleShowDialog: 'Aggiungi Colloquio',
+          descrizioneShowDialog: 'Sicuro di voler aggiungere un colloquio?',
+          metodoShowDialog: () {},
+        )
+      ]),
+    );
+  }
 }

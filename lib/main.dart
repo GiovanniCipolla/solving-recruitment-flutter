@@ -6,6 +6,7 @@ import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
+import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
@@ -13,6 +14,7 @@ import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_
 import 'package:solving_recruitment_flutter/screens/home.dart';
 import 'package:solving_recruitment_flutter/screens/login_screen.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
+import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,6 +64,13 @@ class MyApp extends StatelessWidget {
           create: (ctx) => ColloquioProvider(authProvider: null, colloqui: []),
           update: (ctx, authProvider, previous) => ColloquioProvider(
               authProvider: authProvider, colloqui: previous!.colloqui),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, TipologiaAnnuncioProvider>(
+          create: (ctx) => TipologiaAnnuncioProvider(
+              authProvider: null, tipologiaAnnuncio: []),
+          update: (ctx, authProvider, previous) => TipologiaAnnuncioProvider(
+              authProvider: authProvider,
+              tipologiaAnnuncio: previous!.tipologiaAnnuncio),
         )
       ],
       child: Consumer<AuthProvider>(
@@ -77,7 +86,7 @@ class MyApp extends StatelessWidget {
                 AnnuncioScreen.routeName: (ctx) => const AnnuncioScreen(),
                 SelezionatoreScreen.routeName: (ctx) =>
                     const SelezionatoreScreen(),
-                // TipologiaAnnuncioScreen.routeName: (ctx) => const TipologiaAnnuncioScreen(),
+                TipologiaAnnuncioScreen.routeName: (ctx) => const TipologiaAnnuncioScreen(),
                 Home.routeName: (ctx) => const Home(),
               });
         },

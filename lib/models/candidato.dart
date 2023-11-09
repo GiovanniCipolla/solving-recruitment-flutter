@@ -125,7 +125,8 @@ class Candidato {
       note: json['note'],
       dareRiscontro: json['dareRiscontro'],
       riscontroInviato: json['riscontroInviato'],
-      annuncio: json['annuncio'] != null ? Annuncio.fromJson(json['annuncio']) : null,
+      annuncio:
+          json['annuncio'] != null ? Annuncio.fromJson(json['annuncio']) : null,
       area: json['area'] != null ? Area.fromJson(json['area']) : null,
     );
   }

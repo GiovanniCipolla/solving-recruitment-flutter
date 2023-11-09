@@ -13,13 +13,15 @@ class SelezionatoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selezionatori =
+        Provider.of<SelezionatoreProvider>(context).selezionatori;
 
-    final selezionatori = Provider.of<SelezionatoreProvider>(context).selezionatori;
-    
     return Scaffold(
-        appBar: const CustomAppbar(title: 'Gestione Selezionatori'),
-        endDrawer: const CustomEndDrawer(),
-        body: Column(mainAxisSize: MainAxisSize.min, children: [
+      appBar: const CustomAppbar(title: 'Gestione Selezionatori'),
+      endDrawer: const CustomEndDrawer(),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -38,6 +40,8 @@ class SelezionatoreScreen extends StatelessWidget {
               descrizioneShowDialog:
                   'Sicuro di voler aggiungere un selezionatore ?',
               metodoShowDialog: () {}),
-        ]));
+        ],
+      ),
+    );
   }
 }

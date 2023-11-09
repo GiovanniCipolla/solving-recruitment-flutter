@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solving_recruitment_flutter/data/data_mock.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/area_widgets/area_item.dart';
@@ -15,7 +14,7 @@ class AreaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-         final aree = Provider.of<AreaProvider>(context).aree;
+    final aree = Provider.of<AreaProvider>(context).aree;
     return Scaffold(
       appBar: const CustomAppbar(title: 'Gestione Aree'),
       endDrawer: const CustomEndDrawer(),

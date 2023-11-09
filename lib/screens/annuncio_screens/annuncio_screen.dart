@@ -23,17 +23,14 @@ class AnnuncioScreen extends StatelessWidget {
             height: heightSize(context) * 0.02,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment
-                .spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: () {
-                  
-                },
+                onPressed: () {},
                 child: const Row(
                   children: [
                     Text('Cerca per'),
@@ -48,8 +45,7 @@ class AnnuncioScreen extends StatelessWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: const Row(
                   children: [
                     Text('Ordina per'),

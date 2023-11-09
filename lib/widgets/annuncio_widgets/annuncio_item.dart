@@ -96,9 +96,9 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.tipologia!.descrizione.length > 20
-                      ? '${annuncio.tipologia!.descrizione.substring(0, 10)}...'
-                      : annuncio.tipologia!.descrizione,
+                  annuncio.tipologia!.descrizione!.length > 20
+                      ? '${annuncio.tipologia!.descrizione!.substring(0, 10)}...'
+                      : annuncio.tipologia!.descrizione!,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),

@@ -7,8 +7,7 @@ import 'package:solving_recruitment_flutter/models/httpexception.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
 
-
-class ColloquioProvider extends ChangeNotifier{
+class ColloquioProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
   List<Colloquio> colloqui = [];
   ColloquioProvider({required this.authProvider, required this.colloqui});

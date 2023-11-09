@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AuthProvider extends ChangeNotifier{
-   String? _username;
+class AuthProvider extends ChangeNotifier {
+  String? _username;
   String? _password;
   String? _sessionType;
   String? _action;
@@ -31,12 +31,11 @@ class AuthProvider extends ChangeNotifier{
     return _action;
   }
 
-
-  void doLogin( String email, String password) {
-    if(email == 'admin@admin.it' && password == 'admin') {
+  void doLogin(String email, String password) {
+    if (email == 'admin@admin.it' && password == 'admin') {
       _token = '0000';
-  } else {
-    _token = null;
-  }
+    } else {
+      _token = null;
+    }
   }
 }
