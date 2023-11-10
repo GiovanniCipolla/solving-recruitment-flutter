@@ -3,6 +3,7 @@ import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/widgets/annuncio_widgets/annuncio_detail_item.dart';
+import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_colloqui_item.dart';
 
 class CandidatoDetailScreen extends StatelessWidget {
   const CandidatoDetailScreen({super.key, required this.candidato});
@@ -15,7 +16,7 @@ class CandidatoDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dettagli Candidato'),
       ),
-      body: Column(children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(
           children: [
             Icon(
@@ -39,6 +40,36 @@ class CandidatoDetailScreen extends StatelessWidget {
             ])
           ],
         ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const SizedBox(
+                width: 5,
+              ),
+              const Text('Area : '),
+              Text(
+                candidato.annuncio!.area!.denominazione ?? "Area mancante",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ],
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            const Text('Stato : '),
+            Text(
+              candidato.stato != null
+                  ? statoCandidatoMap[candidato.stato] ?? "Valore di fallback"
+                  : "Stato mancante",
+              style: TextStyle(
+                  color: statoCandidatoIconMap[candidato.stato]!.color),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+          ])
+        ]),
         Divider(
           color: Theme.of(context).colorScheme.primary,
           thickness: 4,
@@ -51,12 +82,6 @@ class CandidatoDetailScreen extends StatelessWidget {
                   title: "Email",
                   description: candidato.email ?? "Email mancante"),
               AnnuncioDetailItem(
-                  title: "Stato",
-                  description: candidato.stato != null
-                      ? statoCandidatoMap[candidato.stato] ??
-                          "Valore di fallback"
-                      : "Stato mancante"),
-              AnnuncioDetailItem(
                 title: 'Luogo di Nascita',
                 description:
                     candidato.luogoDiNascita ?? "Luogo di Nascita mancante",
@@ -67,54 +92,101 @@ class CandidatoDetailScreen extends StatelessWidget {
                       ? " ${candidato.dataDiNascita!.year} - ${candidato.dataDiNascita!.month} - ${candidato.dataDiNascita!.day}"
                       : 'Data di Nascita mancante'),
               AnnuncioDetailItem(
-                title : 'Residenza',
+                title: 'Residenza',
                 description: candidato.residenza ?? "Residenza mancante",
               ),
               AnnuncioDetailItem(
                 title: 'Recapito Telefonico',
-                description: candidato.recapitoTelefonico ?? "Recapito Telefonico mancante",
+                description: candidato.recapitoTelefonico ??
+                    "Recapito Telefonico mancante",
               ),
-              AnnuncioDetailItem(title: 'area', description: candidato.annuncio!.area!.denominazione != null ?  candidato.annuncio!.area!.denominazione! : "Area mancante"),
             ],
           ),
         ),
+        const Spacer(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(' Annuncio : '),
+            Text(candidato.annuncio!.titolo ?? "Titolo mancante", style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+          ],
+        ),
+        SizedBox(
+          height: heightSize(context) * 0.02,
+        ),
+        const Row(
+          children: [
+          Expanded(
+              child: CandidatoDetailColloquiItem(
+                  title: 'Conoscitivo',
+                  color: Colors.teal,
+                  icon: Icon(
+                    Icons.person,
+                  ))),
+          Expanded(
+              child: CandidatoDetailColloquiItem(
+                  title: 'Tecnico',
+                  color: Colors.orange,
+                  icon: Icon(
+                    Icons.settings,
+                  ))),
+          Expanded(
+              child: CandidatoDetailColloquiItem(
+                  title: 'Finale',
+                  color: Colors.green,
+                  icon: Icon(
+                    Icons.business_center,
+                  ))),
+        ]),
+        Divider(
+          color: Theme.of(context).colorScheme.primary,
+          thickness: 2,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              ),
+              onPressed: () {},
+              child: const Row(
+                children: [
+                  Text('Modifica Candidato'),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.edit,
+                  )
+                ],
+              ),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              ),
+              onPressed: () {},
+              child: const Row(
+                children: [
+                  Text('Elimina candidato'),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.delete,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: heightSize(context) * 0.05,
+        )
       ]),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(16.0),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Text('Nome: ${candidato.nome} ${candidato.cognome}'),
-      //       Text('Email: ${candidato.email}'),
-      //       SizedBox(height: 16),
-      //       Text('Dettagli aggiuntivi:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-      //       SizedBox(height: 8),
-      //       Text('Luogo di Nascita: ${candidato.luogoDiNascita}'),
-      //       Text('Data di Nascita: ${candidato.dataDiNascita?.toLocal()}'),
-      //       Text('Residenza: ${candidato.residenza}'),
-      //       Text('Recapito Telefonico: ${candidato.recapitoTelefonico}'),
-      //       Text('Categoria Protetta: ${candidato.categoriaProtetta ?? false ? 'Sì' : 'No'}'),
-      //       Text('RAL: ${candidato.ral}'),
-      //       Text('Seniority: ${candidato.seniority?.toString().split('.').last ?? 'N/A'}'),
-      //       Text('Disponibilità Lavoro: ${candidato.disponibilitaLavoro?.toString().split('.').last ?? 'N/A'}'),
-      //       Text('Data Primo Contatto: ${candidato.dataPrimoContatto?.toLocal()}'),
-      //       Text('Percorso Academy: ${candidato.percorsoAcademy?.toString().split('.').last ?? 'N/A'}'),
-      //       Text('Note: ${candidato.note ?? 'N/A'}'),
-      //       SizedBox(height: 16),
-      //       Text('Tecnologie Conosciute:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-      //       Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: candidato.tecnologieConosciute?.map((tecnologia) => Text(tecnologia)).toList() ?? [],
-      //       ),
-      //       SizedBox(height: 16),
-      //       Text('Soft Skills:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-      //       Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: candidato.softSkills?.map((softSkill) => Text(softSkill)).toList() ?? [],
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

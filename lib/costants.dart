@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 
-const urlAPI = 'http://192.168.5.220:8080/api';
+const urlAPI = 'http://192.168.1.233:8080/api';
 
 void showConfirmationDialog(BuildContext context, String title,
     String description, VoidCallback onConfirm) {
@@ -83,5 +83,5 @@ Map<Stato, Icon> statoCandidatoIconMap = {
       const Icon(Icons.check, color: Color.fromARGB(255, 20, 218, 27)),
   Stato.RIFIUTATO:
       const Icon(Icons.close, color: Color.fromARGB(255, 209, 65, 55)),
-  Stato.IN_ATTESA: const Icon(Icons.watch_later, color: Colors.white),
+  Stato.IN_ATTESA:  const Icon(Icons.watch_later, color: Color.fromARGB(255, 217, 230, 74)),
 };
