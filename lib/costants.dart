@@ -85,3 +85,23 @@ Map<Stato, Icon> statoCandidatoIconMap = {
       const Icon(Icons.close, color: Color.fromARGB(255, 209, 65, 55)),
   Stato.IN_ATTESA:  const Icon(Icons.watch_later, color: Color.fromARGB(255, 217, 230, 74)),
 };
+
+Map<LinguaInglese, String> linguaIngleseMap = {
+  LinguaInglese.SCARSO: "Scarso",
+  LinguaInglese.SUFFICIENTE: "Sufficiente",
+  LinguaInglese.BUONO: "Buono",
+  LinguaInglese.OTTIMO: "Ottimo",
+  LinguaInglese.ND: "Non adeguato",
+};
+
+Map<Seniority, String> seniorityMap = {
+  Seniority.JUNIOR: "Junior",
+  Seniority.MEDIUM: "Medium",
+  Seniority.SENIOR: "Senior",
+};
+
+Map<DisponibilitaLavoro, String> disponibilitaLavoroMap = {
+  DisponibilitaLavoro.PRESENZA: "Presente",
+  DisponibilitaLavoro.REMOTO: "Remoto",
+  DisponibilitaLavoro.IBRIDA: "Ibrido",
+};
