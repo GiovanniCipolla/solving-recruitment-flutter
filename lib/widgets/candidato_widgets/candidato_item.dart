@@ -68,7 +68,9 @@ class CandidatoItem extends StatelessWidget {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                (candidato.annuncio!.titolo ?? "Titolo mancante").length > 20
+                (
+                    candidato.annuncio == null ? "Titolo mancante" :
+                  candidato.annuncio!.titolo ?? "Titolo mancante").length > 20
                     ? "${(candidato.annuncio!.titolo ?? "Titolo mancante").substring(0, 20)}..."
                     : candidato.annuncio!.titolo ?? "Titolo mancante",
                 style:

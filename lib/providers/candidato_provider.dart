@@ -61,4 +61,27 @@ class CandidatoProvider extends ChangeNotifier {
       );
     }
   }
+
+  Future<void> getCandidatiByIdAnnuncio (id) async {
+    String url = '$urlAPI/candidato/candidatiPerAnnuncio/$id';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<Candidato> candidati = [];
+      for (var item in jsonData) {
+        candidati.add(Candidato.fromJson(item));
+      }
+      this.candidati.clear();
+      this.candidati.addAll(candidati);
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: jsonData['statusCode'],
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
 }

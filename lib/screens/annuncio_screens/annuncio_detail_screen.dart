@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
+import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_update_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
@@ -154,7 +158,32 @@ class AnnuncioDetailScreen extends StatelessWidget {
               ),
             ],
           ),
-          const Text('IMPELEMNTARE LISTA CANDIDATI , COME ??')
+          SizedBox(
+            height: heightSize(context) * 0.05,
+          ),
+          TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () async {
+                  await Provider.of<CandidatoProvider>(context, listen: false).getCandidatiByIdAnnuncio(annuncio.id);
+                  List<Candidato> candidati = Provider.of<CandidatoProvider>(context, listen: false).candidati;
+                    BottomSheetUtils.showListCandidati(context, candidati);
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Lista Candidati'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon( 
+                      Icons.touch_app,
+                    )
+                  ],
+                ),
+              ),
         ]),
       ),
       // body: Column(

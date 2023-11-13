@@ -77,6 +77,11 @@ class MyApp extends StatelessWidget {
         builder: (ctx, authProvider, child) {
           return MaterialApp(
               title: 'Solving Recruitment',
+              theme: ThemeData(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+              ),
               home: const LoginScreen(),
               routes: {
                 LoginScreen.routeName: (ctx) => const LoginScreen(),
@@ -86,7 +91,8 @@ class MyApp extends StatelessWidget {
                 AnnuncioScreen.routeName: (ctx) => const AnnuncioScreen(),
                 SelezionatoreScreen.routeName: (ctx) =>
                     const SelezionatoreScreen(),
-                TipologiaAnnuncioScreen.routeName: (ctx) => const TipologiaAnnuncioScreen(),
+                TipologiaAnnuncioScreen.routeName: (ctx) =>
+                    const TipologiaAnnuncioScreen(),
                 Home.routeName: (ctx) => const Home(),
               });
         },

@@ -88,17 +88,26 @@ class CandidatoDetailScreen extends StatelessWidget {
                    BottomSheetUtils.showSchedaAnagrafica(context,candidato);
                   },
                 ),
+                SizedBox(
+                  height: heightSize(context) * 0.01,
+                ),
                 CandidatoDetailCardItem(
                   title: 'Competenze tecniche & Soft skills',
                   onPressed: () {
                     BottomSheetUtils.showCompetenze(context,candidato);
                   },
                 ),
+                 SizedBox(
+                  height: heightSize(context) * 0.01,
+                ),
                 CandidatoDetailCardItem(
                   title: 'Informazioni lavorative',
                   onPressed: () {
                     BottomSheetUtils.showInformazioniLavorative(context,candidato);
                   },
+                ),
+                 SizedBox(
+                  height: heightSize(context) * 0.01,
                 ),
                 CandidatoDetailCardItem(
                   title: 'Recensioni',

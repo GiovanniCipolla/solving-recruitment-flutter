@@ -7,6 +7,48 @@ import 'package:solving_recruitment_flutter/models/candidato.dart';
 class BottomSheetUtils {
 
 
+static Widget _buildInfoCandidati(Candidato candidato){
+  return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                candidato.nome ?? "Nome mancante",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(
+                width:5,
+              ),
+              Text(
+                candidato.cognome ?? "Cognome mancante",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                candidato.email ?? "Email mancante",
+                style: const TextStyle(
+                  fontSize: 14,
+                )
+              )
+            ],
+          ),
+          const Divider(
+            thickness: 0.5,
+          )
+        ],
+      ),
+    );
+}
+
   static Widget _buildInfoRow(String label, String? value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
@@ -113,43 +155,45 @@ class BottomSheetUtils {
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Scheda Anagrafica',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Scheda Anagrafica',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
-              ),
-              Divider(
-                color: Theme.of(context).colorScheme.primary,
-                thickness: 2,
-              ),
-              _buildInfoRow('Nome', candidato.nome),
-              _buildInfoRow('Cognome', candidato.cognome),
-              _buildInfoRow(
-                'Età',
-                candidato.dataDiNascita != null
-                    ? calculateAge(candidato.dataDiNascita!)
-                    : 'Valore di fallback',
-              ),
-              _buildInfoRow('Email', candidato.email),
-              _buildInfoRow('Luogo di Nascita', candidato.luogoDiNascita),
-              _buildInfoRow(
-                'Data di Nascita',
-                candidato.dataDiNascita != null
-                    ? DateFormat('dd/MM/yyyy').format(candidato.dataDiNascita!)
-                    : 'Valore di fallback',
-              ),
-              _buildInfoRow('Residenza', candidato.residenza),
-              _buildInfoRow(
-                  'Recapito Telefonico', candidato.recapitoTelefonico),
-              _buildInfoRow('Recapito Extra', candidato.recapitoExtra),
-              _buildInfoRow('CAP', candidato.cap),
-            ],
+                Divider(
+                  color: Theme.of(context).colorScheme.primary,
+                  thickness: 2,
+                ),
+                _buildInfoRow('Nome', candidato.nome),
+                _buildInfoRow('Cognome', candidato.cognome),
+                _buildInfoRow(
+                  'Età',
+                  candidato.dataDiNascita != null
+                      ? calculateAge(candidato.dataDiNascita!)
+                      : 'Valore di fallback',
+                ),
+                _buildInfoRow('Email', candidato.email),
+                _buildInfoRow('Luogo di Nascita', candidato.luogoDiNascita),
+                _buildInfoRow(
+                  'Data di Nascita',
+                  candidato.dataDiNascita != null
+                      ? DateFormat('dd/MM/yyyy').format(candidato.dataDiNascita!)
+                      : 'Valore di fallback',
+                ),
+                _buildInfoRow('Residenza', candidato.residenza),
+                _buildInfoRow(
+                    'Recapito Telefonico', candidato.recapitoTelefonico),
+                _buildInfoRow('Recapito Extra', candidato.recapitoExtra),
+                _buildInfoRow('CAP', candidato.cap),
+              ],
+            ),
           ),
         );
       },
@@ -276,15 +320,35 @@ class BottomSheetUtils {
     );
   }
 
-  static void showComplexModalD(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text('Contenuto complesso di Prova D'),
-        );
-      },
-    );
-  }
+ static void showListCandidati(BuildContext context, List<Candidato> candidati) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Lista Candidati',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            Divider(
+              color: Theme.of(context).colorScheme.primary,
+              thickness: 2,
+            ),
+            // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
+            for (Candidato candidato in candidati)
+              _buildInfoCandidati(candidato),
+          ],
+        ),
+      );
+    },
+  );
+}
+
 }

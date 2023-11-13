@@ -173,7 +173,7 @@ class ColloquioDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
               Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
