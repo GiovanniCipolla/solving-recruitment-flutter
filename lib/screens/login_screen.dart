@@ -6,7 +6,7 @@ import 'package:solving_recruitment_flutter/screens/home.dart';
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
 
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key});
 
   double getSmallDiameter(BuildContext context) =>
       MediaQuery.of(context).size.width * 2 / 3;
@@ -20,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool obscureText = true;
 
   double getSmallDiameter(BuildContext context) =>
       MediaQuery.of(context).size.width * 2 / 3;
@@ -41,11 +42,16 @@ class _LoginScreenState extends State<LoginScreen> {
               width: getSmallDiameter(context),
               height: getSmallDiameter(context),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(colors: [
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
                     Theme.of(context).colorScheme.primary,
                     Theme.of(context).colorScheme.primary.withOpacity(0.5)
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
             ),
           ),
           Positioned(
@@ -55,18 +61,24 @@ class _LoginScreenState extends State<LoginScreen> {
               width: getBiglDiameter(context),
               height: getBiglDiameter(context),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(colors: [
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
                     Theme.of(context).colorScheme.primary,
-                    Theme.of(context).colorScheme.primary
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+                    Theme.of(context).colorScheme.primary,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
               child: const Center(
                 child: Text(
                   "Welcome!!",
                   style: TextStyle(
-                      fontFamily: "Pacifico",
-                      fontSize: 30,
-                      color: Colors.white),
+                    fontFamily: "Pacifico",
+                    fontSize: 30,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -78,8 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
               width: getBiglDiameter(context),
               height: getBiglDiameter(context),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primary),
+                shape: BoxShape.circle,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
           ),
           Align(
@@ -88,10 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                          color: Theme.of(context).colorScheme.primary),
-                      borderRadius: BorderRadius.circular(10)),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   margin: const EdgeInsets.fromLTRB(20, 280, 20, 10),
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 25),
                   child: Column(
@@ -99,11 +114,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Solving Recruitment',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Theme.of(context).colorScheme.primary,
-                              )),
+                          Text(
+                            'Solving Recruitment',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
                           Image.asset(
                             'assets/images/logoNavbarCoge.png',
                             width: 30,
@@ -117,46 +134,65 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextField(
                         decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.email,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey.shade100)),
-                            labelText: "Email",
-                            enabledBorder: InputBorder.none,
-                            labelStyle: const TextStyle(color: Colors.grey)),
+                          icon: Icon(
+                            Icons.email,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey.shade100),
+                          ),
+                          labelText: "Email",
+                          enabledBorder: InputBorder.none,
+                          labelStyle: const TextStyle(color: Colors.grey),
+                        ),
                         controller: emailController,
                       ),
                       TextField(
-                        obscureText: true,
+                        obscureText: obscureText,
                         decoration: InputDecoration(
+                          icon: Icon(
+                            Icons.vpn_key,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey.shade100),
+                          ),
+                          labelText: "Password",
+                          enabledBorder: InputBorder.none,
+                          labelStyle: const TextStyle(color: Colors.grey),
+                          suffixIcon: IconButton(
                             icon: Icon(
-                              Icons.vpn_key,
+                              obscureText ?
+                              Icons.visibility : Icons.visibility_off,
                               color: Theme.of(context).colorScheme.primary,
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey.shade100)),
-                            labelText: "Password",
-                            enabledBorder: InputBorder.none,
-                            labelStyle: const TextStyle(color: Colors.grey)),
+                            onPressed: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                          ),
+                        ),
                         controller: passwordController,
                       )
                     ],
                   ),
                 ),
                 Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                        margin: const EdgeInsets.fromLTRB(0, 0, 20, 10),
-                        child: Text(
-                          "FORGOT PASSWORD?",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 11),
-                        ))),
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 20, 10),
+                    child: Text(
+                      "FORGOT PASSWORD?",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(20, 0, 20, 30),
                   child: Row(
@@ -167,17 +203,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 40,
                         child: Container(
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Theme.of(context).colorScheme.primary,
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.5)
-                                  ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter)),
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                              colors: [
+                                Theme.of(context).colorScheme.primary,
+                                Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.5),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
                           child: Material(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.transparent,
@@ -191,13 +229,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 loginProvider.doLogin(email, password);
 
                                 if (loginProvider.isLoggedIn) {
-                                  Navigator.pushNamed(context, Home.routeName);
+                                  Navigator.pushNamed(
+                                      context, Home.routeName);
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(
                                     const SnackBar(
                                       backgroundColor: Colors.red,
                                       content: Text(
-                                          'Credenziali non valide. Riprova.'),
+                                        'Credenziali non valide. Riprova.',
+                                      ),
                                       duration: Duration(seconds: 2),
                                     ),
                                   );
@@ -207,8 +248,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Text(
                                   "SIGN IN",
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ),
@@ -233,16 +275,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text(
                       "DON'T HAVE AN ACCOUNT ? ",
                       style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500),
+                        fontSize: 11,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Text(
                       " SIGN UP",
                       style: TextStyle(
-                          fontSize: 11,
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w700),
+                        fontSize: 11,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
                     )
                   ],
                 )
