@@ -43,4 +43,27 @@ class AnnuncioProvider extends ChangeNotifier {
       );
     }
   }
+
+  Future<void> getAnnunciByArea(id) async {
+    String url = '$urlAPI/annuncio/annunciByArea/$id';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<Annuncio> annunci = [];
+      for (var item in jsonData) {
+        annunci.add(Annuncio.fromJson(item));
+      }
+      this.annunci.clear();
+      this.annunci.addAll(annunci);
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: jsonData['statusCode'],
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
 }

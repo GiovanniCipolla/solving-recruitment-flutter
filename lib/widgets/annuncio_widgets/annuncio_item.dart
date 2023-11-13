@@ -75,6 +75,9 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
+                  annuncio.area == null
+                      ? 'Errore'
+                      :
                   annuncio.area!.denominazione!.length > 20
                       ? '${annuncio.area!.denominazione!.substring(0, 18)}...'
                       : annuncio.area!.denominazione!,
@@ -101,6 +104,9 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
+                  annuncio.tipologia == null
+                      ? 'Errore'
+                      :
                   annuncio.tipologia!.descrizione!.length > 12
                       ? '${annuncio.tipologia!.descrizione!.substring(0, 10)}...'
                       : annuncio.tipologia!.descrizione!,

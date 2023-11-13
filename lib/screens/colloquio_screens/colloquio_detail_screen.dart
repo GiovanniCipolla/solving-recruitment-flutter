@@ -3,36 +3,28 @@ import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
-import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_detail_screen.dart';
 
-class ColloquioItem extends StatelessWidget {
-  const ColloquioItem({super.key, required this.colloquio});
+class ColloquioDetailScreen extends StatelessWidget {
+  const ColloquioDetailScreen({super.key, required this.colloquio});
+
   final Colloquio colloquio;
 
   @override
   Widget build(BuildContext context) {
     final dateFormatter = DateFormat('yyyy-MM-dd');
 
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ColloquioDetailScreen(colloquio: colloquio);
-            }
-          )
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.all(heightSize(context) * 0.01),
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dettagli Colloquio'),
+      ),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            SizedBox(
+              height: heightSize(context) * 0.05,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -136,6 +128,95 @@ class ColloquioItem extends StatelessWidget {
             Divider(
               color: Theme.of(context).colorScheme.primary,
               thickness: 2,
+            ),
+            Container(
+              margin:
+                  EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Altri widget...
+                  SizedBox(
+                    height: heightSize(context) * 0.02, // Spazio tra i widget
+                  ),
+                  Text(
+                    'Note Colloquio ${tipologiaMap[colloquio.tipologia]}:',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: heightSize(context) * 0.025,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    child: TextField(
+                      readOnly:
+                          false,
+                      maxLines: 10, 
+                      controller: TextEditingController(
+                          text: colloquio.note ?? 'Nessuna nota disponibile'),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        contentPadding: const EdgeInsets.all(8.0),
+                        hintText: colloquio.note ?? 'Nessuna nota disponibile',
+                        hintStyle: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Spacer(),
+              Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () {},
+                child: const Row(
+                  children: [
+                    Text('Modifica Colloquio'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Icons.edit,
+                    )
+                  ],
+                ),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () {},
+                child: const Row(
+                  children: [
+                    Text('Elimina Colloquio'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Icons.delete,
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+            SizedBox(
+              height: heightSize(context) * 0.02,
             )
           ],
         ),
