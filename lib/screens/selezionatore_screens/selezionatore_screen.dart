@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -16,31 +17,36 @@ class SelezionatoreScreen extends StatelessWidget {
     final selezionatori =
         Provider.of<SelezionatoreProvider>(context).selezionatori;
 
-    return Scaffold(
-      appBar: const CustomAppbar(title: 'Gestione Selezionatori'),
-      endDrawer: const CustomEndDrawer(),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...selezionatori.map(
-                    (item) => SelezionatoreItem(
-                      selezionatore: item,
-                    ),
-                  )
-                ],
+    return WillPopScope(
+      onWillPop: () async {
+        return backHome(context);
+      },
+      child: Scaffold(
+        appBar: const CustomAppbar(title: 'Gestione Selezionatori'),
+        endDrawer: const CustomEndDrawer(),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...selezionatori.map(
+                      (item) => SelezionatoreItem(
+                        selezionatore: item,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          CustomButtonAdd(
-              titleShowDialog: 'Aggiungi Selezionatore',
-              descrizioneShowDialog:
-                  'Sicuro di voler aggiungere un selezionatore ?',
-              metodoShowDialog: () {}),
-        ],
+            CustomButtonAdd(
+                titleShowDialog: 'Aggiungi Selezionatore',
+                descrizioneShowDialog:
+                    'Sicuro di voler aggiungere un selezionatore ?',
+                metodoShowDialog: () {}),
+          ],
+        ),
       ),
     );
   }

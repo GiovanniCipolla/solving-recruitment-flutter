@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/area_widgets/area_item.dart';
@@ -15,51 +16,56 @@ class AreaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final aree = Provider.of<AreaProvider>(context).aree;
-    return Scaffold(
-      appBar: const CustomAppbar(title: 'Gestione Aree'),
-      endDrawer: const CustomEndDrawer(),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...aree.map((item) => AreaItem(area: item)).toList(),
-                  SizedBox(
-                    height: heightSize(context) * 0.15,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
-                          'Vai alla gestione academy',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward,
-                          color: Colors.red,
-                        ),
-                        SizedBox(
-                          width: widthSize(context) * 0.02,
-                        ),
-                      ],
+    return WillPopScope(
+      onWillPop: () async {
+        return backHome(context);
+      },
+      child: Scaffold(
+        appBar: const CustomAppbar(title: 'Gestione Aree'),
+        endDrawer: const CustomEndDrawer(),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...aree.map((item) => AreaItem(area: item)).toList(),
+                    SizedBox(
+                      height: heightSize(context) * 0.15,
                     ),
-                  ),
-                  const Divider(
-                    thickness: 2.0,
-                    color: Colors.red,
-                  )
-                ],
+                    TextButton(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Text(
+                            'Vai alla gestione academy',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.red,
+                          ),
+                          SizedBox(
+                            width: widthSize(context) * 0.02,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 2.0,
+                      color: Colors.red,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          CustomButtonAdd(
-              titleShowDialog: 'Aggiungi Area',
-              descrizioneShowDialog: 'Sicuro di voler aggiungere un\' area ?',
-              metodoShowDialog: () {}),
-        ],
+            CustomButtonAdd(
+                titleShowDialog: 'Aggiungi Area',
+                descrizioneShowDialog: 'Sicuro di voler aggiungere un\' area ?',
+                metodoShowDialog: () {}),
+          ],
+        ),
       ),
     );
   }

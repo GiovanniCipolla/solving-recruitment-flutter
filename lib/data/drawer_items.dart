@@ -20,7 +20,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'icon': Icons.dashboard,
     'title': 'Dashboard',
     'onTap': (context) {
-      Navigator.pushNamed(context, Home.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, Home.routeName, (route) => false);
     },
   },
   {
@@ -33,7 +34,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'onTap': (context) async {
       await Provider.of<CandidatoProvider>(context, listen: false)
           .getCandidati();
-      Navigator.pushNamed(context, CandidatoScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, CandidatoScreen.routeName, (route) => false);
     },
   },
   {
@@ -45,7 +47,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'title': 'Gestione Aree',
     'onTap': (context) async {
       await Provider.of<AreaProvider>(context, listen: false).getAreas();
-      Navigator.pushNamed(context, AreaScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, AreaScreen.routeName, (route) => false);
     },
   },
   {
@@ -58,7 +61,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'onTap': (context) async {
       await Provider.of<ColloquioProvider>(context, listen: false)
           .getColloqui();
-      Navigator.pushNamed(context, ColloquioScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, ColloquioScreen.routeName, (route) => false);
     },
   },
   {
@@ -71,7 +75,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'onTap': (context) async {
       await Provider.of<SelezionatoreProvider>(context, listen: false)
           .getSelezionatori();
-      Navigator.pushNamed(context, SelezionatoreScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, SelezionatoreScreen.routeName, (route) => false);
     },
   },
   {
@@ -83,6 +88,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'title': 'Gestione Annunci',
     'onTap': (context) async {
       await Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      Navigator.pushNamedAndRemoveUntil(
+          context, AnnuncioScreen.routeName, (route) => false);
       Navigator.pushNamed(context, AnnuncioScreen.routeName);
     },
   },
@@ -108,7 +115,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'onTap': (context) async {
       await Provider.of<TipologiaAnnuncioProvider>(context, listen: false)
           .getTipologiaAnnuncio();
-      Navigator.pushNamed(context, TipologiaAnnuncioScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, TipologiaAnnuncioScreen.routeName, (route) => false);
     },
   },
   {
@@ -120,7 +128,8 @@ final List<Map<String, dynamic>> drawerItems = [
     'title': 'Logout',
     'onTap': (context) {
       // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-      Navigator.pushNamed(context, LoginScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, LoginScreen.routeName, (route) => false);
     },
   },
 ];

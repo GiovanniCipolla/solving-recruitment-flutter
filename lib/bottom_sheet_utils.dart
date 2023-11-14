@@ -267,6 +267,7 @@ static Widget _buildInfoCandidati(Candidato candidato){
               _buildInfoRow('Categoria Protetta', candidato.categoriaProtetta! ? 'SI' : 'No'),
               _buildInfoRow('Ral richiesta', candidato.ral.toString()),
               _buildInfoRow('Seniority', seniorityMap[candidato.seniority]!),
+              _buildInfoRow('Posizione', candidato.posizione),
               _buildInfoRow('Disponibilità Lavoro', disponibilitaLavoroMap[candidato.disponibilitaLavoro]),
               _buildInfoRow('Residenza', candidato.residenza),
               // _buildInfoRow(

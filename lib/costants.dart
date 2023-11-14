@@ -77,13 +77,15 @@ Map<Stato, String> statoCandidatoMap = {
   Stato.SUPERATO: "Superato",
   Stato.RIFIUTATO: "Rifiutato",
   Stato.IN_ATTESA: "In attesa",
+  Stato.ND: "Non definito",
 };
 Map<Stato, Icon> statoCandidatoIconMap = {
   Stato.SUPERATO:
       const Icon(Icons.check, color: Color.fromARGB(255, 20, 218, 27)),
   Stato.RIFIUTATO:
       const Icon(Icons.close, color: Color.fromARGB(255, 209, 65, 55)),
-  Stato.IN_ATTESA:  const Icon(Icons.watch_later, color: Color.fromARGB(255, 149, 187, 132)),
+  Stato.IN_ATTESA:  const Icon(Icons.watch_later, color: Color.fromARGB(154, 113, 237, 102)),
+  Stato.ND:  const Icon(Icons.help_outline, color: Color.fromARGB(255, 243, 143, 21)),
 };
 
 Map<LinguaInglese, String> linguaIngleseMap = {

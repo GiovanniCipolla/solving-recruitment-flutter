@@ -1,7 +1,7 @@
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
 
-enum Stato { SUPERATO, RIFIUTATO, IN_ATTESA }
+enum Stato { ND , SUPERATO , RIFIUTATO , IN_ATTESA }
 
 enum LinguaInglese { ND, SCARSO, SUFFICIENTE, BUONO, OTTIMO }
 
@@ -33,6 +33,7 @@ class Candidato {
       this.seniority,
       this.disponibilitaLavoro,
       this.dataPrimoContatto,
+      this.posizione,
       this.percorsoAcademy,
       this.note,
       this.dareRiscontro,
@@ -60,6 +61,7 @@ class Candidato {
   final Seniority? seniority;
   final DisponibilitaLavoro? disponibilitaLavoro;
   final DateTime? dataPrimoContatto;
+  final String? posizione;
   final PercorsoAcademy? percorsoAcademy;
   final String? note;
   final bool? dareRiscontro;
@@ -121,6 +123,7 @@ class Candidato {
       dataPrimoContatto: json['dataPrimoContatto'] != null
           ? DateTime.parse(json['dataPrimoContatto'])
           : null,
+      posizione: json['posizione'],
       percorsoAcademy: json['percorsoAcademy'],
       note: json['note'],
       dareRiscontro: json['dareRiscontro'],
@@ -153,6 +156,7 @@ class Candidato {
       'seniority': seniority,
       'disponibilitaLavoro': disponibilitaLavoro,
       'dataPrimoContatto': dataPrimoContatto?.toIso8601String(),
+      'posizione': posizione,
       'percorsoAcademy': percorsoAcademy,
       'note': note,
       'dareRiscontro': dareRiscontro,

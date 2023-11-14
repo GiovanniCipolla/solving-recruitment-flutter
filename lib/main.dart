@@ -16,6 +16,7 @@ import 'package:solving_recruitment_flutter/screens/login_screen.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -93,7 +94,7 @@ class MyApp extends StatelessWidget {
                     const SelezionatoreScreen(),
                 TipologiaAnnuncioScreen.routeName: (ctx) =>
                     const TipologiaAnnuncioScreen(),
-                Home.routeName: (ctx) => const Home(),
+                Home.routeName: (ctx) =>  Home(),
               });
         },
       ),
