@@ -278,7 +278,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                     }
                   },
                   decoration: const InputDecoration(
-                    labelText: 'Seniority',
+                    labelText: 'Disponibilità Lavoro',
                   ),
                 ),
                 TextFormField(

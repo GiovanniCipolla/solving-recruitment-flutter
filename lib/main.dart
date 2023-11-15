@@ -20,7 +20,6 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 void main() {
   runApp(const MyApp());
 }
- 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

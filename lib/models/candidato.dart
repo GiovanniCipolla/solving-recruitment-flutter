@@ -1,7 +1,7 @@
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
 
-enum Stato { ND , SUPERATO , RIFIUTATO , IN_ATTESA }
+enum Stato { ND, SUPERATO, RIFIUTATO, IN_ATTESA }
 
 enum LinguaInglese { ND, SCARSO, SUFFICIENTE, BUONO, OTTIMO }
 
@@ -12,34 +12,35 @@ enum Seniority { JUNIOR, MEDIUM, SENIOR }
 enum DisponibilitaLavoro { ND, PRESENZA, REMOTO, IBRIDA }
 
 class Candidato {
-  Candidato(
-      {this.id,
-      this.stato,
-      this.nome,
-      this.cognome,
-      this.email,
-      this.luogoDiNascita,
-      this.dataDiNascita,
-      this.residenza,
-      this.recapitoTelefonico,
-      this.recapitoExtra,
-      this.cap,
-      this.linguaInglese,
-      this.tecnologieConosciute,
-      this.softSkills,
-      this.altreCompetenzeMaturate,
-      this.categoriaProtetta,
-      this.ral,
-      this.seniority,
-      this.disponibilitaLavoro,
-      this.dataPrimoContatto,
-      this.posizione,
-      this.percorsoAcademy,
-      this.note,
-      this.dareRiscontro,
-      this.riscontroInviato,
-      this.annuncio,
-      this.area});
+  Candidato({
+    this.id,
+    this.stato,
+    this.nome,
+    this.cognome,
+    this.email,
+    this.luogoDiNascita,
+    this.dataDiNascita,
+    this.residenza,
+    this.recapitoTelefonico,
+    this.recapitoExtra,
+    this.cap,
+    this.linguaInglese,
+    this.tecnologieConosciute,
+    this.softSkills,
+    this.altreCompetenzeMaturate,
+    this.categoriaProtetta,
+    this.ral,
+    this.seniority,
+    this.disponibilitaLavoro,
+    this.dataPrimoContatto,
+    this.posizione,
+    this.percorsoAcademy,
+    this.note,
+    this.dareRiscontro,
+    this.riscontroInviato,
+    this.annuncio,
+    this.area,
+  });
 
   final int? id;
   final Stato? stato;
