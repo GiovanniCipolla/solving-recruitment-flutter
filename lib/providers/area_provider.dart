@@ -31,7 +31,7 @@ class AreaProvider extends ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Area> areaa = [];
       for (var item in jsonData) {
-        areaa.add(Area.fromJson(item));
+        areaa.add(Area.fromJsonGetAll(item));
       }
       aree.clear();
       aree.addAll(areaa);

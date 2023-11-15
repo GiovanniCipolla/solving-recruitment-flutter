@@ -84,7 +84,8 @@ class AnnuncioScreen extends StatelessWidget {
             ),
             CustomButtonAdd(
                 titleShowDialog: 'Aggiungi annuncio',
-                descrizioneShowDialog: 'Sicuro di voler aggiungere un annuncio?',
+                descrizioneShowDialog:
+                    'Sicuro di voler aggiungere un annuncio?',
                 metodoShowDialog: () {}),
           ],
         ),

@@ -10,6 +10,13 @@ class Area {
       id: json['id'] != null ? json['id'] as int : null,
       denominazione:
           json['denominazione'] != null ? json['denominazione'] as String : "",
+    );
+  }
+  factory Area.fromJsonGetAll(Map<String, dynamic> json) {
+    return Area(
+      id: json['id'] != null ? json['id'] as int : null,
+      denominazione:
+          json['denominazione'] != null ? json['denominazione'] as String : "",
       countAnnunci:
           json['countAnnunci'] != null ? json['countAnnunci'] as int : 0,
     );

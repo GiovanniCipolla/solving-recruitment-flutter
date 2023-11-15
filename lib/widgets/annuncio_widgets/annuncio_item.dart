@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:intl/intl.dart';
+import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 
 class AnnuncioItem extends StatelessWidget {
@@ -12,20 +14,22 @@ class AnnuncioItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateFormatter = DateFormat('yyyy-MM-dd');
 
-    final dynamic? formattedDataFine;
+    final dynamic? formattedDataInizio;
 
-    if (annuncio.dataFine != null) {
-      formattedDataFine = dateFormatter.format(annuncio.dataFine!);
+    if (annuncio.dataInizio != null) {
+      formattedDataInizio = dateFormatter.format(annuncio.dataInizio!);
     } else {
-      formattedDataFine = null;
+      formattedDataInizio = null;
     }
 
     return InkWell(
-      onTap: () {
+      onTap: () async {
+       Annuncio annuncioDetail = await Provider.of<AnnuncioProvider>(context, listen: false).getAnnuncio(annuncio.id);
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return AnnuncioDetailScreen(annuncio: annuncio);
+            return AnnuncioDetailScreen(annuncio: annuncioDetail);
           }),
         );
       },
@@ -75,12 +79,11 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.area == null
+                  annuncio.descrizioneArea == null
                       ? 'Errore'
-                      :
-                  annuncio.area!.denominazione!.length > 20
-                      ? '${annuncio.area!.denominazione!.substring(0, 18)}...'
-                      : annuncio.area!.denominazione!,
+                      : annuncio.descrizioneArea!.length > 20
+                          ? '${annuncio.descrizioneArea!.substring(0, 18)}...'
+                          : annuncio.descrizioneArea!,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
@@ -104,12 +107,11 @@ class AnnuncioItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  annuncio.tipologia == null
+                  annuncio.descrizioneTipologia == null
                       ? 'Errore'
-                      :
-                  annuncio.tipologia!.descrizione!.length > 12
-                      ? '${annuncio.tipologia!.descrizione!.substring(0, 10)}...'
-                      : annuncio.tipologia!.descrizione!,
+                      : annuncio.descrizioneTipologia!.length > 12
+                          ? '${annuncio.descrizioneTipologia!.substring(0, 10)}...'
+                          : annuncio.descrizioneTipologia!,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
@@ -131,7 +133,7 @@ class AnnuncioItem extends StatelessWidget {
                 ),
               ),
               Text(
-                formattedDataFine ?? 'Data mancante',
+                formattedDataInizio ?? 'Data mancante',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),

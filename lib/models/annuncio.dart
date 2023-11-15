@@ -10,6 +10,8 @@ class Annuncio {
     this.dataFine,
     this.tipologia,
     this.area,
+    this.descrizioneArea,
+    this.descrizioneTipologia,
   });
 
   final int? id;
@@ -19,6 +21,8 @@ class Annuncio {
   final DateTime? dataFine;
   final TipologiaAnnuncio? tipologia;
   final Area? area;
+  final String? descrizioneArea;
+  final String? descrizioneTipologia;
 
   factory Annuncio.fromJson(Map<String, dynamic> json) {
     return Annuncio(
@@ -35,6 +39,23 @@ class Annuncio {
           ? TipologiaAnnuncio.fromJson(json['tipologiaAnnuncio'])
           : null,
       area: json['area'] != null ? Area.fromJson(json['area']) : null,
+    );
+  }
+  factory Annuncio.fromJsonGetAllAnnunci(Map<String, dynamic> json) {
+    return Annuncio(
+      id: json['id'] != null ? json['id'] as int : null,
+      titolo: json['titoloAnnuncio'] != null
+          ? json['titoloAnnuncio'] as String
+          : null,
+      dataInizio: json['inizioAnnuncio'] != null
+          ? DateTime.parse(json['inizioAnnuncio'])
+          : null,
+      descrizioneArea: json['denominazioneArea'] != null
+          ? json['denominazioneArea'] as String
+          : null,
+      descrizioneTipologia: json['descrizioneTipologiaAnnuncio'] != null
+          ? json['descrizioneTipologiaAnnuncio'] as String
+          : null,
     );
   }
 

@@ -40,6 +40,10 @@ class Candidato {
     this.riscontroInviato,
     this.annuncio,
     this.area,
+    this.annuncioID,
+    this.areaID,
+    this.denominazioneArea,
+    this.titoloAnnuncio,
   });
 
   final int? id;
@@ -67,8 +71,12 @@ class Candidato {
   final String? note;
   final bool? dareRiscontro;
   final bool? riscontroInviato;
+  final int? annuncioID;
+  final int? areaID;
   final Area? area;
   final Annuncio? annuncio;
+  final String? denominazioneArea;
+  final String? titoloAnnuncio;
 
   factory Candidato.fromJson(Map<String, dynamic> json) {
     Stato? stato = json['stato'] != null
@@ -135,35 +143,51 @@ class Candidato {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'stato': stato,
-      'nome': nome,
-      'cognome': cognome,
-      'email': email,
-      'luogoDiNascita': luogoDiNascita,
-      'dataDiNascita': dataDiNascita?.toIso8601String(),
-      'residenza': residenza,
-      'recapitoTelefonico': recapitoTelefonico,
-      'recapitoExtra': recapitoExtra,
-      'cap': cap,
-      'linguaInglese': linguaInglese,
-      'tecnologieConosciute': tecnologieConosciute,
-      'softSkills': softSkills,
-      'altreCompetenzeMaturate': altreCompetenzeMaturate,
-      'categoriaProtetta': categoriaProtetta,
-      'ral': ral,
-      'seniority': seniority,
-      'disponibilitaLavoro': disponibilitaLavoro,
-      'dataPrimoContatto': dataPrimoContatto?.toIso8601String(),
-      'posizione': posizione,
-      'percorsoAcademy': percorsoAcademy,
-      'note': note,
-      'dareRiscontro': dareRiscontro,
-      'riscontroInviato': riscontroInviato,
-      'annuncio': annuncio?.toJson(),
-      'area': area?.toJson(),
-    };
+  factory Candidato.fromJsonGetAllCandidato(Map<String, dynamic> json) {
+    Stato? stato = json['stato'] != null
+        ? Stato.values.firstWhere(
+            (element) => element.toString() == 'Stato.${json['stato']}')
+        : null;
+    return Candidato(
+      id: json['id'],
+      nome: json['nome'],
+      cognome: json['cognome'],
+      stato: stato,
+      denominazioneArea: json['denominazioneArea'],
+      titoloAnnuncio: json['titoloAnnuncio'],
+      email: json['email'],
+    );
   }
+
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'id': id,
+  //     'stato': stato,
+  //     'nome': nome,
+  //     'cognome': cognome,
+  //     'email': email,
+  //     'luogoDiNascita': luogoDiNascita,
+  //     'dataDiNascita': dataDiNascita?.toIso8601String(),
+  //     'residenza': residenza,
+  //     'recapitoTelefonico': recapitoTelefonico,
+  //     'recapitoExtra': recapitoExtra,
+  //     'cap': cap,
+  //     'linguaInglese': linguaInglese,
+  //     'tecnologieConosciute': tecnologieConosciute,
+  //     'softSkills': softSkills,
+  //     'altreCompetenzeMaturate': altreCompetenzeMaturate,
+  //     'categoriaProtetta': categoriaProtetta,
+  //     'ral': ral,
+  //     'seniority': seniority,
+  //     'disponibilitaLavoro': disponibilitaLavoro,
+  //     'dataPrimoContatto': dataPrimoContatto?.toIso8601String(),
+  //     'posizione': posizione,
+  //     'percorsoAcademy': percorsoAcademy,
+  //     'note': note,
+  //     'dareRiscontro': dareRiscontro,
+  //     'riscontroInviato': riscontroInviato,
+  //     'annuncio': annuncio?.toJson(),
+  //     'area': area?.toJson(),
+  //   };
+  // }
 }

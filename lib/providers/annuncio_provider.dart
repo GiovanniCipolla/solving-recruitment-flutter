@@ -15,6 +15,7 @@ class AnnuncioProvider extends ChangeNotifier {
       required this.annunci,
       required this.candidati,
       required this.area});
+
   List<Annuncio> annunci = [];
   List<Candidato> candidati = [];
   Area? area;
@@ -22,7 +23,7 @@ class AnnuncioProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
 
   Future<void> getAnnunci() async {
-    String url = '$urlAPI/annuncio/get';
+    String url = '$urlAPI/annuncio/getAllMobile';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
     });
@@ -30,7 +31,7 @@ class AnnuncioProvider extends ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
-        annunci.add(Annuncio.fromJson(item));
+        annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
       }
       this.annunci.clear();
       this.annunci.addAll(annunci);
@@ -44,8 +45,25 @@ class AnnuncioProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getAnnunciByArea(id) async {
-    String url = '$urlAPI/annuncio/annunciByArea/$id';
+  Future<Annuncio> getAnnuncio(id) async {
+    String url = '$urlAPI/annuncio/get/$id';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return Annuncio.fromJson(jsonData);
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
+
+  Future<void> getAnnunciByIdArea(id) async {
+    String url = '$urlAPI/area/getAnnunciByArea/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
     });
@@ -53,17 +71,34 @@ class AnnuncioProvider extends ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
-        annunci.add(Annuncio.fromJson(item));
+        annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
       }
       this.annunci.clear();
       this.annunci.addAll(annunci);
+
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: jsonData['statusCode'],
+        statusCode: response.statusCode,
         title: jsonData['title'],
         description: jsonData['description'],
       );
+    }
+  }
+
+  Future<void> getAnnunciWithSameIdTipolgiaAnnuncio(id) async {
+    String url = '$urlAPI/annuncio/getAllWithSameTipologiaMobile/$id';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<Annuncio> annunci = [];
+      for (var item in jsonData) {
+        annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
+      }
+      this.annunci.clear();
+      this.annunci.addAll(annunci);
     }
   }
 }

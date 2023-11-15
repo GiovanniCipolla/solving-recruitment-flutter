@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_detail_screen.dart';
 
 class CandidatoItem extends StatelessWidget {
@@ -12,12 +14,14 @@ class CandidatoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
+        Candidato candidatoDetail = await  Provider.of<CandidatoProvider>(context, listen: false).getCandidato(candidato.id);
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) {
-              return CandidatoDetailScreen(candidato: candidato);
+              return CandidatoDetailScreen(candidato: candidatoDetail);
             },
           ),
         );
@@ -69,10 +73,10 @@ class CandidatoItem extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
                 (
-                    candidato.annuncio == null ? "Titolo mancante" :
-                  candidato.annuncio!.titolo ?? "Titolo mancante").length > 20
-                    ? "${(candidato.annuncio!.titolo ?? "Titolo mancante").substring(0, 20)}..."
-                    : candidato.annuncio!.titolo ?? "Titolo mancante",
+                    candidato.titoloAnnuncio == null ? "Titolo mancante" :
+                  candidato.titoloAnnuncio ?? "Titolo mancante").length > 20
+                    ? "${(candidato.titoloAnnuncio ?? "Titolo mancante").substring(0, 20)}..."
+                    : candidato.titoloAnnuncio ?? "Titolo mancante",
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
@@ -82,14 +86,14 @@ class CandidatoItem extends StatelessWidget {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                (candidato.annuncio!.area != null
-                                ? candidato.annuncio!.area!.denominazione ??
+                (candidato.denominazioneArea != null
+                                ? candidato.denominazioneArea ??
                                     "Denominazione area mancante"
                                 : "Area mancante")
                             .length >
                         20
-                    ? "${(candidato.annuncio!.area!.denominazione ?? "Denominazione area mancante").substring(0, 20)}..."
-                    : candidato.annuncio!.area!.denominazione ??
+                    ? "${(candidato.denominazioneArea?? "Denominazione area mancante").substring(0, 20)}..."
+                    : candidato.denominazioneArea ??
                         "Denominazione area mancante",
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
