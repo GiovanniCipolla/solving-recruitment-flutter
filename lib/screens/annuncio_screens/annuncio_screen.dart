@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/annuncio_widgets/annuncio_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -62,9 +63,8 @@ class AnnuncioScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
-              color: Theme.of(context).colorScheme.primary,
-              thickness: 1.5,
+            SizedBox(
+              height: heightSize(context) * 0.02,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -86,7 +86,12 @@ class AnnuncioScreen extends StatelessWidget {
                 titleShowDialog: 'Aggiungi annuncio',
                 descrizioneShowDialog:
                     'Sicuro di voler aggiungere un annuncio?',
-                metodoShowDialog: () {}),
+                metodoShowDialog: () {
+                 Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AnnuncioInsertScreen()));
+                }),
           ],
         ),
       ),

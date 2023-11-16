@@ -125,9 +125,8 @@ class ColloquioDetailScreen extends StatelessWidget {
                         Theme.of(context).colorScheme.primary,
                   ))
             ]),
-            Divider(
-              color: Theme.of(context).colorScheme.primary,
-              thickness: 2,
+            SizedBox(
+              height: heightSize(context) * 0.02,
             ),
             Container(
               margin:
@@ -149,9 +148,8 @@ class ColloquioDetailScreen extends StatelessWidget {
                   ),
                   SingleChildScrollView(
                     child: TextField(
-                      readOnly:
-                          false,
-                      maxLines: 10, 
+                      readOnly: false,
+                      maxLines: 6,
                       controller: TextEditingController(
                           text: colloquio.note ?? 'Nessuna nota disponibile'),
                       style: TextStyle(
@@ -174,47 +172,47 @@ class ColloquioDetailScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-              Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  onPressed: () {},
+                  child: const Row(
+                    children: [
+                      Text('Modifica Colloquio'),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        Icons.edit,
+                      )
+                    ],
+                  ),
                 ),
-                onPressed: () {},
-                child: const Row(
-                  children: [
-                    Text('Modifica Colloquio'),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(
-                      Icons.edit,
-                    )
-                  ],
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  onPressed: () {},
+                  child: const Row(
+                    children: [
+                      Text('Elimina Colloquio'),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        Icons.delete,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                ),
-                onPressed: () {},
-                child: const Row(
-                  children: [
-                    Text('Elimina Colloquio'),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(
-                      Icons.delete,
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
+              ],
+            ),
             SizedBox(
               height: heightSize(context) * 0.02,
             )

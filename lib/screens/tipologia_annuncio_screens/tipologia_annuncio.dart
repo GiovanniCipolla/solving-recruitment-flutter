@@ -34,9 +34,6 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
                         .map((item) =>
                             TipologiaAnnuncioItem(tipologiaAnnuncio: item))
                         .toList(),
-                    SizedBox(
-                      height: heightSize(context) * 0.15,
-                    ),
                   ],
                 ),
               ),

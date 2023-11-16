@@ -10,6 +10,7 @@ class CandidatoItem extends StatelessWidget {
   const CandidatoItem({super.key, required this.candidato});
 
   final Candidato candidato;
+  static const String variabileNulla = 'Errore';
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class CandidatoItem extends StatelessWidget {
                 const Spacer(),
                 statoCandidatoIconMap[candidato.stato] ??
                     const Text(
-                      'Stato mancante',
+                      variabileNulla,
                     ),
               ],
             ),
@@ -73,10 +74,9 @@ class CandidatoItem extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
                 (
-                    candidato.titoloAnnuncio == null ? "Titolo mancante" :
-                  candidato.titoloAnnuncio ?? "Titolo mancante").length > 20
-                    ? "${(candidato.titoloAnnuncio ?? "Titolo mancante").substring(0, 20)}..."
-                    : candidato.titoloAnnuncio ?? "Titolo mancante",
+                    candidato.titoloAnnuncio ?? variabileNulla).length > 20
+                    ? "${(candidato.titoloAnnuncio ?? variabileNulla).substring(0, 20)}..."
+                    : candidato.titoloAnnuncio ?? variabileNulla,
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
@@ -88,13 +88,13 @@ class CandidatoItem extends StatelessWidget {
               Text(
                 (candidato.denominazioneArea != null
                                 ? candidato.denominazioneArea ??
-                                    "Denominazione area mancante"
-                                : "Area mancante")
+                                    variabileNulla
+                                : variabileNulla)
                             .length >
                         20
                     ? "${(candidato.denominazioneArea?? "Denominazione area mancante").substring(0, 20)}..."
                     : candidato.denominazioneArea ??
-                        "Denominazione area mancante",
+                        variabileNulla,
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
               ),
@@ -104,7 +104,7 @@ class CandidatoItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  candidato.email ?? "Email mancante",
+                  candidato.email ?? variabileNulla,
                   style:
                       TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                 ),

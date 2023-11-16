@@ -17,6 +17,10 @@ import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezi
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio.dart';
 
 
+final kColorScheme = ColorScheme.fromSeed(
+  seedColor:  Colors.blueAccent,
+);
+
 void main() {
   runApp(const MyApp());
 }
@@ -78,6 +82,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
               title: 'Solving Recruitment',
               theme: ThemeData(
+                colorScheme: kColorScheme,
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 hoverColor: Colors.transparent,

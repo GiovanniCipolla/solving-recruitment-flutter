@@ -6,7 +6,7 @@ import 'package:solving_recruitment_flutter/screens/home.dart';
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
 
-  const LoginScreen({Key? key});
+  const LoginScreen({super.key});
 
   double getSmallDiameter(BuildContext context) =>
       MediaQuery.of(context).size.width * 2 / 3;

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/models/colloquio.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
+import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_update_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_card_item.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_colloqui_item.dart';
 
@@ -85,7 +89,7 @@ class CandidatoDetailScreen extends StatelessWidget {
                 CandidatoDetailCardItem(
                   title: 'Scheda anagrafica',
                   onPressed: () {
-                   BottomSheetUtils.showSchedaAnagrafica(context,candidato);
+                    BottomSheetUtils.showSchedaAnagrafica(context, candidato);
                   },
                 ),
                 SizedBox(
@@ -94,19 +98,20 @@ class CandidatoDetailScreen extends StatelessWidget {
                 CandidatoDetailCardItem(
                   title: 'Competenze tecniche & Soft skills',
                   onPressed: () {
-                    BottomSheetUtils.showCompetenze(context,candidato);
+                    BottomSheetUtils.showCompetenze(context, candidato);
                   },
                 ),
-                 SizedBox(
+                SizedBox(
                   height: heightSize(context) * 0.01,
                 ),
                 CandidatoDetailCardItem(
                   title: 'Informazioni lavorative',
                   onPressed: () {
-                    BottomSheetUtils.showInformazioniLavorative(context,candidato);
+                    BottomSheetUtils.showInformazioniLavorative(
+                        context, candidato);
                   },
                 ),
-                 SizedBox(
+                SizedBox(
                   height: heightSize(context) * 0.01,
                 ),
                 CandidatoDetailCardItem(
@@ -129,36 +134,38 @@ class CandidatoDetailScreen extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
-            color: Theme.of(context).colorScheme.primary,
-            thickness: 2,
-          ),
-          const Row(children: [
+          Row(children: [
+            Expanded(
+              child: CandidatoDetailColloquiItem(
+                title: 'Conoscitivo',
+                color: Colors.teal,
+                icon: const Icon(
+                  Icons.person,
+                ),
+                candidatoId: candidato.id!, tipologia: 'CONOSCITIVO',
+              ),
+            ),
             Expanded(
                 child: CandidatoDetailColloquiItem(
-                    title: 'Conoscitivo',
-                    color: Colors.teal,
-                    icon: Icon(
-                      Icons.person,
-                    ))),
+              title: 'Tecnico',
+              color: Colors.orange,
+              icon: const Icon(
+                Icons.settings,
+              ),
+              candidatoId: candidato.id!, tipologia: 'TECNICO',
+            )),
             Expanded(
                 child: CandidatoDetailColloquiItem(
-                    title: 'Tecnico',
-                    color: Colors.orange,
-                    icon: Icon(
-                      Icons.settings,
-                    ))),
-            Expanded(
-                child: CandidatoDetailColloquiItem(
-                    title: 'Finale',
-                    color: Colors.green,
-                    icon: Icon(
-                      Icons.business_center,
-                    ))),
+              title: 'Finale',
+              color: Colors.green,
+              icon: const Icon(
+                Icons.business_center,
+              ),
+              candidatoId: candidato.id!, tipologia: 'FINALE',
+            ))
           ]),
-          Divider(
-            color: Theme.of(context).colorScheme.primary,
-            thickness: 2,
+          SizedBox(
+            height: heightSize(context) * 0.02,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -168,7 +175,12 @@ class CandidatoDetailScreen extends StatelessWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                //   final CandidatoProvider candidatoProvider = Provider.of( context,listen: false);
+                //  Candidato candidatoToEdit =  await candidatoProvider.getCandidato(candidato.id!);
+                //  // ignore: use_build_context_synchronously
+                //  Navigator.push(context, MaterialPageRoute(builder: (context) => CandidatoUpdateScreen(candidato: candidatoToEdit)));
+                },
                 child: const Row(
                   children: [
                     Text('Modifica Candidato'),

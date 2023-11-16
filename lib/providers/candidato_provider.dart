@@ -59,7 +59,6 @@ class CandidatoProvider extends ChangeNotifier {
         description: jsonData['description'],
       );
     }
-
   }
 
   Future<Candidato> getCandidato(id) async {
@@ -123,6 +122,83 @@ class CandidatoProvider extends ChangeNotifier {
         title: jsonData['title'],
         description: jsonData['description'],
       );
+    }
+  }
+
+  Future<void> getCandidatoWithFilter(filter) async {
+    String url = '$urlAPI/candidato/filtrata/$filter';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<Candidato> candidati = [];
+      for (var item in jsonData) {
+        candidati.add(Candidato.fromJsonGetAllCandidato(item));
+      }
+      this.candidati.clear();
+      this.candidati.addAll(candidati);
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: jsonData['statusCode'],
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
+
+  Future<void> getCandidatisearchAndPagination(filtro) async {
+    String url = '$urlAPI/search';
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(filtro.toJson()),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<Candidato> candidati = [];
+
+      var decodedResponse = json.decode(response.body);
+
+      if (decodedResponse is List) {
+        for (var item in decodedResponse) {
+          if (item is Map<String, dynamic>) {
+            candidati.add(Candidato.fromJsonGetAllCandidato(item));
+          }
+        }
+      }
+
+      this.candidati.clear();
+      this.candidati.addAll(candidati);
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: json.decode(response.body)['statusCode'],
+        title: json.decode(response.body)['title'],
+        description: json.decode(response.body)['description'],
+      );
+    }
+  }
+
+  Future<bool> createCandidato(candidato) async {
+    print('SONO ENTRATO ');
+    String url = '$urlAPI/candidato';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(candidato.toJson()),
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

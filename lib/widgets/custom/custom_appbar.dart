@@ -10,7 +10,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) => AppBar(
-        title: Text(title),
+        title: Text(title, style: TextStyle(color: Theme.of(context).colorScheme.primary),),
         leading: IconButton(
           icon: Image.asset("assets/images/logoNavbarCoge.png"),
           onPressed: () {

@@ -7,7 +7,7 @@ enum LinguaInglese { ND, SCARSO, SUFFICIENTE, BUONO, OTTIMO }
 
 enum PercorsoAcademy { IN_ATTESA, IN_CORSO, RITIRATO, TERMINATO }
 
-enum Seniority { JUNIOR, MEDIUM, SENIOR }
+enum Seniority { ND, JUNIOR, MEDIUM, SENIOR }
 
 enum DisponibilitaLavoro { ND, PRESENZA, REMOTO, IBRIDA }
 
@@ -154,40 +154,43 @@ class Candidato {
       cognome: json['cognome'],
       stato: stato,
       denominazioneArea: json['denominazioneArea'],
-      titoloAnnuncio: json['titoloAnnuncio'],
+      titoloAnnuncio: json['titoloArea'],
       email: json['email'],
     );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'id': id,
-  //     'stato': stato,
-  //     'nome': nome,
-  //     'cognome': cognome,
-  //     'email': email,
-  //     'luogoDiNascita': luogoDiNascita,
-  //     'dataDiNascita': dataDiNascita?.toIso8601String(),
-  //     'residenza': residenza,
-  //     'recapitoTelefonico': recapitoTelefonico,
-  //     'recapitoExtra': recapitoExtra,
-  //     'cap': cap,
-  //     'linguaInglese': linguaInglese,
-  //     'tecnologieConosciute': tecnologieConosciute,
-  //     'softSkills': softSkills,
-  //     'altreCompetenzeMaturate': altreCompetenzeMaturate,
-  //     'categoriaProtetta': categoriaProtetta,
-  //     'ral': ral,
-  //     'seniority': seniority,
-  //     'disponibilitaLavoro': disponibilitaLavoro,
-  //     'dataPrimoContatto': dataPrimoContatto?.toIso8601String(),
-  //     'posizione': posizione,
-  //     'percorsoAcademy': percorsoAcademy,
-  //     'note': note,
-  //     'dareRiscontro': dareRiscontro,
-  //     'riscontroInviato': riscontroInviato,
-  //     'annuncio': annuncio?.toJson(),
-  //     'area': area?.toJson(),
-  //   };
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nome': nome,
+      'cognome': cognome,
+      'email': email,
+      'stato': (stato != null) ? stato : 'ND',
+      'luogoDiNascita': luogoDiNascita,
+      'dataDiNascita':
+          dataDiNascita != null ? dataDiNascita!.toIso8601String() : null,
+      'residenza': residenza,
+      'recapitoTelefonico': recapitoTelefonico,
+      'recapitoExtra': recapitoExtra,
+      'cap': cap,
+      'linguaInglese': linguaInglese,
+      'tecnologieConosciute': tecnologieConosciute,
+      'softSkills': softSkills,
+      'altreCompetenzeMaturate': altreCompetenzeMaturate,
+      'categoriaProtetta': categoriaProtetta,
+      'ral': ral,
+      'seniority': (seniority != null) ? seniority : 'ND',
+      'disponibilitaLavoro': disponibilitaLavoro,
+      'dataPrimoContatto': dataPrimoContatto != null
+          ? dataPrimoContatto!.toIso8601String()
+          : null,
+      'posizione': posizione,
+      'percorsoAcademy': percorsoAcademy,
+      'note': note,
+      'dareRiscontro': dareRiscontro,
+      'riscontroInviato': riscontroInviato,
+      'annuncio': annuncio != null ? annuncio!.toJson() : null,
+      'area': area != null ? area!.toJson() : null,
+    };
+  }
 }

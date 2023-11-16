@@ -64,10 +64,10 @@ class Annuncio {
       'id': id,
       'titolo': titolo,
       'descrizione': descrizione,
-      'dataInizio': dataInizio,
-      'dataFine': dataFine,
-      'tipologiaAnnuncio': tipologia?.toJson(),
-      'area': area?.toJson(),
+      'dataInizio': dataInizio != null ? dataInizio!.toIso8601String() : null,
+      'dataFine': dataFine != null ? dataFine!.toIso8601String() : null,
+      'tipologiaAnnuncio': tipologia != null ? tipologia!.toJson() : null,
+      'area': area != null ?  area!.toJson() : null,
     };
   }
 }

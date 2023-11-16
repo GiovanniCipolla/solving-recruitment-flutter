@@ -15,6 +15,8 @@ class Colloquio {
     this.candidato,
     this.selezionatore,
     this.note,
+    this.idSelezionatore,
+    this.idCandidato,
   });
 
   final int? id;
@@ -24,6 +26,8 @@ class Colloquio {
   final Candidato? candidato;
   final Selezionatore? selezionatore;
   final String? note;
+  final int? idSelezionatore;
+  final int? idCandidato;
 
   factory Colloquio.fromJson(Map<String, dynamic> json) {
     FeedBackColloquio? feedback = json['feedback'] != null
@@ -47,6 +51,23 @@ class Colloquio {
       selezionatore: json['selezionatore'] != null
           ? Selezionatore.fromJson(json['selezionatore'])
           : null,
+    );
+  }
+
+  factory Colloquio.fromJsonGetAllColloqui(Map<String, dynamic> json) {
+    return Colloquio(
+      id: json['id'] != null ? json['id'] as int : null,
+      data: json['data'] != null ? DateTime.parse(json['data']) : null,
+      tipologia: json['tipologia'] != null
+          ? Tipologia.values.firstWhere((element) =>
+              element.toString() == 'Tipologia.${json['tipologia']}')
+          : null,
+      feedback: json['feedback'] != null
+          ? FeedBackColloquio.values.firstWhere(
+              (element) => element.toString() == 'FeedBack.${json['feedback']}')
+          : null,
+      idCandidato: json['idCandidato'],
+      idSelezionatore: json['idSelezionatore'],
     );
   }
 

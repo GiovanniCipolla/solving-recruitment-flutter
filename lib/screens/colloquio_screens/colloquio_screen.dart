@@ -67,9 +67,8 @@ class ColloquioScreen extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
-            color: Theme.of(context).colorScheme.primary,
-            thickness: 1.5,
+          SizedBox(
+            height: heightSize(context) * 0.02,
           ),
           Expanded(
               child: SingleChildScrollView(

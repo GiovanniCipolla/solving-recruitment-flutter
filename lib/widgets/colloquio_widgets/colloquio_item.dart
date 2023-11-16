@@ -15,14 +15,9 @@ class ColloquioItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ColloquioDetailScreen(colloquio: colloquio);
-            }
-          )
-        );
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ColloquioDetailScreen(colloquio: colloquio);
+        }));
       },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
@@ -36,87 +31,97 @@ class ColloquioItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(children: [
-                  Icon(
-                    Icons.person,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  SizedBox(
-                    width: widthSize(context) * 0.02,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(colloquio.candidato!.nome!,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                          )),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: widthSize(context) * 0.015,
-                          ),
-                          Text(colloquio.candidato!.cognome!,
+                Expanded(
+                  flex: 4,
+                  child: Row(children: [
+                    Icon(
+                      Icons.person,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    SizedBox(
+                      width: widthSize(context) * 0.02,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(colloquio.candidato!.nome!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            )),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: widthSize(context) * 0.015,
+                            ),
+                            Text(colloquio.candidato!.cognome!,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                )),
+                          ],
+                        )
+                      ],
+                    )
+                  ]),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Column(children: [
+                    Icon(
+                      Icons.assignment,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: heightSize(context) * 0.04,
+                    ),
+                    Text(
+                      tipologiaMap[colloquio.tipologia] ??
+                          "Tipologia mancante", // Utilizza il valore predefinito se tipologiaMap[colloquio.tipologia] è null
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: heightSize(context) * 0.013,
+                      ),
+                    )
+                  ]),
+                ),
+                Expanded(
+                  flex: 4,
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              colloquio.selezionatore!.cognome!,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
-                              )),
-                        ],
-                      )
-                    ],
-                  )
-                ]),
-                Column(children: [
-                  Icon(
-                    Icons.assignment,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: heightSize(context) * 0.04,
-                  ),
-                  Text(
-                    tipologiaMap[colloquio.tipologia] ??
-                        "Tipologia mancante", // Utilizza il valore predefinito se tipologiaMap[colloquio.tipologia] è null
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: heightSize(context) * 0.013,
+                              ),
+                            ),
+                            SizedBox(
+                              width: widthSize(context) * 0.015,
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              colloquio.selezionatore!.nome!,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            SizedBox(
+                              width: widthSize(context) * 0.03,
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                  )
-                ]),
-                Row(children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            colloquio.selezionatore!.cognome!,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          SizedBox(
-                            width: widthSize(context) * 0.015,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            colloquio.selezionatore!.nome!,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          SizedBox(
-                            width: widthSize(context) * 0.03,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Icon(
-                    Icons.person_search,
-                    color: Theme.of(context).colorScheme.primary,
-                  )
-                ])
+                    Icon(
+                      Icons.person_search,
+                      color: Theme.of(context).colorScheme.primary,
+                    )
+                  ]),
+                )
               ],
             ),
             SizedBox(

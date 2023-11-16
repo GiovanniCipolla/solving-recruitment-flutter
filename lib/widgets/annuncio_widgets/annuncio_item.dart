@@ -24,7 +24,9 @@ class AnnuncioItem extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
-       Annuncio annuncioDetail = await Provider.of<AnnuncioProvider>(context, listen: false).getAnnuncio(annuncio.id);
+        Annuncio annuncioDetail =
+            await Provider.of<AnnuncioProvider>(context, listen: false)
+                .getAnnuncio(annuncio.id);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
@@ -82,7 +84,7 @@ class AnnuncioItem extends StatelessWidget {
                   annuncio.descrizioneArea == null
                       ? 'Errore'
                       : annuncio.descrizioneArea!.length > 20
-                          ? '${annuncio.descrizioneArea!.substring(0, 18)}...'
+                          ? '${annuncio.descrizioneArea!.substring(0, 8)}...'
                           : annuncio.descrizioneArea!,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
@@ -110,7 +112,7 @@ class AnnuncioItem extends StatelessWidget {
                   annuncio.descrizioneTipologia == null
                       ? 'Errore'
                       : annuncio.descrizioneTipologia!.length > 12
-                          ? '${annuncio.descrizioneTipologia!.substring(0, 10)}...'
+                          ? '${annuncio.descrizioneTipologia!.substring(0, 8)}...'
                           : annuncio.descrizioneTipologia!,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,

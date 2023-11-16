@@ -5,8 +5,7 @@ class CustomEndDrawer extends StatelessWidget implements PreferredSizeWidget {
   const CustomEndDrawer({super.key});
 
   @override
-  Size get preferredSize =>
-      const Size.fromHeight(kToolbarHeight); // Definisci l'altezza desiderata
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -21,7 +20,10 @@ class CustomEndDrawer extends StatelessWidget implements PreferredSizeWidget {
               return ListTile(
                 leading: item['icon'] == Icons.logout
                     ? Icon(item['icon'], color: Colors.red)
-                    : Icon(item['icon']),
+                    : Icon(
+                        item['icon'],
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                 title: Text(item['title']),
                 onTap: () {
                   item['onTap'](context);

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
+import 'package:solving_recruitment_flutter/models/annuncio.dart';
+import 'package:solving_recruitment_flutter/models/area.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/providers/area_provider.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 
 class CandidatoInsertScreen extends StatefulWidget {
   const CandidatoInsertScreen({super.key});
@@ -40,6 +46,10 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
   DateTime? dataPrimoContatto;
   final TextEditingController posizioneController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
+  Area? areaSelezionata;
+  final TextEditingController areaController = TextEditingController();
+  Annuncio? annuncioSelezionato;
+  final TextEditingController annuncioController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -57,11 +67,27 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
     }
   }
 
+  Future<void> inserimentoRiuscito() async {
+    final CandidatoProvider candidatoProvider =
+        Provider.of<CandidatoProvider>(context, listen: false);
+    await candidatoProvider.getCandidati();
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<AreaProvider>(context).getAreas();
+    Provider.of<AnnuncioProvider>(context).getAnnunci();
+    final areas = Provider.of<AreaProvider>(context).aree;
+    final annunci = Provider.of<AnnuncioProvider>(context).annunci;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inserisci Candidato'),
+        title: Text('Inserisci Candidato',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -75,6 +101,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                 customTextFormFieldWithValidator(cognomeController, 'Cognome'),
                 TextFormField(
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: 'Email',
                     ),
@@ -89,8 +116,15 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                     }),
                 customTextFormFieldWithoutValidator(
                     luogoDiNascitaController, 'Luogo di nascita'),
-                customTextFormFieldWithoutValidator(
-                    dataDiNascitaController, 'Data di nascita'),
+                TextFormField(
+                  controller: dataDiNascitaController,
+                  decoration: const InputDecoration(
+                    labelText: 'Data Di Nascita',
+                  ),
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                ),
                 customTextFormFieldWithoutValidator(
                     residenzaController, 'Residenza'),
                 customTextFormFieldWithoutValidator(
@@ -237,8 +271,11 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                       labelText: 'RAL (Retribuzione Annua Lorda)',
                     ),
                     validator: (value) {
-                      if (value != null && double.parse(value) <= 0) {
-                        return 'Il valore deve essere maggiore di 0';
+                      if (value != null && value.isNotEmpty) {
+                        double? parsedValue = double.tryParse(value);
+                        if (parsedValue! < 0) {
+                          return 'Inserisci un valore numerico valido e maggiore di 0';
+                        }
                       }
                       return null;
                     }),
@@ -293,11 +330,92 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                 customTextFormFieldWithoutValidator(
                     posizioneController, 'Posizione'),
                 customTextFormFieldWithoutValidator(noteController, 'Note'),
+                DropdownButtonFormField<int>(
+                  value: areaSelezionata?.id,
+                  items: areas.map((Area area) {
+                    return DropdownMenuItem<int>(
+                      value: area.id,
+                      child: Text(area.denominazione ?? 'errore'),
+                    );
+                  }).toList(),
+                  onChanged: (int? value) {
+                    if (value != null) {
+                      setState(() {
+                        areaSelezionata =
+                            areas.firstWhere((area) => area.id == value);
+                      });
+                    }
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Area',
+                  ),
+                ),
+                DropdownButtonFormField<int>(
+                  value: annuncioSelezionato?.id,
+                  items: annunci.map((Annuncio annuncio) {
+                    return DropdownMenuItem<int>(
+                      value: annuncio.id,
+                      child: Text(annuncio.titolo ?? 'errore'),
+                    );
+                  }).toList(),
+                  onChanged: (int? value) {
+                    if (value != null) {
+                      setState(() {
+                        annuncioSelezionato = annunci
+                            .firstWhere((annuncio) => annuncio.id == value);
+                      });
+                    }
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Annuncio',
+                  ),
+                ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {
-                      // Tutti i campi sono validi, procedi con la logica di salvataggio
-                      // Puoi accedere ai valori inseriti tramite i controller, ad esempio nomeController.text per il Nome.
+                      final candidato = Candidato(
+                        nome: nomeController.text,
+                        cognome: cognomeController.text,
+                        email: emailController.text,
+                        luogoDiNascita: luogoDiNascitaController.text,
+                        dataDiNascita: (dataDiNascitaController.text.isNotEmpty)
+                            ? DateTime.parse(dataDiNascitaController.text)
+                            : null,
+                        residenza: residenzaController.text,
+                        recapitoTelefonico: recapitoTelefonicoController.text,
+                        recapitoExtra: recapitoExtra.text,
+                        cap: cap.text,
+                        linguaInglese: linguaIngleseSelezionata,
+                        tecnologieConosciute: tecnologieConosciute,
+                        softSkills: softSkills,
+                        altreCompetenzeMaturate: altreCompetenze,
+                        categoriaProtetta: categoriaProtetta,
+                        ral: ralController.text.isNotEmpty
+                            ? double.parse(ralController.text)
+                            : null,
+                        seniority: senioritySelezionata,
+                        disponibilitaLavoro: disponibilitaLavoroSelezionata,
+                        dataPrimoContatto: (dataPrimoContattoController
+                                .text.isNotEmpty)
+                            ? DateTime.parse(dataPrimoContattoController.text)
+                            : null,
+                        posizione: posizioneController.text,
+                        note: noteController.text,
+                        area: areaSelezionata,
+                        annuncio: annuncioSelezionato,
+                      );
+
+                      final candidatoProvider = Provider.of<CandidatoProvider>(
+                          context,
+                          listen: false);
+                      bool result =
+                          await candidatoProvider.createCandidato(candidato);
+                      // ignore: use_build_context_synchronously
+
+                      result
+                          // ignore: use_build_context_synchronously
+                          ? inserimentoRiuscito()
+                          : print('aaaaaa');
                     }
                   },
                   child: const Text('Inserisci'),

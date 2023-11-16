@@ -3,11 +3,13 @@ class Selezionatore {
     this.id,
     this.nome,
     this.cognome,
+    this.email,
   });
 
   int? id;
   String? nome;
   String? cognome;
+  String? email;
 
   factory Selezionatore.fromJson(Map<String, dynamic> json) {
     return Selezionatore(

@@ -23,48 +23,51 @@ class AreaScreen extends StatelessWidget {
       child: Scaffold(
         appBar: const CustomAppbar(title: 'Gestione Aree'),
         endDrawer: const CustomEndDrawer(),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ...aree.map((item) => AreaItem(area: item)).toList(),
-                    SizedBox(
-                      height: heightSize(context) * 0.15,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Text(
-                            'Vai alla gestione academy',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward,
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            width: widthSize(context) * 0.02,
-                          ),
-                        ],
+        body: Container(
+          margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...aree.map((item) => AreaItem(area: item)).toList(),
+                      SizedBox(
+                        height: heightSize(context) * 0.15,
                       ),
-                    ),
-                    const Divider(
-                      thickness: 2.0,
-                      color: Colors.red,
-                    )
-                  ],
+                      TextButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              'Vai alla gestione academy',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward,
+                              color: Colors.red,
+                            ),
+                            SizedBox(
+                              width: widthSize(context) * 0.02,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 2.0,
+                        color: Colors.red,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            CustomButtonAdd(
-                titleShowDialog: 'Aggiungi Area',
-                descrizioneShowDialog: 'Sicuro di voler aggiungere un\' area ?',
-                metodoShowDialog: () {}),
-          ],
+              CustomButtonAdd(
+                  titleShowDialog: 'Aggiungi Area',
+                  descrizioneShowDialog: 'Sicuro di voler aggiungere un\' area ?',
+                  metodoShowDialog: () {}),
+            ],
+          ),
         ),
       ),
     );
