@@ -111,7 +111,23 @@ class AnnuncioProvider extends ChangeNotifier {
       },
       body: json.encode(annuncio.toJson()),
     );
-    if( response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> updateAnnuncio(annuncio) async {
+    String url = '$urlAPI/annuncio/update/${annuncio.id}';
+    final response = await http.put(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(annuncio.toJson()),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       return false;

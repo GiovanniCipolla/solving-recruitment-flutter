@@ -107,7 +107,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return AnnuncioUpdate(
+                            return AnnuncioUpdateScreen(
                               annuncio: annuncio,
                             );
                           },
@@ -134,23 +134,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () {
-                  showConfirmationDialog(
-                    context,
-                    'Conferma eliminazione',
-                    'Sicuro di voler eliminare questo annuncio, non potrà più essere usato!',
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return AnnuncioUpdate(
-                              annuncio: annuncio,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
+                
                 },
                 child: const Row(
                   children: [

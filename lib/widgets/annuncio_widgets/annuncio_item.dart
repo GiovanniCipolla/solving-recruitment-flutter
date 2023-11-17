@@ -54,7 +54,7 @@ class AnnuncioItem extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   Text(
-                    annuncio.titolo!.length > 20
+                    annuncio.titolo!.length > 18
                         ? '${annuncio.titolo!.substring(0, 18)}...'
                         : annuncio.titolo!,
                     style: TextStyle(

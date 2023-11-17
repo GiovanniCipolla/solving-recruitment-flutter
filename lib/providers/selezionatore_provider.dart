@@ -46,7 +46,24 @@ class SelezionatoreProvider extends ChangeNotifier {
       },
       body: json.encode(selezionatore.toJson()),
     );
-    if( response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> updateSelezionatore(selezionatore) async {
+    String url = '$urlAPI/selezionatore/update/${selezionatore.id}';
+    final response = await http.put(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(selezionatore.toJson()),
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       return false;
