@@ -37,6 +37,7 @@ TextFormField customTextFormFieldWithoutValidator(controller, label) {
     ),
   );
 }
+
 TextFormField customTextFormFieldWithValidator(controller, label) {
   return TextFormField(
     controller: controller,
@@ -51,3 +52,22 @@ TextFormField customTextFormFieldWithValidator(controller, label) {
     },
   );
 }
+
+TextFormField customTextFormFieldWithEmail(controller, label) {
+  return TextFormField(
+      controller: controller,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        labelText: label,
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Inserisci una email valida';
+        }
+        if (!value.contains('@')) {
+          return 'Inserisci una email valida';
+        }
+        return null;
+      });
+}
+

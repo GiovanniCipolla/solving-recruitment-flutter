@@ -165,7 +165,7 @@ class Candidato {
       'nome': nome,
       'cognome': cognome,
       'email': email,
-      'stato': (stato != null) ? stato : 'ND',
+'stato': (stato != null) ? stato.toString().split('.').last : 'ND',
       'luogoDiNascita': luogoDiNascita,
       'dataDiNascita':
           dataDiNascita != null ? dataDiNascita!.toIso8601String() : null,
@@ -173,14 +173,14 @@ class Candidato {
       'recapitoTelefonico': recapitoTelefonico,
       'recapitoExtra': recapitoExtra,
       'cap': cap,
-      'linguaInglese': linguaInglese,
+      'linguaInglese': linguaInglese != null ? linguaInglese.toString().split('.').last  : 'ND',
       'tecnologieConosciute': tecnologieConosciute,
       'softSkills': softSkills,
       'altreCompetenzeMaturate': altreCompetenzeMaturate,
       'categoriaProtetta': categoriaProtetta,
       'ral': ral,
-      'seniority': (seniority != null) ? seniority : 'ND',
-      'disponibilitaLavoro': disponibilitaLavoro,
+      'seniority': (seniority != null) ? seniority.toString().split('.').last  : 'ND',
+      'disponibilitaLavoro': (disponibilitaLavoro != null) ?  disponibilitaLavoro.toString().split('.').last  : 'ND',
       'dataPrimoContatto': dataPrimoContatto != null
           ? dataPrimoContatto!.toIso8601String()
           : null,

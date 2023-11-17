@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/colloquio_widgets/colloquio_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
@@ -81,7 +82,13 @@ class ColloquioScreen extends StatelessWidget {
           CustomButtonAdd(
             titleShowDialog: 'Aggiungi Colloquio',
             descrizioneShowDialog: 'Sicuro di voler aggiungere un colloquio?',
-            metodoShowDialog: () {},
+            metodoShowDialog: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return const ColloquioInsertScreen();
+                }
+              ));
+            },
           )
         ]),
       ),

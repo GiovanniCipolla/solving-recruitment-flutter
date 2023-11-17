@@ -8,6 +8,7 @@ import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
+import 'package:intl/intl.dart';
 
 class CandidatoInsertScreen extends StatefulWidget {
   const CandidatoInsertScreen({super.key});
@@ -24,6 +25,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
   final TextEditingController luogoDiNascitaController =
       TextEditingController();
   final TextEditingController dataDiNascitaController = TextEditingController();
+  DateTime? dataDiNascita;
   final TextEditingController residenzaController = TextEditingController();
   final TextEditingController recapitoTelefonicoController =
       TextEditingController();
@@ -51,18 +53,17 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
   Annuncio? annuncioSelezionato;
   final TextEditingController annuncioController = TextEditingController();
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context, contoller, type) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: dataPrimoContatto ?? DateTime.now(),
+      initialDate: type ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != dataPrimoContatto) {
+    if (picked != null && picked != type) {
       setState(() {
-        dataPrimoContatto = picked;
-        dataPrimoContattoController.text =
-            "${picked.day}/${picked.month}/${picked.year}";
+        type = picked;
+        contoller.text = "${picked.day}/${picked.month}/${picked.year}";
       });
     }
   }
@@ -99,21 +100,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
               children: [
                 customTextFormFieldWithValidator(nomeController, 'Nome'),
                 customTextFormFieldWithValidator(cognomeController, 'Cognome'),
-                TextFormField(
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Inserisci una email valida';
-                      }
-                      if (!value.contains('@')) {
-                        return 'Inserisci una email valida';
-                      }
-                      return null;
-                    }),
+                customTextFormFieldWithEmail(emailController, 'E-Mail'),
                 customTextFormFieldWithoutValidator(
                     luogoDiNascitaController, 'Luogo di nascita'),
                 TextFormField(
@@ -122,7 +109,8 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                     labelText: 'Data Di Nascita',
                   ),
                   onTap: () {
-                    _selectDate(context);
+                    _selectDate(
+                        context, dataDiNascitaController, dataDiNascita);
                   },
                 ),
                 customTextFormFieldWithoutValidator(
@@ -324,7 +312,8 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                     labelText: 'Data Primo Contatto',
                   ),
                   onTap: () {
-                    _selectDate(context);
+                    _selectDate(context, dataPrimoContattoController,
+                        dataPrimoContatto);
                   },
                 ),
                 customTextFormFieldWithoutValidator(
@@ -332,19 +321,30 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                 customTextFormFieldWithoutValidator(noteController, 'Note'),
                 DropdownButtonFormField<int>(
                   value: areaSelezionata?.id,
-                  items: areas.map((Area area) {
-                    return DropdownMenuItem<int>(
-                      value: area.id,
-                      child: Text(area.denominazione ?? 'errore'),
-                    );
-                  }).toList(),
+                  items: [
+                    // Aggiungi un elemento vuoto all'inizio della lista
+                    const DropdownMenuItem<int>(
+                      value: 0,
+                      child: Text(' - '),
+                    ),
+                    // Aggiungi gli altri elementi
+                    ...areas.map((Area area) {
+                      return DropdownMenuItem<int>(
+                        value: area.id,
+                        child: Text(area.denominazione ?? 'errore'),
+                      );
+                    }).toList(),
+                  ],
                   onChanged: (int? value) {
-                    if (value != null) {
-                      setState(() {
+                    setState(() {
+                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                      if (value == 0) {
+                        areaSelezionata = null;
+                      } else {
                         areaSelezionata =
                             areas.firstWhere((area) => area.id == value);
-                      });
-                    }
+                      }
+                    });
                   },
                   decoration: const InputDecoration(
                     labelText: 'Area',
@@ -352,19 +352,30 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                 ),
                 DropdownButtonFormField<int>(
                   value: annuncioSelezionato?.id,
-                  items: annunci.map((Annuncio annuncio) {
-                    return DropdownMenuItem<int>(
-                      value: annuncio.id,
-                      child: Text(annuncio.titolo ?? 'errore'),
-                    );
-                  }).toList(),
+                  items: [
+                    // Aggiungi un elemento vuoto all'inizio della lista
+                    const DropdownMenuItem<int>(
+                      value: 0,
+                      child: Text(' - '),
+                    ),
+                    // Aggiungi gli altri elementi
+                    ...annunci.map((Annuncio annuncio) {
+                      return DropdownMenuItem<int>(
+                        value: annuncio.id,
+                        child: Text(annuncio.titolo ?? 'errore'),
+                      );
+                    }).toList(),
+                  ],
                   onChanged: (int? value) {
-                    if (value != null) {
-                      setState(() {
+                    setState(() {
+                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                      if (value == 0) {
+                        annuncioSelezionato = null;
+                      } else {
                         annuncioSelezionato = annunci
                             .firstWhere((annuncio) => annuncio.id == value);
-                      });
-                    }
+                      }
+                    });
                   },
                   decoration: const InputDecoration(
                     labelText: 'Annuncio',
@@ -379,7 +390,8 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                         email: emailController.text,
                         luogoDiNascita: luogoDiNascitaController.text,
                         dataDiNascita: (dataDiNascitaController.text.isNotEmpty)
-                            ? DateTime.parse(dataDiNascitaController.text)
+                            ? DateFormat('dd/MM/yyyy')
+                                .parse(dataDiNascitaController.text)
                             : null,
                         residenza: residenzaController.text,
                         recapitoTelefonico: recapitoTelefonicoController.text,
@@ -395,10 +407,11 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                             : null,
                         seniority: senioritySelezionata,
                         disponibilitaLavoro: disponibilitaLavoroSelezionata,
-                        dataPrimoContatto: (dataPrimoContattoController
-                                .text.isNotEmpty)
-                            ? DateTime.parse(dataPrimoContattoController.text)
-                            : null,
+                        dataPrimoContatto:
+                            (dataPrimoContattoController.text.isNotEmpty)
+                                ? DateFormat('dd/MM/yyyy')
+                                    .parse(dataPrimoContattoController.text)
+                                : null,
                         posizione: posizioneController.text,
                         note: noteController.text,
                         area: areaSelezionata,

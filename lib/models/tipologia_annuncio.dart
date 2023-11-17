@@ -20,6 +20,6 @@ class TipologiaAnnuncio {
   }
 
   Map<String, dynamic> toJson() {
-    return {'id': id, 'descrizione': descrizione, 'countAnnunci': countAnnunci};
+    return {'id': id, 'descrizione': descrizione};
   }
 }

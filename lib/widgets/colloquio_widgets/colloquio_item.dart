@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
+import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_detail_screen.dart';
 
 class ColloquioItem extends StatelessWidget {
@@ -14,9 +16,11 @@ class ColloquioItem extends StatelessWidget {
     final dateFormatter = DateFormat('yyyy-MM-dd');
 
     return InkWell(
-      onTap: () {
+      onTap: ()async {
+final colloquioToSend =await Provider.of<ColloquioProvider>(context, listen: false).getColloquioById(colloquio.id!);
+        // ignore: use_build_context_synchronously
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ColloquioDetailScreen(colloquio: colloquio);
+          return ColloquioDetailScreen(colloquio: colloquioToSend);
         }));
       },
       child: Container(
@@ -44,7 +48,7 @@ class ColloquioItem extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(colloquio.candidato!.nome!,
+                        Text(colloquio.nomeCandidato ?? "Nome mancante",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                             )),
@@ -53,7 +57,7 @@ class ColloquioItem extends StatelessWidget {
                             SizedBox(
                               width: widthSize(context) * 0.015,
                             ),
-                            Text(colloquio.candidato!.cognome!,
+                            Text(colloquio.cognomeCandidato ?? "Cognome mancante",
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                 )),
@@ -91,7 +95,7 @@ class ColloquioItem extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              colloquio.selezionatore!.cognome!,
+                              colloquio.cognomeSelezionatore ?? "Cognome mancante",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -104,7 +108,7 @@ class ColloquioItem extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              colloquio.selezionatore!.nome!,
+                              colloquio.nomeSelezionatore ?? "Nome mancante",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               ),

@@ -17,6 +17,10 @@ class Colloquio {
     this.note,
     this.idSelezionatore,
     this.idCandidato,
+     this.nomeCandidato,
+     this.cognomeCandidato,
+     this.nomeSelezionatore,
+     this.cognomeSelezionatore,
   });
 
   final int? id;
@@ -28,6 +32,10 @@ class Colloquio {
   final String? note;
   final int? idSelezionatore;
   final int? idCandidato;
+  final String? nomeCandidato;
+  final String? cognomeCandidato;
+  final String? nomeSelezionatore;
+  final String? cognomeSelezionatore;
 
   factory Colloquio.fromJson(Map<String, dynamic> json) {
     FeedBackColloquio? feedback = json['feedback'] != null
@@ -68,17 +76,21 @@ class Colloquio {
           : null,
       idCandidato: json['idCandidato'],
       idSelezionatore: json['idSelezionatore'],
+      nomeCandidato: json['nomeCandidato'],
+      cognomeCandidato: json['cognomeCandidato'],
+      nomeSelezionatore: json['nomeSelezionatore'],
+      cognomeSelezionatore: json['cognomeSelezionatore'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'data': data,
-      'tipologia': tipologia,
-      'feedback': feedback,
-      'candidato': candidato,
-      'selezionatore': selezionatore,
+      'data': data != null ? data!.toIso8601String() : null,
+      'tipologia': tipologia.toString().split('.').last,
+      'feedback': feedback != null ? feedback.toString().split('.').last : null,
+      'candidato': candidato?.toJson(),
+      'selezionatore': selezionatore?.toJson(),
       'note': note
     };
   }

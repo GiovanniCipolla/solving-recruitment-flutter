@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             authProvider: authProvider,
             annunci: previous!.annunci,
             candidati: previous.candidati,
-            area: null,
+            area: previous.area,
           ),
         ),
         ChangeNotifierProxyProvider<AuthProvider, CandidatoProvider>(

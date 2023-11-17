@@ -63,7 +63,11 @@ class AnnuncioDetailScreen extends StatelessWidget {
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.primary),
                       ),
-                      Text(dateFormatter.format(annuncio.dataInizio!)),
+                      Text(
+                        annuncio.dataInizio != null
+                            ? dateFormatter.format(annuncio.dataInizio!)
+                            : 'Errore',
+                      ),
                     ]),
                     Row(children: [
                       Text(
@@ -71,8 +75,12 @@ class AnnuncioDetailScreen extends StatelessWidget {
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.primary),
                       ),
-                      Text(dateFormatter.format(annuncio.dataFine!)),
-                    ])
+                      Text(
+                        annuncio.dataFine != null
+                            ? dateFormatter.format(annuncio.dataFine!)
+                            : 'Errore',
+                      ),
+                    ]),
                   ],
                 ),
               ],
@@ -81,7 +89,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
           SizedBox(
             height: heightSize(context) * 0.02,
           ),
-           Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
@@ -94,7 +102,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                     context,
                     'Modifica Annuncio',
                     'Sicuro di voler modificare questo annuncio?',
-                        () {
+                    () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -130,7 +138,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                     context,
                     'Conferma eliminazione',
                     'Sicuro di voler eliminare questo annuncio, non potrà più essere usato!',
-                        () {
+                    () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -150,7 +158,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                     SizedBox(
                       width: 5,
                     ),
-                    Icon( 
+                    Icon(
                       Icons.delete,
                     )
                   ],
@@ -162,28 +170,31 @@ class AnnuncioDetailScreen extends StatelessWidget {
             height: heightSize(context) * 0.05,
           ),
           TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            style: TextButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            ),
+            onPressed: () async {
+              await Provider.of<CandidatoProvider>(context, listen: false)
+                  .getCandidatiByIdAnnuncio(annuncio.id);
+              List<Candidato> candidati =
+                  Provider.of<CandidatoProvider>(context, listen: false)
+                      .candidati;
+              BottomSheetUtils.showListCandidati(context, candidati);
+            },
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Lista Candidati'),
+                SizedBox(
+                  width: 5,
                 ),
-                onPressed: () async {
-                  await Provider.of<CandidatoProvider>(context, listen: false).getCandidatiByIdAnnuncio(annuncio.id);
-                  List<Candidato> candidati = Provider.of<CandidatoProvider>(context, listen: false).candidati;
-                    BottomSheetUtils.showListCandidati(context, candidati);
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Lista Candidati'),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon( 
-                      Icons.touch_app,
-                    )
-                  ],
-                ),
-              ),
+                Icon(
+                  Icons.touch_app,
+                )
+              ],
+            ),
+          ),
         ]),
       ),
       // body: Column(

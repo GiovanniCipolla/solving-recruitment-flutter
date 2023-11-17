@@ -35,16 +35,34 @@ class ColloquioProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getColloquioByCandidatoByTipologia(id,tipologia) async {
-    String url = '$urlAPI/colloquio/candidato/$id/tipologia/$tipologia';
+  Future<Colloquio> getColloquioById( id) async {
+    String url = '$urlAPI/colloquio/get/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      return Colloquio.fromJson(jsonData);
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
+
+  Future<void> getColloquioByCandidatoByTipologia(id,tipologia) async {
+    String url = '$urlAPI/colloquio/colloquioWithNomeCognome/$id/tipologia/$tipologia';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+    });
+    final jsonData = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
-        colloqui.add(Colloquio.fromJson(item));
+        colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
       }
       this.colloqui.clear();
       this.colloqui.addAll(colloqui);
@@ -55,6 +73,23 @@ class ColloquioProvider extends ChangeNotifier {
         title: jsonData['title'],
         description: jsonData['description'],
       );
+    }
+  }
+
+  Future<bool> createColloquio(colloquio) async {
+    String url = '$urlAPI/colloquio';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(colloquio.toJson()),
+    );
+    print(response.body);
+    if( response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

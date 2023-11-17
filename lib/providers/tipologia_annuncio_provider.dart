@@ -36,4 +36,20 @@ class TipologiaAnnuncioProvider extends ChangeNotifier {
       );
     }
   }
+
+  Future<bool> createTipologiaANnuncio(tipologiaAnnuncio) async {
+    String url = '$urlAPI/tipologiaAnnuncio';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(tipologiaAnnuncio.toJson()),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

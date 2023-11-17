@@ -1,6 +1,7 @@
 import 'package:solving_recruitment_flutter/models/area.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 
+
 class Annuncio {
   Annuncio({
     this.id,

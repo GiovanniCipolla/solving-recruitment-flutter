@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
@@ -42,7 +43,11 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
                 titleShowDialog: 'Aggiungi Tipologia',
                 descrizioneShowDialog:
                     'Sicuro di voler aggiungere una tipologia ?',
-                metodoShowDialog: () {}),
+                metodoShowDialog: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const TipologiaAnnuncioInsertScreen();
+                  }));
+                }),
           ],
         ),
       ),
