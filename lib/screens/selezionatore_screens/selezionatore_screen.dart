@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
+import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
@@ -26,7 +27,7 @@ class SelezionatoreScreen extends StatelessWidget {
         appBar: const CustomAppbar(title: 'Gestione Selezionatori'),
         endDrawer: const CustomEndDrawer(),
         body: Container(
-          margin:  EdgeInsets.symmetric(horizontal: heightSize(context) * 0.02),
+          margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.02),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -47,7 +48,12 @@ class SelezionatoreScreen extends StatelessWidget {
                   titleShowDialog: 'Aggiungi Selezionatore',
                   descrizioneShowDialog:
                       'Sicuro di voler aggiungere un selezionatore ?',
-                  metodoShowDialog: () {}),
+                  metodoShowDialog: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const SelezionatoreInsertScreen();
+                    }));
+                  }),
             ],
           ),
         ),

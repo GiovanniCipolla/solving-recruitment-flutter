@@ -36,4 +36,20 @@ class SelezionatoreProvider extends ChangeNotifier {
       );
     }
   }
+
+  Future<bool> createSelezionatore(selezionatore) async {
+    String url = '$urlAPI/selezionatore';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(selezionatore.toJson()),
+    );
+    if( response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -67,6 +67,7 @@ class SelezionatoreItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Expanded(child: Text(selezionatore.email ?? "Email mancante", style: TextStyle(color: Theme.of(context).colorScheme.primary))),
               TextButton(
                 onPressed: () {
                   // Azione da eseguire quando viene premuto il pulsante "Mostra candidati"

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
-import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
@@ -25,30 +24,39 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
       child: Scaffold(
         appBar: const CustomAppbar(title: 'Gestione Tipologia Annunci'),
         endDrawer: const CustomEndDrawer(),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ...tipologiaANnunci
-                        .map((item) =>
-                            TipologiaAnnuncioItem(tipologiaAnnuncio: item))
-                        .toList(),
-                  ],
+        body: Container(
+          margin: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...tipologiaANnunci
+                          .map((item) =>
+                              TipologiaAnnuncioItem(tipologiaAnnuncio: item))
+                          .toList(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            CustomButtonAdd(
+              CustomButtonAdd(
                 titleShowDialog: 'Aggiungi Tipologia',
                 descrizioneShowDialog:
                     'Sicuro di voler aggiungere una tipologia ?',
                 metodoShowDialog: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const TipologiaAnnuncioInsertScreen();
-                  }));
-                }),
-          ],
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const TipologiaAnnuncioInsertScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
