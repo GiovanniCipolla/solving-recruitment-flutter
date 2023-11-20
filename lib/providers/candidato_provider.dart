@@ -147,47 +147,43 @@ class CandidatoProvider extends ChangeNotifier {
       );
     }
   }
-Future<void> getCandidatiFiltratiAutoComplete(String filtro) async {
-  try {
-    if (filtro != null) {
-String url = '$urlAPI/candidato/filtrataMobile?filtro=$filtro';
-      final response = await http.get(Uri.parse(url), headers: {
-        'Content-Type': 'application/json',
-      });
-      
-      print('URL della richiesta: $url');
-      print('Codice di risposta: ${response.statusCode}');
-      print('Body della risposta: ${response.body}');
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        List<Candidato> candidati = [];
-        final jsonData = json.decode(response.body);
-        
-        for (var item in jsonData) {
-          candidati.add(Candidato.fromJsonGetAllCandidato(item));
+  Future<void> getCandidatiFiltratiAutoComplete(String filtro) async {
+    try {
+      if (filtro != null) {
+        String url = '$urlAPI/candidato/filtrataMobile?filtro=$filtro';
+        final response = await http.get(Uri.parse(url), headers: {
+          'Content-Type': 'application/json',
+        });
+
+        print('URL della richiesta: $url');
+        print('Codice di risposta: ${response.statusCode}');
+        print('Body della risposta: ${response.body}');
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          List<Candidato> candidati = [];
+          final jsonData = json.decode(response.body);
+
+          for (var item in jsonData) {
+            candidati.add(Candidato.fromJsonGetAllCandidato(item));
+          }
+
+          this.candidati.clear();
+          this.candidati.addAll(candidati);
+          notifyListeners();
+        } else {
+          throw HttpException(
+            statusCode: response.statusCode,
+            title: 'Errore di rete',
+            description: 'Errore durante la chiamata al server',
+          );
         }
-
-        this.candidati.clear();
-        this.candidati.addAll(candidati);
-        notifyListeners();
-      } else {
-        throw HttpException(
-          statusCode: response.statusCode,
-          title: 'Errore di rete',
-          description: 'Errore durante la chiamata al server',
-        );
       }
+    } catch (error) {
+      print('Errore durante la chiamata: $error');
+      // Tratta l'errore come desiderato
     }
-  } catch (error) {
-    print('Errore durante la chiamata: $error');
-    // Tratta l'errore come desiderato
   }
-}
-
-
-
-
-
 
   Future<void> getCandidatisearchAndPagination(filtro) async {
     String url = '$urlAPI/search';
@@ -242,4 +238,34 @@ String url = '$urlAPI/candidato/filtrataMobile?filtro=$filtro';
       return false;
     }
   }
+
+  Future<bool> updateCandidato(Candidato candidato) async {
+    String url = '$urlAPI/candidato/update/${candidato.id}';
+    final response = await http.put(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(candidato.toJson()),
+    );
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+Future<bool> deleteCandidato(id) async {
+  String url = '$urlAPI/candidato/delete/$id';
+  final response = await http.delete(Uri.parse(url), headers: {
+    'Content-Type': 'application/json',
+  });
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    return true;
+  } else {
+    return false;
+  }
+
 }
+}
+

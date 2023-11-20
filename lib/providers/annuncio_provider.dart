@@ -133,4 +133,16 @@ class AnnuncioProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> deleteAnnuncio(id) async {
+    String url = '$urlAPI/annuncio/delete/$id';
+    final response = await http.delete(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -4,7 +4,6 @@ import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
-import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_update_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_card_item.dart';
@@ -56,7 +55,8 @@ class CandidatoDetailScreen extends StatelessWidget {
                 ),
                 const Text('Area : '),
                 Text(
-                  candidato.annuncio!.area!.denominazione ?? "Area mancante",
+                  candidato.annuncio != null && candidato.annuncio!.area != null ? 
+                  candidato.annuncio!.area!.denominazione ?? "Area mancante " : "Area mancante ",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -142,7 +142,8 @@ class CandidatoDetailScreen extends StatelessWidget {
                 icon: const Icon(
                   Icons.person,
                 ),
-                candidatoId: candidato.id!, tipologia: 'CONOSCITIVO',
+                candidatoId: candidato.id!,
+                tipologia: 'CONOSCITIVO',
               ),
             ),
             Expanded(
@@ -152,7 +153,8 @@ class CandidatoDetailScreen extends StatelessWidget {
               icon: const Icon(
                 Icons.settings,
               ),
-              candidatoId: candidato.id!, tipologia: 'TECNICO',
+              candidatoId: candidato.id!,
+              tipologia: 'TECNICO',
             )),
             Expanded(
                 child: CandidatoDetailColloquiItem(
@@ -161,7 +163,8 @@ class CandidatoDetailScreen extends StatelessWidget {
               icon: const Icon(
                 Icons.business_center,
               ),
-              candidatoId: candidato.id!, tipologia: 'FINALE',
+              candidatoId: candidato.id!,
+              tipologia: 'FINALE',
             ))
           ]),
           SizedBox(
@@ -176,10 +179,10 @@ class CandidatoDetailScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () async {
-                //   final CandidatoProvider candidatoProvider = Provider.of( context,listen: false);
-                //  Candidato candidatoToEdit =  await candidatoProvider.getCandidato(candidato.id!);
-                //  // ignore: use_build_context_synchronously
-                //  Navigator.push(context, MaterialPageRoute(builder: (context) => CandidatoUpdateScreen(candidato: candidatoToEdit)));
+                    final CandidatoProvider candidatoProvider = Provider.of( context,listen: false);
+                   Candidato candidatoToEdit =  await candidatoProvider.getCandidato(candidato.id!);
+                   // ignore: use_build_context_synchronously
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => CandidatoUpdateScreen(candidato: candidatoToEdit)));
                 },
                 child: const Row(
                   children: [
@@ -198,18 +201,39 @@ class CandidatoDetailScreen extends StatelessWidget {
                   backgroundColor: Colors.red,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: () {},
-                child: const Row(
-                  children: [
-                    Text('Elimina candidato'),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(
-                      Icons.delete,
-                    )
-                  ],
-                ),
+                onPressed: () async {
+                  final result = await Provider.of<CandidatoProvider>(context,
+                          listen: false)
+                      .deleteCandidato(candidato.id!);
+                  if (result) {
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Candidato eliminato',
+                        ),
+                      ),
+                    );
+                  } else {
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Errore durante l\'eliminazione del candidato',
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: const Row(children: [
+                  Text('Elimina candidato'),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.delete,
+                  )
+                ]),
               ),
             ],
           ),

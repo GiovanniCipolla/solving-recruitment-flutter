@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
+import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_edit_screen.dart';
 
 class SelezionatoreItem extends StatelessWidget {
@@ -41,9 +43,8 @@ class SelezionatoreItem extends StatelessWidget {
                                   selezionatore.nome ?? "Nome mancante",
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 const Spacer(),
@@ -55,13 +56,11 @@ class SelezionatoreItem extends StatelessWidget {
                                   width: widthSize(context) * 0.2,
                                 ),
                                 Text(
-                                  selezionatore.cognome ??
-                                      "Cognome mancante",
+                                  selezionatore.cognome ?? "Cognome mancante",
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ],
@@ -75,11 +74,43 @@ class SelezionatoreItem extends StatelessWidget {
                 Positioned(
                   top: 0,
                   right: 5,
-                  child: IconButton(
-                    icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.primary),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelezionatoreEditScreen(selezionatore: selezionatore)));
-                    },
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.settings,
+                            color: Theme.of(context).colorScheme.primary),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SelezionatoreEditScreen(
+                                      selezionatore: selezionatore)));
+                        },
+                      ),
+                      IconButton(
+                          onPressed: () async {
+                            final result =
+                                await Provider.of<SelezionatoreProvider>(
+                                        context,
+                                        listen: false)
+                                    .deleteSelezionatore(selezionatore.id);
+                            if (result) {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                    "Selezionatore eliminato correttamente"),
+                              ));
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Selezionatore non cancellato'),
+                              ));
+                            }
+                          },
+                          icon: const Icon(Icons.delete, color: Colors.red)),
+                    ],
                   ),
                 ),
               ],
@@ -89,12 +120,9 @@ class SelezionatoreItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Expanded(
-                    child: Text(selezionatore.email ??
-                        "Email mancante",
+                    child: Text(selezionatore.email ?? "Email mancante",
                         style: TextStyle(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary))),
+                            color: Theme.of(context).colorScheme.primary))),
                 TextButton(
                   onPressed: () {
                     // Azione da eseguire quando viene premuto il pulsante "Mostra candidati"
@@ -104,17 +132,13 @@ class SelezionatoreItem extends StatelessWidget {
                       Text(
                         'Mostra Colloqui Effettuati',
                         style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: heightSize(context) * 0.015,
                         ),
                       ),
                       Icon(
                         Icons.chevron_right,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ],
                   ),

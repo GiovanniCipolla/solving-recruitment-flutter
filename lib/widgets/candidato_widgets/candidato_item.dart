@@ -40,7 +40,7 @@ class CandidatoItem extends StatelessWidget {
               children: [
                 Icon(
                   Icons.person,
-                  color: statoCandidatoIconMap[candidato.stato]!.color,
+                  color: statoCandidatoIconMap[candidato.stato]!.color ?? Colors.red,
                   size: 50,
                 ),
                 Column(

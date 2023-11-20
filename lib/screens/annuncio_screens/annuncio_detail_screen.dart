@@ -6,6 +6,8 @@ import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_update_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
@@ -69,18 +71,6 @@ class AnnuncioDetailScreen extends StatelessWidget {
                             : 'Errore',
                       ),
                     ]),
-                    Row(children: [
-                      Text(
-                        'Fine : ',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary),
-                      ),
-                      Text(
-                        annuncio.dataFine != null
-                            ? dateFormatter.format(annuncio.dataFine!)
-                            : 'Errore',
-                      ),
-                    ]),
                   ],
                 ),
               ],
@@ -97,12 +87,14 @@ class AnnuncioDetailScreen extends StatelessWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: () {
+                onPressed: ()  {
                   showConfirmationDialog(
                     context,
                     'Modifica Annuncio',
                     'Sicuro di voler modificare questo annuncio?',
-                    () {
+                    () async {
+                      await  Provider.of<AreaProvider>(context).getAreas();
+                      await  Provider.of<AnnuncioProvider>(context).getAnnunci();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -133,8 +125,23 @@ class AnnuncioDetailScreen extends StatelessWidget {
                   backgroundColor: Colors.red,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: () {
-                
+                onPressed: () async {
+                  final result = await Provider.of<AnnuncioProvider>(context,
+                          listen: false)
+                      .deleteAnnuncio(annuncio.id);
+                  if (result) {
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                      'Annuncio eliminato',
+                    )));
+                  } else {
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                      'Errore durante l\'eliminazione dell\'annuncio',
+                    )));
+                  }
                 },
                 child: const Row(
                   children: [
@@ -162,8 +169,10 @@ class AnnuncioDetailScreen extends StatelessWidget {
               await Provider.of<CandidatoProvider>(context, listen: false)
                   .getCandidatiByIdAnnuncio(annuncio.id);
               List<Candidato> candidati =
+                  // ignore: use_build_context_synchronously
                   Provider.of<CandidatoProvider>(context, listen: false)
                       .candidati;
+              // ignore: use_build_context_synchronously
               BottomSheetUtils.showListCandidati(context, candidati);
             },
             child: const Row(
@@ -181,239 +190,6 @@ class AnnuncioDetailScreen extends StatelessWidget {
           ),
         ]),
       ),
-      // body: Column(
-      //   children: [
-      //     SizedBox(height: heightSize(context) * 0.10),
-      //     TextButton(
-      //       onPressed: () => Navigator.pop(context),
-      //       child: Row(
-      //         children: [
-      //           Icon(Icons.arrow_back),
-      //           Text('Torna agli annunci'),
-      //         ],
-      //       ),
-      //     ),
-      //     Container(
-      //       margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
-      //       color: Theme.of(context).colorScheme.primary,
-      //       child: Column(
-      //         children: [
-      //           SizedBox(height: heightSize(context) * 0.020),
-      //           Text(
-      //             annuncio.titolo!,
-      //             style: TextStyle(
-      //               color: Theme.of(context).colorScheme.onPrimary,
-      //               fontSize: heightSize(context) * 0.02,
-      //             ),
-      //           ),
-      //           Divider(
-      //             color: Theme.of(context).colorScheme.onPrimary,
-      //             thickness: 0.5,
-      //           ),
-      //           SingleChildScrollView(
-      //             child: Text(
-      //               annuncio.descrizione!,
-      //               style: TextStyle(
-      //                 color: Theme.of(context).colorScheme.onPrimary,
-      //                 fontSize: heightSize(context) * 0.017,
-      //               ),
-      //             ),
-      //           ),
-      //           Divider(
-      //             color: Theme.of(context).colorScheme.onPrimary,
-      //             thickness: 0.5,
-      //           ),
-      //           SizedBox(height: heightSize(context) * 0.020),
-      //           Column(
-      //             children: [
-      //               Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: [
-      //                   Padding(
-      //                     padding: EdgeInsets.all(heightSize(context) * 0.01),
-      //                     child: Column(
-      //                       crossAxisAlignment: CrossAxisAlignment.start,
-      //                       children: [
-      //                         Row(
-      //                           mainAxisAlignment: MainAxisAlignment.start,
-      //                           children: [
-      //                             Text(
-      //                               'Inizio Annuncio : ',
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                             Text(
-      //                               dateFormatter.format(annuncio.dataInizio!),
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                           ],
-      //                         ),
-      //                         SizedBox(height: heightSize(context) * 0.01),
-      //                         Row(
-      //                           mainAxisAlignment: MainAxisAlignment.start,
-      //                           children: [
-      //                             Text(
-      //                               'Fine Annuncio : ',
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                             Text(
-      //                               dateFormatter.format(annuncio.dataFine!),
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                   Padding(
-      //                     padding: EdgeInsets.all(heightSize(context) * 0.01),
-      //                     child: Column(
-      //                       crossAxisAlignment: CrossAxisAlignment.end,
-      //                       children: [
-      //                         Row(
-      //                           children: [
-      //                             Text(
-      //                               'Area : ',
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                             Text(
-      //                               annuncio.area!.denominazione!,
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                           ],
-      //                         ),
-      //                         SizedBox(height: heightSize(context) * 0.01),
-      //                         Row(
-      //                           children: [
-      //                             Text(
-      //                               'Tipologia : ',
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                             Text(
-      //                               annuncio.tipologia!.descrizione!,
-      //                               style: TextStyle(
-      //                                 color: Theme.of(context).colorScheme.onPrimary,
-      //                               ),
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //               Divider(
-      //                 color: Theme.of(context).colorScheme.onPrimary,
-      //                 thickness: 1.5,
-      //               ),
-      //               SizedBox(height: heightSize(context) * 0.01),
-      //               ElevatedButton(
-      //                 onPressed: () {},
-      //                 child: Row(
-      //                   children: [
-      //                     Text(
-      //                       'Mostra candidati di questo annuncio',
-      //                       style: TextStyle(
-      //                         color: Theme.of(context).colorScheme.onPrimary,
-      //                       ),
-      //                     ),
-      //                     Icon(
-      //                       Icons.chevron_right,
-      //                       color: Theme.of(context).colorScheme.onPrimary,
-      //                     ),
-      //                   ],
-      //                 ),
-      //               ),
-      //               SizedBox(height: heightSize(context) * 0.02),
-      //             ],
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //     SizedBox(height: heightSize(context) * 0.02),
-      //     Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //       children: [
-      //         TextButton(
-      //           style: TextButton.styleFrom(
-      //             backgroundColor: Theme.of(context).colorScheme.primary,
-      //             foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      //           ),
-      //           onPressed: () {
-      //             showConfirmationDialog(
-      //               context,
-      //               'Modifica Annuncio',
-      //               'Sicuro di voler modificare questo annuncio?',
-      //                   () {
-      //                 Navigator.push(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                     builder: (context) {
-      //                       return AnnuncioUpdate(
-      //                         annuncio: annuncio,
-      //                       );
-      //                     },
-      //                   ),
-      //                 );
-      //               },
-      //             );
-      //           },
-      //           child: const Text('Modifica Annuncio'),
-      //         ),
-      //         TextButton(
-      //           style: TextButton.styleFrom(
-      //             backgroundColor: Colors.red,
-      //             foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      //           ),
-      //           onPressed: () {
-      //             showConfirmationDialog(
-      //               context,
-      //               'Conferma eliminazione',
-      //               'Sicuro di voler eliminare questo annuncio, non potrà più essere usato!',
-      //                   () {
-      //                 Navigator.push(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                     builder: (context) {
-      //                       return AnnuncioUpdate(
-      //                         annuncio: annuncio,
-      //                       );
-      //                     },
-      //                   ),
-      //                 );
-      //               },
-      //             );
-      //           },
-      //           child: const Text('Elimina annuncio'),
-      //         ),
-      //       ],
-      //     ),
-      //     SizedBox(height: heightSize(context) * 0.05),
-      //     TextButton(
-      //       style: TextButton.styleFrom(
-      //         backgroundColor: Theme.of(context).colorScheme.primary,
-      //         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      //       ),
-      //       onPressed: () {
-      //         // Add action to be executed when the "Ordina per" button is pressed.
-      //       },
-      //       child: const Text('Lista Candidati'),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

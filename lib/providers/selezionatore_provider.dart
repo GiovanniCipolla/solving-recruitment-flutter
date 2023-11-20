@@ -62,11 +62,22 @@ class SelezionatoreProvider extends ChangeNotifier {
       },
       body: json.encode(selezionatore.toJson()),
     );
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       return false;
     }
   }
+
+ Future<bool> deleteSelezionatore(id) async {
+   String url = '$urlAPI/selezionatore/delete/$id';
+   final response = await http.delete(Uri.parse(url), headers: {
+     'Content-Type': 'application/json',
+   });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+ }
 }

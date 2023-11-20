@@ -1,7 +1,7 @@
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
 
-enum Stato { ND, SUPERATO, RIFIUTATO, IN_ATTESA }
+enum Stato { ND , ASSUNTO , ISCRITTO ,IDONEO , RIFIUTATO , IN_ATTESA }
 
 enum LinguaInglese { ND, SCARSO, SUFFICIENTE, BUONO, OTTIMO }
 
