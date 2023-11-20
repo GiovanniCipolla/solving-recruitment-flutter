@@ -39,7 +39,7 @@ class ColloquioDetailScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(colloquio.candidato!.nome!,
+                      Text(colloquio.nomeCandidato ?? "Nome mancante",
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                           )),
@@ -48,7 +48,7 @@ class ColloquioDetailScreen extends StatelessWidget {
                           SizedBox(
                             width: widthSize(context) * 0.015,
                           ),
-                          Text(colloquio.candidato!.cognome!,
+                          Text(colloquio.cognomeCandidato ?? "Cognome mancante",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               )),
@@ -79,7 +79,7 @@ class ColloquioDetailScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            colloquio.selezionatore!.cognome!,
+                            colloquio.cognomeCandidato ?? "cognome mancante",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -92,7 +92,7 @@ class ColloquioDetailScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            colloquio.selezionatore!.nome!,
+                            colloquio.nomeSelezionatore ?? "nome mancante",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                             ),

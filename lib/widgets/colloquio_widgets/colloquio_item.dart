@@ -48,7 +48,7 @@ final colloquioToSend =await Provider.of<ColloquioProvider>(context, listen: fal
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(colloquio.nomeCandidato ?? "Nome mancante",
+                        Text(colloquio.nomeCandidato ?? "errore",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                             )),
@@ -57,7 +57,7 @@ final colloquioToSend =await Provider.of<ColloquioProvider>(context, listen: fal
                             SizedBox(
                               width: widthSize(context) * 0.015,
                             ),
-                            Text(colloquio.cognomeCandidato ?? "Cognome mancante",
+                            Text(colloquio.cognomeCandidato ?? "errore",
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                 )),
@@ -95,7 +95,7 @@ final colloquioToSend =await Provider.of<ColloquioProvider>(context, listen: fal
                         Row(
                           children: [
                             Text(
-                              colloquio.cognomeSelezionatore ?? "Cognome mancante",
+                              colloquio.cognomeSelezionatore ?? "errore",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -108,7 +108,7 @@ final colloquioToSend =await Provider.of<ColloquioProvider>(context, listen: fal
                         Row(
                           children: [
                             Text(
-                              colloquio.nomeSelezionatore ?? "Nome mancante",
+                              colloquio.nomeSelezionatore ?? "errore",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               ),

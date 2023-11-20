@@ -80,6 +80,7 @@ class Colloquio {
       cognomeCandidato: json['cognomeCandidato'],
       nomeSelezionatore: json['nomeSelezionatore'],
       cognomeSelezionatore: json['cognomeSelezionatore'],
+      note: json['note'],
     );
   }
 

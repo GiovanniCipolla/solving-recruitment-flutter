@@ -13,7 +13,7 @@ class ColloquioProvider extends ChangeNotifier {
   ColloquioProvider({required this.authProvider, required this.colloqui});
 
   Future<void> getColloqui() async {
-    String url = '$urlAPI/colloquio/get';
+    String url = '$urlAPI/colloquio/getMobile';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
     });
@@ -21,7 +21,7 @@ class ColloquioProvider extends ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
-        colloqui.add(Colloquio.fromJson(item));
+        colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
       }
       this.colloqui.clear();
       this.colloqui.addAll(colloqui);
@@ -36,13 +36,13 @@ class ColloquioProvider extends ChangeNotifier {
   }
 
   Future<Colloquio> getColloquioById( id) async {
-    String url = '$urlAPI/colloquio/get/$id';
+    String url = '$urlAPI/colloquio/getMobile/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return Colloquio.fromJson(jsonData);
+      return Colloquio.fromJsonGetAllColloqui(jsonData);
     } else {
       throw HttpException(
         statusCode: response.statusCode,
