@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
+import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/models/colloquio.dart';
 
 class BottomSheetUtils {
   static Widget _buildInfoCandidati(Candidato candidato) {
@@ -44,6 +46,71 @@ class BottomSheetUtils {
     );
   }
 
+  static Widget _buildInfoAnnuncio(Annuncio annuncio) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                annuncio.titolo ?? "Titolo mancante",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              const Spacer(),
+              Text(DateFormat('yyyy-MM-dd').format(annuncio.dataInizio ?? DateTime.now()),
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ))
+            ],
+          ),
+          const Divider(
+            thickness: 0.5,
+          )
+        ],
+      ),
+    );
+  }
+  static Widget _buildInfoColloquio(Colloquio colloquio) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                tipologiaMap[colloquio.tipologia] ?? "Errore",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              const Spacer(),
+              Text(feedbackLabelMap[colloquio.feedback] ?? "Da dare feedback",
+                  style:  TextStyle(
+                    fontSize: 14,
+                    color: feedbackColorMap[colloquio.feedback],
+                  ))
+            ],
+          ),
+          const Divider(
+            thickness: 0.5,
+          )
+        ],
+      ),
+    );
+  }
   static Widget _buildInfoRow(String label, String? value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
@@ -329,7 +396,10 @@ class BottomSheetUtils {
   }
 
   static void showListCandidati(
-      BuildContext context, List<Candidato> candidati) {
+    BuildContext context,
+    String title,
+    List<Candidato> candidati,
+  ) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -339,7 +409,7 @@ class BottomSheetUtils {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Lista Candidati',
+                title,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -353,6 +423,74 @@ class BottomSheetUtils {
               // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
               for (Candidato candidato in candidati)
                 _buildInfoCandidati(candidato),
+            ],
+          ),
+        );
+      },
+    );
+  }
+  static void showListAnnunci(
+    BuildContext context,
+    String title,
+    List<Annuncio> annunci,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              Divider(
+                color: Theme.of(context).colorScheme.primary,
+                thickness: 2,
+              ),
+              // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
+              for (Annuncio annuncio in annunci)
+                _buildInfoAnnuncio(annuncio),
+            ],
+          ),
+        );
+      },
+    );
+  }
+  static void showListColloqui(
+    BuildContext context,
+    String title,
+    List<Colloquio> colloqui,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              Divider(
+                color: Theme.of(context).colorScheme.primary,
+                thickness: 2,
+              ),
+              // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
+              for (Colloquio colloquio in colloqui)
+                _buildInfoColloquio(colloquio),
             ],
           ),
         );

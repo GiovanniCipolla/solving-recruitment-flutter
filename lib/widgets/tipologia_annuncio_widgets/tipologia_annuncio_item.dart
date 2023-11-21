@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio_update.dart';
 
 class TipologiaAnnuncioItem extends StatelessWidget {
@@ -103,8 +104,9 @@ class TipologiaAnnuncioItem extends StatelessWidget {
                       Provider.of<AnnuncioProvider>(context, listen: false);
                   await annuncioProvider.getAnnunciWithSameIdTipolgiaAnnuncio(
                       tipologiaAnnuncio.id!);
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushNamed(context, AnnuncioScreen.routeName);
+                 List<Annuncio> annunci = annuncioProvider.annunci;
+                 // ignore: use_build_context_synchronously
+                 BottomSheetUtils.showListAnnunci(context, 'Annunci con tipologia :  ${tipologiaAnnuncio.descrizione}', annunci);
                 },
                 child: Row(
                   children: [
@@ -116,7 +118,7 @@ class TipologiaAnnuncioItem extends StatelessWidget {
                       ),
                     ),
                     Icon(
-                      Icons.chevron_right,
+                      Icons.touch_app,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ],

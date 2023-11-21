@@ -24,7 +24,11 @@ class AnnuncioDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(title: annuncio.titolo!),
+      appBar: AppBar(
+        title:  Text(
+          'Dettagli Annuncio',style: TextStyle(fontSize: 25, color: Theme.of(context).colorScheme.primary),
+        )
+      ),
       endDrawer: const CustomEndDrawer(),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
@@ -93,8 +97,10 @@ class AnnuncioDetailScreen extends StatelessWidget {
                     'Modifica Annuncio',
                     'Sicuro di voler modificare questo annuncio?',
                     () async {
-                      await  Provider.of<AreaProvider>(context).getAreas();
-                      await  Provider.of<AnnuncioProvider>(context).getAnnunci();
+                      await  Provider.of<AreaProvider>(context, listen: false).getAreas();
+                      // ignore: use_build_context_synchronously
+                      await  Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -173,7 +179,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
                   Provider.of<CandidatoProvider>(context, listen: false)
                       .candidati;
               // ignore: use_build_context_synchronously
-              BottomSheetUtils.showListCandidati(context, candidati);
+              BottomSheetUtils.showListCandidati(context, 'Candidati dell\'annuncio ${annuncio.titolo}' ,candidati);
             },
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

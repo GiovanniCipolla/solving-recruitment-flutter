@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
+import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
@@ -27,11 +29,9 @@ class CandidatoDetailColloquiItem extends StatelessWidget {
             Provider.of<ColloquioProvider>(context, listen: false);
         await colloquioProvider.getColloquioByCandidatoByTipologia(
             3, tipologia);
-        // ignore: use_build_context_synchronously
-        Navigator.pushNamed(
-          context,
-          ColloquioScreen.routeName,
-        );
+       List<Colloquio> colloqui = colloquioProvider.colloqui;
+       // ignore: use_build_context_synchronously
+       BottomSheetUtils.showListColloqui(context, 'Lista Colloqui ${tipologia}', colloqui);
       },
       child: Card(
           elevation: 5,

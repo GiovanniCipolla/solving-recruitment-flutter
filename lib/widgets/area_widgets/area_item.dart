@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
+import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
-import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 
 class AreaItem extends StatelessWidget {
   const AreaItem({super.key, required this.area});
@@ -62,8 +64,9 @@ class AreaItem extends StatelessWidget {
               onPressed: () async {
                final candidatoProvider =  Provider.of<CandidatoProvider>(context, listen: false);
                 await candidatoProvider.getCandidatiWithSameArea(area.id!);
+                List<Candidato> candidati =  candidatoProvider.candidati;
                 // ignore: use_build_context_synchronously
-                Navigator.pushNamed(context, CandidatoScreen.routeName);
+                BottomSheetUtils.showListCandidati(context, 'Candidati di ${area.denominazione}' ,candidati);
               },
               child: Row(
                 children: [
@@ -75,7 +78,7 @@ class AreaItem extends StatelessWidget {
                     ),
                   ),
                   Icon(
-                    Icons.chevron_right,
+                    Icons.touch_app,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ],
@@ -85,8 +88,9 @@ class AreaItem extends StatelessWidget {
               onPressed: () async {
                 final annuncioProvider =  Provider.of<AnnuncioProvider>(context, listen: false);
                 await annuncioProvider.getAnnunciByIdArea(area.id!);
+                List<Annuncio> annunci =  annuncioProvider.annunci;
                 // ignore: use_build_context_synchronously
-                Navigator.pushNamed(context, AnnuncioScreen.routeName);
+                BottomSheetUtils.showListAnnunci(context, 'Annunci di ${area.denominazione}' ,annunci);
               },
               child: Row(
                 children: [
@@ -98,7 +102,7 @@ class AreaItem extends StatelessWidget {
                     ),
                   ),
                   Icon(
-                    Icons.chevron_right,
+                    Icons.touch_app,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ],

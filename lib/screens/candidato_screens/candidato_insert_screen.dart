@@ -9,6 +9,7 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:solving_recruitment_flutter/utilities/dropdownButtonFormField.dart';
 
 class CandidatoInsertScreen extends StatefulWidget {
   const CandidatoInsertScreen({super.key});
@@ -78,10 +79,14 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AreaProvider>(context).getAreas();
-    Provider.of<AnnuncioProvider>(context).getAnnunci();
-    final areas = Provider.of<AreaProvider>(context).aree;
-    final annunci = Provider.of<AnnuncioProvider>(context).annunci;
+    final areaProvider = Provider.of<AreaProvider>(context, listen: false);
+    // ignore: use_build_context_synchronously
+    final annuncioProvider =
+        Provider.of<AnnuncioProvider>(context, listen: false);
+    areaProvider.getAreas();
+    annuncioProvider.getAnnunci();
+    final areas = areaProvider.aree;
+    final annunci = annuncioProvider.annunci;
     return Scaffold(
       appBar: AppBar(
         title: Text('Inserisci Candidato',
@@ -120,24 +125,13 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                 customTextFormFieldWithoutValidator(
                     recapitoExtra, 'Recapito extra'),
                 customTextFormFieldWithoutValidator(cap, 'CAP'),
-                DropdownButtonFormField<LinguaInglese>(
-                  value: linguaIngleseSelezionata,
-                  items: LinguaInglese.values.map((LinguaInglese value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(linguaIngleseMap[value] ?? ''),
-                    );
-                  }).toList(),
-                  onChanged: (LinguaInglese? value) {
-                    if (value != null) {
-                      setState(() {
-                        linguaIngleseSelezionata = value;
-                      });
-                    }
+                showLinguaInglese(
+                  linguaIngleseSelezionata ?? LinguaInglese.ND,
+                  (LinguaInglese? value) {
+                    setState(() {
+                      linguaIngleseSelezionata = value;
+                    });
                   },
-                  decoration: const InputDecoration(
-                    labelText: 'Lingua Inglese',
-                  ),
                 ),
                 const SizedBox(
                   height: 10,

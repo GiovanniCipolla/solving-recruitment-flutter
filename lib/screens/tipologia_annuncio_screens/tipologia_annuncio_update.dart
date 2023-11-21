@@ -43,7 +43,11 @@ class _TipologiaAnnuncioUpdateScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Modifica tipologia annuncio'),
+        title: Text(
+          'Modifica tipologia annuncio',
+          style: TextStyle(
+              fontSize: 20, color: Theme.of(context).colorScheme.primary),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

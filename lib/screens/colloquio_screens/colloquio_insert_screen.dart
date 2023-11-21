@@ -68,8 +68,8 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
         selezionatoreProvider.selezionatori;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Inserisci Colloquio',
+        title:  Text(
+          'Inserisci Colloquio', style: TextStyle(fontSize: 25, color: Theme.of(context).colorScheme.primary),
         ),
       ),
       body: Form(
@@ -123,7 +123,7 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                 return (a.nome! + a.cognome!).compareTo(b.nome! + b.cognome!);
               },
               itemSubmitted: (item) async {
-               await  candidatoSelezionato(item.id);
+                await candidatoSelezionato(item.id);
                 setState(() {
                   candidatoController.text = '${item.nome} ${item.cognome}';
                 });
@@ -195,7 +195,8 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                         : null,
                     candidato: candidato,
                     selezionatore: selezionatoreSelezionato,
-                    note: 'Ricorda di scrivere una nota, perchè il dto sta fuori di testa',
+                    note:
+                        'Ricorda di scrivere una nota, perchè il dto sta fuori di testa',
                   );
                   final colloquioProvider =
                       Provider.of<ColloquioProvider>(context, listen: false);
@@ -204,7 +205,7 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                   result ? inserimentoRiuscito() : print('NON VAAA');
                 }
               },
-              child: Text('Inserisci'),
+              child: const Text('Inserisci'),
             )
           ]),
         ),

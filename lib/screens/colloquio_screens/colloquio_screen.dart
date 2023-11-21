@@ -38,7 +38,7 @@ class ColloquioScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () {
-                  // Aggiungi l'azione da eseguire quando il pulsante "Applica filtri" viene premuto.
+                  showAlertDialog(context);
                 },
                 child: const Row(
                   children: [
@@ -55,7 +55,7 @@ class ColloquioScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () {
-                  // Aggiungi l'azione da eseguire quando il pulsante "Ordina per" viene premuto.
+                  showAlertDialog(context);
                 },
                 child: const Row(
                   children: [
@@ -83,11 +83,9 @@ class ColloquioScreen extends StatelessWidget {
             titleShowDialog: 'Aggiungi Colloquio',
             descrizioneShowDialog: 'Sicuro di voler aggiungere un colloquio?',
             metodoShowDialog: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return const ColloquioInsertScreen();
-                }
-              ));
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ColloquioInsertScreen();
+              }));
             },
           )
         ]),

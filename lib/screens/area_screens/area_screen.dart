@@ -24,7 +24,7 @@ class AreaScreen extends StatelessWidget {
         appBar: const CustomAppbar(title: 'Gestione Aree'),
         endDrawer: const CustomEndDrawer(),
         body: Container(
-          margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
+          margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.02),
           child: Column(
             children: [
               Expanded(
@@ -65,7 +65,10 @@ class AreaScreen extends StatelessWidget {
               CustomButtonAdd(
                   titleShowDialog: 'Aggiungi Area',
                   descrizioneShowDialog: 'Sicuro di voler aggiungere un\' area ?',
-                  metodoShowDialog: () {}),
+                  metodoShowDialog: () {
+                                        showAlertDialog(context);
+
+                  }),
             ],
           ),
         ),

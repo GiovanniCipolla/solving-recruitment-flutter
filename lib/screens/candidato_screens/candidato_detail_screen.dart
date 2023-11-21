@@ -18,7 +18,7 @@ class CandidatoDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dettagli Candidato'),
+        title:  Text('Dettagli Candidato', style: TextStyle(fontSize: 25, color: Theme.of(context).colorScheme.primary)),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

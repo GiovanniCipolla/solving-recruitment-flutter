@@ -36,7 +36,9 @@ class AnnuncioScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showAlertDialog(context);
+                  },
                   child: const Row(
                     children: [
                       Text('Cerca per'),
@@ -51,7 +53,9 @@ class AnnuncioScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showAlertDialog(context);
+                  },
                   child: const Row(
                     children: [
                       Text('Ordina per'),
@@ -87,7 +91,7 @@ class AnnuncioScreen extends StatelessWidget {
                 descrizioneShowDialog:
                     'Sicuro di voler aggiungere un annuncio?',
                 metodoShowDialog: () {
-                 Navigator.push(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const AnnuncioInsertScreen()));

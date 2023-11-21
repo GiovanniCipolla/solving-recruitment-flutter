@@ -41,6 +41,7 @@ class ColloquioProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
     });
     final jsonData = json.decode(response.body);
+    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return Colloquio.fromJsonGetAllColloqui(jsonData);
     } else {
@@ -86,6 +87,23 @@ class ColloquioProvider extends ChangeNotifier {
       body: json.encode(colloquio.toJson()),
     );
     print(response.body);
+    if( response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> updateColloquio(colloquio) async {
+    String url = '$urlAPI/colloquio/update/${colloquio.id}';
+    final response = await http.put(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(colloquio.toJson()),
+    );
+      print(response.body);
     if( response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {

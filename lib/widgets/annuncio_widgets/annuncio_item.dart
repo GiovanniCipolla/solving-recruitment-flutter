@@ -50,7 +50,7 @@ class AnnuncioItem extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    Icons.search,
+                    Icons.announcement,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   Text(

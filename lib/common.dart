@@ -23,6 +23,23 @@ Future<bool> showExitDialog(BuildContext context) async {
       false;
 }
 
+Future<bool> showAlertDialog(BuildContext context) async {
+  return await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('OPS.. :-( '),
+          content: const Text('Questa funzionalità sarà presto disponibile'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Ok'),
+            ),
+          ],
+        ),
+      ) ??
+      false;
+}
+
 Future<bool> backHome(context) async {
   await Navigator.pushNamedAndRemoveUntil(
       context, Home.routeName, (route) => false);

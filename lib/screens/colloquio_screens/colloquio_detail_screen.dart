@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
+import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_update_screen.dart';
 
 class ColloquioDetailScreen extends StatelessWidget {
   const ColloquioDetailScreen({super.key, required this.colloquio});
@@ -15,7 +18,11 @@ class ColloquioDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dettagli Colloquio'),
+        title: Text(
+          'Dettagli Colloquio',
+          style: TextStyle(
+              fontSize: 25, color: Theme.of(context).colorScheme.primary),
+        ),
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
@@ -79,7 +86,8 @@ class ColloquioDetailScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            colloquio.cognomeCandidato ?? "cognome mancante",
+                            colloquio.cognomeSelezionatore ??
+                                "cognome mancante",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -148,7 +156,7 @@ class ColloquioDetailScreen extends StatelessWidget {
                   ),
                   SingleChildScrollView(
                     child: TextField(
-                      readOnly: false,
+                      readOnly: true,
                       maxLines: 6,
                       controller: TextEditingController(
                           text: colloquio.note ?? 'Nessuna nota disponibile'),
@@ -180,7 +188,19 @@ class ColloquioDetailScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final SelezionatoreProvider selezionatoreProvider =
+                        Provider.of<SelezionatoreProvider>(context,
+                            listen: false);
+                    await selezionatoreProvider.getSelezionatori();
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ColloquioUpdateScreen(
+                        colloquio: colloquio,
+                      );
+                    }));
+                  },
                   child: const Row(
                     children: [
                       Text('Modifica Colloquio'),

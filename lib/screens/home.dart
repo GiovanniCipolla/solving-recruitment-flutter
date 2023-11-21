@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
         appBar: const CustomAppbar(title: 'Solving Recruitment'),
         endDrawer: const CustomEndDrawer(),
         body: Container(
-          margin: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Center(
             child: PieChart(
               PieChartData(

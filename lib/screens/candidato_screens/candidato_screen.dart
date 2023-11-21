@@ -5,8 +5,6 @@ import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_item.dart';
-import 'package:solving_recruitment_flutter/widgets/candidato_widgets/filtri_dialog.dart';
-import 'package:solving_recruitment_flutter/widgets/candidato_widgets/ordinamento_dialog.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
@@ -20,7 +18,7 @@ class CandidatoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final candidatoProvider = Provider.of<CandidatoProvider>(context);
     final candidati = candidatoProvider.candidati;
-    return  WillPopScope(
+    return WillPopScope(
       onWillPop: () async {
         return backHome(context);
       },
@@ -44,25 +42,25 @@ class CandidatoScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () async {
-                    final String filter = await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return FiltriDialog(
-                          onSearch: (filter) {
-                            // Non è necessario chiamare il metodo del provider qui
-                            // Rimuovi la chiamata a getCandidatisearchAndPagination(filter);
-                            Navigator.pop(context,
-                                filter); // Chiudi il dialogo e restituisci il filtro
-                          },
-                        );
-                      },
-                    );
+                    // final String filter = await showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) {
+                    //     return FiltriDialog(
+                    //       onSearch: (filter) {
+                    //         // Non è necessario chiamare il metodo del provider qui
+                    //         // Rimuovi la chiamata a getCandidatisearchAndPagination(filter);
+                    //         Navigator.pop(context,
+                    //             filter); // Chiudi il dialogo e restituisci il filtro
+                    //       },
+                    //     );
+                    //   },
+                    // );
 
-                    // ignore: use_build_context_synchronously
-                    await Provider.of<CandidatoProvider>(context,
-                            listen: false)
-                        .getCandidatisearchAndPagination(filter);
-                                    },
+                    // // ignore: use_build_context_synchronously
+                    // await Provider.of<CandidatoProvider>(context, listen: false)
+                    //     .getCandidatisearchAndPagination(filter);
+                    showAlertDialog(context);
+                  },
                   child: const Row(
                     children: [
                       Text('Cerca per'),
@@ -78,17 +76,18 @@ class CandidatoScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return OrdinamentoDialog(
-                          onSelected: (value) {
-                            // Gestisci l'opzione di ordinamento selezionata
-                          },
-                          context: context, // Passa il context
-                        );
-                      },
-                    );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) {
+                    //     return OrdinamentoDialog(
+                    //       onSelected: (value) {
+                    //         // Gestisci l'opzione di ordinamento selezionata
+                    //       },
+                    //       context: context, // Passa il context
+                    //     );
+                    //   },
+                    // );
+                    showAlertDialog(context);
                   },
                   child: const Row(
                     children: [
@@ -126,9 +125,11 @@ class CandidatoScreen extends StatelessWidget {
                     'Sicuro di voler aggiungere un candidato?',
                 metodoShowDialog: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CandidatoInsertScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CandidatoInsertScreen(),
+                    ),
+                  );
                 }),
           ],
         ),

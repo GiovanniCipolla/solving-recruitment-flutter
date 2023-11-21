@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
+import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 
@@ -32,8 +33,8 @@ class _TipologiaAnnuncioInsertState
         ),
         body: Form(
             key: _formKey,
-            child: Padding(
-                padding: const EdgeInsets.all(16.0),
+            child: Container(
+          margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.02),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

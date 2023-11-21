@@ -25,7 +25,7 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
         appBar: const CustomAppbar(title: 'Gestione Tipologia Annunci'),
         endDrawer: const CustomEndDrawer(),
         body: Container(
-          margin: const EdgeInsets.all(20),
+          margin: const EdgeInsets.all(5),
           child: Column(
             children: [
               Expanded(
