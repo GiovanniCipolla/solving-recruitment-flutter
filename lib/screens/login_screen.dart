@@ -222,11 +222,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: InkWell(
                               borderRadius: BorderRadius.circular(20),
                               splashColor: Colors.amber,
-                              onTap: () {
+                              onTap: () async {
                                 String email = emailController.text;
                                 String password = passwordController.text;
 
-                                loginProvider.doLogin(email, password);
+                               await loginProvider.doLogin(email, password);
 
                                 if (loginProvider.isLoggedIn) {
                                   Navigator.pushNamed(
