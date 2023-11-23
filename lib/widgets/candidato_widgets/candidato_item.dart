@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_detail_screen.dart';
@@ -16,7 +17,10 @@ class CandidatoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+        showLoadingDialog(context);
         Candidato candidatoDetail = await  Provider.of<CandidatoProvider>(context, listen: false).getCandidato(candidato.id);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

@@ -3,7 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
+import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_update_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_card_item.dart';
@@ -179,8 +182,15 @@ class CandidatoDetailScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () async {
+                  showLoadingDialog(context);
                     final CandidatoProvider candidatoProvider = Provider.of( context,listen: false);
                    Candidato candidatoToEdit =  await candidatoProvider.getCandidato(candidato.id!);
+                   // ignore: use_build_context_synchronously
+                  await Provider.of<AreaProvider>(context,listen: false).getAreas();
+                   // ignore: use_build_context_synchronously
+                  await Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+                   // ignore: use_build_context_synchronously
+                   Navigator.of(context).pop();
                    // ignore: use_build_context_synchronously
                    Navigator.push(context, MaterialPageRoute(builder: (context) => CandidatoUpdateScreen(candidato: candidatoToEdit)));
                 },

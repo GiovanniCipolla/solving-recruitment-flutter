@@ -222,13 +222,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(20),
                               splashColor: Colors.amber,
                               onTap: () async {
-                                String email = emailController.text;
+                                String email = emailController.text.trim();
                                 String password = passwordController.text;
                                 await loginProvider.doLogin(email, password);
                                 if (loginProvider.isLoggedIn) {
                                   // ignore: use_build_context_synchronously
                                   Navigator.pushNamed(context, Home.routeName);
                                 } else {
+                                  // ignore: use_build_context_synchronously
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       backgroundColor: Colors.red,

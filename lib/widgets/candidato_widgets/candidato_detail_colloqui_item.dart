@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
-import 'package:solving_recruitment_flutter/costants.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
-import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
 
 class CandidatoDetailColloquiItem extends StatelessWidget {
   const CandidatoDetailColloquiItem(
@@ -25,10 +24,13 @@ class CandidatoDetailColloquiItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+        showLoadingDialog(context);
         final colloquioProvider =
             Provider.of<ColloquioProvider>(context, listen: false);
         await colloquioProvider.getColloquioByCandidatoByTipologia(
             3, tipologia);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
        List<Colloquio> colloqui = colloquioProvider.colloqui;
        // ignore: use_build_context_synchronously
        BottomSheetUtils.showListColloqui(context, 'Lista Colloqui ${tipologia}', colloqui);

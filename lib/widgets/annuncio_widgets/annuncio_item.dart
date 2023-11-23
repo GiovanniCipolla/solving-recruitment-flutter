@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
@@ -24,9 +25,12 @@ class AnnuncioItem extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        showLoadingDialog(context);
         Annuncio annuncioDetail =
             await Provider.of<AnnuncioProvider>(context, listen: false)
                 .getAnnuncio(annuncio.id);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

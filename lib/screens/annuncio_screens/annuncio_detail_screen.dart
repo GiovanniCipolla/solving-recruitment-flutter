@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
@@ -25,10 +26,11 @@ class AnnuncioDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
-          'Dettagli Annuncio',style: TextStyle(fontSize: 25, color: Theme.of(context).colorScheme.primary),
-        )
-      ),
+          title: Text(
+        'Dettagli Annuncio',
+        style: TextStyle(
+            fontSize: 25, color: Theme.of(context).colorScheme.primary),
+      )),
       endDrawer: const CustomEndDrawer(),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: heightSize(context) * 0.01),
@@ -91,15 +93,21 @@ class AnnuncioDetailScreen extends StatelessWidget {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: ()  {
+                onPressed: () {
                   showConfirmationDialog(
                     context,
                     'Modifica Annuncio',
                     'Sicuro di voler modificare questo annuncio?',
                     () async {
-                      await  Provider.of<AreaProvider>(context, listen: false).getAreas();
+                      showLoadingDialog(context);
+                      await Provider.of<AreaProvider>(context, listen: false)
+                          .getAreas();
                       // ignore: use_build_context_synchronously
-                      await  Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+                      await Provider.of<AnnuncioProvider>(context,
+                              listen: false)
+                          .getAnnunci();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pop();
                       // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
@@ -179,7 +187,8 @@ class AnnuncioDetailScreen extends StatelessWidget {
                   Provider.of<CandidatoProvider>(context, listen: false)
                       .candidati;
               // ignore: use_build_context_synchronously
-              BottomSheetUtils.showListCandidati(context, 'Candidati dell\'annuncio ${annuncio.titolo}' ,candidati);
+              BottomSheetUtils.showListCandidati(context,
+                  'Candidati dell\'annuncio ${annuncio.titolo}', candidati);
             },
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

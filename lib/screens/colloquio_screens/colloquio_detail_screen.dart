@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_update_screen.dart';
@@ -189,10 +190,12 @@ class ColloquioDetailScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () async {
+                    showLoadingDialog(context);
                     final SelezionatoreProvider selezionatoreProvider =
                         Provider.of<SelezionatoreProvider>(context,
                             listen: false);
                     await selezionatoreProvider.getSelezionatori();
+                    Navigator.of(context).pop();
                     // ignore: use_build_context_synchronously
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {

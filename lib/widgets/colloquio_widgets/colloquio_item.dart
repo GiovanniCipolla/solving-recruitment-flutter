@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_detail_screen.dart';
@@ -16,8 +17,14 @@ class ColloquioItem extends StatelessWidget {
     final dateFormatter = DateFormat('yyyy-MM-dd');
 
     return InkWell(
-      onTap: ()async {
-final colloquioToSend =await Provider.of<ColloquioProvider>(context, listen: false).getColloquioById(colloquio.id!);
+      onTap: () async {
+        showLoadingDialog(context);
+        final colloquioToSend =
+            await Provider.of<ColloquioProvider>(context, listen: false)
+                .getColloquioById(colloquio.id!);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+
         // ignore: use_build_context_synchronously
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ColloquioDetailScreen(colloquio: colloquioToSend);
