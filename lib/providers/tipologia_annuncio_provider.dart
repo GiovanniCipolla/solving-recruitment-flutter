@@ -18,6 +18,7 @@ class TipologiaAnnuncioProvider extends ChangeNotifier {
     String url = '$urlAPI/tipologiaAnnuncio/getMobile';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -43,6 +44,7 @@ class TipologiaAnnuncioProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(tipologiaAnnuncio.toJson()),
     );
@@ -60,28 +62,29 @@ class TipologiaAnnuncioProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(tipologiaAnnuncio.toJson()),
     );
-            print(response.body);
+    print(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       return false;
     }
-    
   }
 
   Future<bool> deleteTipologiaAnnuncio(id) async {
     String url = '$urlAPI/tipologiaAnnuncio/delete/$id';
     final response = await http.delete(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
-     if (response.statusCode == 200 || response.statusCode == 201) {
-       return true;
-     } else {
-       return false;
-     }
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

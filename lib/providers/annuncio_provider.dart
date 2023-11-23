@@ -26,6 +26,7 @@ class AnnuncioProvider extends ChangeNotifier {
     String url = '$urlAPI/annuncio/getAllMobile';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -49,6 +50,7 @@ class AnnuncioProvider extends ChangeNotifier {
     String url = '$urlAPI/annuncio/get/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -66,6 +68,7 @@ class AnnuncioProvider extends ChangeNotifier {
     String url = '$urlAPI/area/getAnnunciByArea/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -90,6 +93,7 @@ class AnnuncioProvider extends ChangeNotifier {
     String url = '$urlAPI/annuncio/getAllWithSameTipologiaMobile/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -108,6 +112,7 @@ class AnnuncioProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(annuncio.toJson()),
     );
@@ -124,6 +129,7 @@ class AnnuncioProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(annuncio.toJson()),
     );
@@ -138,6 +144,7 @@ class AnnuncioProvider extends ChangeNotifier {
     String url = '$urlAPI/annuncio/delete/$id';
     final response = await http.delete(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;

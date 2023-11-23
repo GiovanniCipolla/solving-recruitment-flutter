@@ -19,6 +19,7 @@ class CandidatoProvider extends ChangeNotifier {
     String url = '$urlAPI/candidato/getMobile';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -42,6 +43,7 @@ class CandidatoProvider extends ChangeNotifier {
     String url = '$urlAPI/candidato/getAllCandidatiByIdArea/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -65,6 +67,7 @@ class CandidatoProvider extends ChangeNotifier {
     String url = '$urlAPI/candidato/get/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -82,6 +85,7 @@ class CandidatoProvider extends ChangeNotifier {
     String url = '$urlAPI/candidato/candidatiPerArea/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -106,6 +110,7 @@ class CandidatoProvider extends ChangeNotifier {
     String url = '$urlAPI/candidato/candidatiPerAnnuncio/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -129,6 +134,7 @@ class CandidatoProvider extends ChangeNotifier {
     String url = '$urlAPI/candidato/filtrata/$filter';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -154,11 +160,8 @@ class CandidatoProvider extends ChangeNotifier {
         String url = '$urlAPI/candidato/filtrataMobile?filtro=$filtro';
         final response = await http.get(Uri.parse(url), headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${authProvider!.token}',
         });
-
-        print('URL della richiesta: $url');
-        print('Codice di risposta: ${response.statusCode}');
-        print('Body della risposta: ${response.body}');
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           List<Candidato> candidati = [];
@@ -192,6 +195,7 @@ class CandidatoProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(filtro.toJson()),
     );
@@ -228,6 +232,7 @@ class CandidatoProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(candidato.toJson()),
     );
@@ -245,6 +250,7 @@ class CandidatoProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(candidato.toJson()),
     );
@@ -255,17 +261,17 @@ class CandidatoProvider extends ChangeNotifier {
       return false;
     }
   }
-Future<bool> deleteCandidato(id) async {
-  String url = '$urlAPI/candidato/delete/$id';
-  final response = await http.delete(Uri.parse(url), headers: {
-    'Content-Type': 'application/json',
-  });
-  if (response.statusCode == 200 || response.statusCode == 201) {
-    return true;
-  } else {
-    return false;
+
+  Future<bool> deleteCandidato(id) async {
+    String url = '$urlAPI/candidato/delete/$id';
+    final response = await http.delete(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
   }
-
 }
-}
-

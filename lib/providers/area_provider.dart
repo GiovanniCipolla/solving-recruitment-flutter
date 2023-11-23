@@ -25,7 +25,8 @@ class AreaProvider extends ChangeNotifier {
   Future<void> getAreas() async {
     String url = '$urlAPI/area/getMobile';
     final response = await http.get(Uri.parse(url), headers: {
-      'Content-Type': 'application/json',
+'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',      
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {

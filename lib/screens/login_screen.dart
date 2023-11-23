@@ -139,8 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.grey.shade100),
+                            borderSide: BorderSide(color: Colors.grey.shade100),
                           ),
                           labelText: "Email",
                           enabledBorder: InputBorder.none,
@@ -156,16 +155,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.grey.shade100),
+                            borderSide: BorderSide(color: Colors.grey.shade100),
                           ),
                           labelText: "Password",
                           enabledBorder: InputBorder.none,
                           labelStyle: const TextStyle(color: Colors.grey),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              obscureText ?
-                              Icons.visibility : Icons.visibility_off,
+                              obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Theme.of(context).colorScheme.primary,
                             ),
                             onPressed: () {
@@ -225,19 +224,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               onTap: () async {
                                 String email = emailController.text;
                                 String password = passwordController.text;
-
-                               await loginProvider.doLogin(email, password);
-
+                                await loginProvider.doLogin(email, password);
                                 if (loginProvider.isLoggedIn) {
-                                  Navigator.pushNamed(
-                                      context, Home.routeName);
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushNamed(context, Home.routeName);
                                 } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       backgroundColor: Colors.red,
                                       content: Text(
-                                        'Credenziali non valide. Riprova.',
+                                        'Errore durante il login, verifica le credenziali',
                                       ),
                                       duration: Duration(seconds: 2),
                                     ),

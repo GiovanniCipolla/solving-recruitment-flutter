@@ -16,6 +16,7 @@ class ColloquioProvider extends ChangeNotifier {
     String url = '$urlAPI/colloquio/getMobile';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -39,6 +40,7 @@ class ColloquioProvider extends ChangeNotifier {
     String url = '$urlAPI/colloquio/getMobile/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     print(response.body);
@@ -56,8 +58,8 @@ class ColloquioProvider extends ChangeNotifier {
   Future<void> getColloquioByCandidatoByTipologia(id,tipologia) async {
     String url = '$urlAPI/colloquio/colloquioWithNomeCognome/$id/tipologia/$tipologia';
     final response = await http.get(Uri.parse(url), headers: {
-      'Content-Type': 'application/json',
-    });
+'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',    });
     final jsonData = json.decode(response.body);
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -82,8 +84,8 @@ class ColloquioProvider extends ChangeNotifier {
     final response = await http.post(
       Uri.parse(url),
       headers: {
-        'Content-Type': 'application/json',
-      },
+'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',      },
       body: json.encode(colloquio.toJson()),
     );
     print(response.body);
@@ -99,11 +101,10 @@ class ColloquioProvider extends ChangeNotifier {
     final response = await http.put(
       Uri.parse(url),
       headers: {
-        'Content-Type': 'application/json',
-      },
+'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',      },
       body: json.encode(colloquio.toJson()),
     );
-      print(response.body);
     if( response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {

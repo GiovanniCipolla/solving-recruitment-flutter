@@ -18,6 +18,7 @@ class SelezionatoreProvider extends ChangeNotifier {
     String url = '$urlAPI/selezionatore/get';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -43,6 +44,7 @@ class SelezionatoreProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(selezionatore.toJson()),
     );
@@ -59,6 +61,7 @@ class SelezionatoreProvider extends ChangeNotifier {
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(selezionatore.toJson()),
     );
@@ -69,15 +72,16 @@ class SelezionatoreProvider extends ChangeNotifier {
     }
   }
 
- Future<bool> deleteSelezionatore(id) async {
-   String url = '$urlAPI/selezionatore/delete/$id';
-   final response = await http.delete(Uri.parse(url), headers: {
-     'Content-Type': 'application/json',
-   });
+  Future<bool> deleteSelezionatore(id) async {
+    String url = '$urlAPI/selezionatore/delete/$id';
+    final response = await http.delete(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       return false;
     }
- }
+  }
 }
