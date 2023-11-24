@@ -19,16 +19,33 @@ class ColloquioItem extends StatelessWidget {
     return InkWell(
       onTap: () async {
         showLoadingDialog(context);
-        final colloquioToSend =
-            await Provider.of<ColloquioProvider>(context, listen: false)
-                .getColloquioById(colloquio.id!);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-
-        // ignore: use_build_context_synchronously
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ColloquioDetailScreen(colloquio: colloquioToSend);
-        }));
+try {
+  final colloquioToSend =
+      await Provider.of<ColloquioProvider>(context, listen: false)
+          .getColloquioById(colloquio.id!);
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ColloquioDetailScreen(colloquio: colloquioToSend),
+    ),
+  );
+} catch (error) {
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text(
+        'Si è verificato un errore durante il caricamento del colloquio',
+        style: TextStyle(color: Colors.red),
+      ),
+    ),
+  );
+  print('Errore durante il caricamento del colloquio: $error');
+}
       },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),

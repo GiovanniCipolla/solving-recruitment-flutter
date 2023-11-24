@@ -421,8 +421,13 @@ class BottomSheetUtils {
                 thickness: 2,
               ),
               // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
-              for (Candidato candidato in candidati)
-                _buildInfoCandidati(candidato),
+             candidati.isEmpty
+                ? const Text('Nessun candidato trovato', style: TextStyle(fontSize: 20))
+                : Column(
+                    children: candidati.map((Candidato candidato) {
+                      return _buildInfoCandidati(candidato);
+                    }).toList(),
+                  ),
             ],
           ),
         );
@@ -455,8 +460,13 @@ class BottomSheetUtils {
                 thickness: 2,
               ),
               // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
-              for (Annuncio annuncio in annunci)
-                _buildInfoAnnuncio(annuncio),
+              annunci.isEmpty
+                ? const Text('Nessun annuncio trovato', style: TextStyle(fontSize: 20))
+                : Column(
+                    children: annunci.map((Annuncio annuncio) {
+                      return _buildInfoAnnuncio(annuncio);
+                    }).toList(),
+                  ),
             ],
           ),
         );
@@ -488,9 +498,13 @@ class BottomSheetUtils {
                 color: Theme.of(context).colorScheme.primary,
                 thickness: 2,
               ),
-              // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
-              for (Colloquio colloquio in colloqui)
-                _buildInfoColloquio(colloquio),
+             colloqui.isEmpty
+                ? const Text('Nessun colloquio trovato', style: TextStyle(fontSize: 20))
+                : Column(
+                    children: colloqui.map((Colloquio colloquio) {
+                      return _buildInfoColloquio(colloquio);
+                    }).toList(),
+                  ),
             ],
           ),
         );

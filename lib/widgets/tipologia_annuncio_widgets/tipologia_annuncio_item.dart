@@ -102,18 +102,34 @@ class TipologiaAnnuncioItem extends StatelessWidget {
           TextButton(
             onPressed: () async {
               showLoadingDialog(context);
-              final annuncioProvider =
-                  Provider.of<AnnuncioProvider>(context, listen: false);
-              await annuncioProvider
-                  .getAnnunciWithSameIdTipolgiaAnnuncio(tipologiaAnnuncio.id!);
-              // ignore: use_build_context_synchronously
-              Navigator.pop(context);
-              List<Annuncio> annunci = annuncioProvider.annunci;
-              // ignore: use_build_context_synchronously
-              BottomSheetUtils.showListAnnunci(
+              try {
+                final annuncioProvider =
+                    Provider.of<AnnuncioProvider>(context, listen: false);
+                await annuncioProvider.getAnnunciWithSameIdTipolgiaAnnuncio(
+                    tipologiaAnnuncio.id!);
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context);
+                List<Annuncio> annunci = annuncioProvider.annunci;
+                // ignore: use_build_context_synchronously
+                BottomSheetUtils.showListAnnunci(
                   context,
-                  'Annunci con tipologia :  ${tipologiaAnnuncio.descrizione}',
-                  annunci);
+                  'Annunci con tipologia: ${tipologiaAnnuncio.descrizione}',
+                  annunci,
+                );
+              } catch (error) {
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context);
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Si è verificato un errore durante il recupero degli annunci',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                );
+                print('Errore durante il recupero degli annunci: $error');
+              }
             },
             child: Row(
               children: [

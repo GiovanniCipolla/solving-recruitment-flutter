@@ -190,19 +190,35 @@ class ColloquioDetailScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () async {
-                    showLoadingDialog(context);
-                    final SelezionatoreProvider selezionatoreProvider =
-                        Provider.of<SelezionatoreProvider>(context,
-                            listen: false);
-                    await selezionatoreProvider.getSelezionatori();
-                    Navigator.of(context).pop();
-                    // ignore: use_build_context_synchronously
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return ColloquioUpdateScreen(
-                        colloquio: colloquio,
-                      );
-                    }));
+                   showLoadingDialog(context);
+try {
+  final SelezionatoreProvider selezionatoreProvider =
+      Provider.of<SelezionatoreProvider>(context, listen: false);
+  await selezionatoreProvider.getSelezionatori();
+  // ignore: use_build_context_synchronously
+  Navigator.of(context).pop();
+  // ignore: use_build_context_synchronously
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ColloquioUpdateScreen(colloquio: colloquio),
+    ),
+  );
+} catch (error) {
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text(
+        'Si è verificato un errore durante il caricamento dei selezionatori',
+        style: TextStyle(color: Colors.red),
+      ),
+    ),
+  );
+  print('Errore durante il caricamento dei selezionatori: $error');
+}
+
                   },
                   child: const Row(
                     children: [

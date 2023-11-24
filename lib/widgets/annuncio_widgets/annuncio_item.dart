@@ -22,22 +22,37 @@ class AnnuncioItem extends StatelessWidget {
     } else {
       formattedDataInizio = null;
     }
-
     return InkWell(
       onTap: () async {
         showLoadingDialog(context);
-        Annuncio annuncioDetail =
-            await Provider.of<AnnuncioProvider>(context, listen: false)
-                .getAnnuncio(annuncio.id);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return AnnuncioDetailScreen(annuncio: annuncioDetail);
-          }),
-        );
+try {
+  Annuncio annuncioDetail =
+      await Provider.of<AnnuncioProvider>(context, listen: false)
+          .getAnnuncio(annuncio.id);
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) {
+      return AnnuncioDetailScreen(annuncio: annuncioDetail);
+    }),
+  );
+} catch (error) {
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text(
+        'Si è verificato un errore durante il caricamento dell\'annuncio',
+        style: TextStyle(color: Colors.red),
+      ),
+    ),
+  );
+  print('Errore durante il caricamento dell\'annuncio: $error');
+}
+
       },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),

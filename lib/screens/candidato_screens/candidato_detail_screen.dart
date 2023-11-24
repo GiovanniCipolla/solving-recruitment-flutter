@@ -182,17 +182,37 @@ class CandidatoDetailScreen extends StatelessWidget {
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () async {
-                  showLoadingDialog(context);
-                    final CandidatoProvider candidatoProvider = Provider.of( context,listen: false);
-                   Candidato candidatoToEdit =  await candidatoProvider.getCandidato(candidato.id!);
-                   // ignore: use_build_context_synchronously
-                  await Provider.of<AreaProvider>(context,listen: false).getAreas();
-                   // ignore: use_build_context_synchronously
-                  await Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-                   // ignore: use_build_context_synchronously
-                   Navigator.of(context).pop();
-                   // ignore: use_build_context_synchronously
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => CandidatoUpdateScreen(candidato: candidatoToEdit)));
+                showLoadingDialog(context);
+try {
+  final CandidatoProvider candidatoProvider = Provider.of<CandidatoProvider>(context, listen: false);
+  Candidato candidaoToEdit = await candidatoProvider.getCandidato(candidato.id!);
+  // ignore: use_build_context_synchronously
+  await Provider.of<AreaProvider>(context, listen: false).getAreas();
+  // ignore: use_build_context_synchronously
+  await Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => CandidatoUpdateScreen(candidato: candidaoToEdit),
+    ),
+  );
+} catch (error) {
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text(
+        'Si è verificato un errore durante il caricamento',
+        style: TextStyle(color: Colors.red),
+      ),
+    ),
+  );
+  print('Errore durante il caricamento: $error');
+}
                 },
                 child: const Row(
                   children: [

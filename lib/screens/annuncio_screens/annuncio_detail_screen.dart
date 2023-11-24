@@ -11,7 +11,6 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_update_screen.dart';
-import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class AnnuncioDetailScreen extends StatelessWidget {
@@ -100,25 +99,41 @@ class AnnuncioDetailScreen extends StatelessWidget {
                     'Sicuro di voler modificare questo annuncio?',
                     () async {
                       showLoadingDialog(context);
-                      await Provider.of<AreaProvider>(context, listen: false)
-                          .getAreas();
-                      // ignore: use_build_context_synchronously
-                      await Provider.of<AnnuncioProvider>(context,
-                              listen: false)
-                          .getAnnunci();
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pop();
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return AnnuncioUpdateScreen(
-                              annuncio: annuncio,
-                            );
-                          },
-                        ),
-                      );
+                      try {
+                        await Provider.of<AreaProvider>(context, listen: false)
+                            .getAreas();
+                        // ignore: use_build_context_synchronously
+                        await Provider.of<AnnuncioProvider>(context,
+                                listen: false)
+                            .getAnnunci();
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).pop();
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return AnnuncioUpdateScreen(
+                                annuncio: annuncio,
+                              );
+                            },
+                          ),
+                        );
+                      } catch (error) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context);
+                        // ignore: use_build_context_synchronously
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Si è verificato un errore durante la modifica dell\'annuncio',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        );
+                        print(
+                            'Errore durante la modifica dell\'annuncio: $error');
+                      }
                     },
                   );
                 },
@@ -180,15 +195,31 @@ class AnnuncioDetailScreen extends StatelessWidget {
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
             ),
             onPressed: () async {
-              await Provider.of<CandidatoProvider>(context, listen: false)
-                  .getCandidatiByIdAnnuncio(annuncio.id);
-              List<Candidato> candidati =
-                  // ignore: use_build_context_synchronously
-                  Provider.of<CandidatoProvider>(context, listen: false)
-                      .candidati;
-              // ignore: use_build_context_synchronously
-              BottomSheetUtils.showListCandidati(context,
-                  'Candidati dell\'annuncio ${annuncio.titolo}', candidati);
+              try {
+                await Provider.of<CandidatoProvider>(context, listen: false)
+                    .getCandidatiByIdAnnuncio(annuncio.id);
+                List<Candidato> candidati =
+                    // ignore: use_build_context_synchronously
+                    Provider.of<CandidatoProvider>(context, listen: false)
+                        .candidati;
+                // ignore: use_build_context_synchronously
+                BottomSheetUtils.showListCandidati(
+                  context,
+                  'Candidati dell\'annuncio ${annuncio.titolo}',
+                  candidati,
+                );
+              } catch (error) {
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Si è verificato un errore durante il recupero dei candidati',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                );
+                print('Errore durante il recupero dei candidati: $error');
+              }
             },
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

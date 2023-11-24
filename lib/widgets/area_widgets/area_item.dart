@@ -12,7 +12,6 @@ import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 class AreaItem extends StatelessWidget {
   const AreaItem({super.key, required this.area});
   final Area area;
- 
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,7 @@ class AreaItem extends StatelessWidget {
       children: [
         SizedBox(height: heightSize(context) * 0.03),
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: widthSize(context) * 0.02),
+          padding: EdgeInsets.symmetric(horizontal: widthSize(context) * 0.02),
           child: Row(
             children: [
               Icon(
@@ -63,13 +61,30 @@ class AreaItem extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 showLoadingDialog(context);
-               final candidatoProvider =  Provider.of<CandidatoProvider>(context, listen: false);
-                await candidatoProvider.getCandidatiWithSameArea(area.id!);
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-                List<Candidato> candidati =  candidatoProvider.candidati;
-                // ignore: use_build_context_synchronously
-                BottomSheetUtils.showListCandidati(context, 'Candidati di ${area.denominazione}' ,candidati);
+                try {
+                  final candidatoProvider =
+                      Provider.of<CandidatoProvider>(context, listen: false);
+                  await candidatoProvider.getCandidatiWithSameArea(area.id!);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  List<Candidato> candidati = candidatoProvider.candidati;
+                  // ignore: use_build_context_synchronously
+                  BottomSheetUtils.showListCandidati(
+                      context, 'Candidati di ${area.denominazione}', candidati);
+                } catch (error) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Si è verificato un errore durante il caricamento dei candidati',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  );
+                  print('Errore durante il caricamento dei candidati: $error');
+                }
               },
               child: Row(
                 children: [
@@ -90,13 +105,30 @@ class AreaItem extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 showLoadingDialog(context);
-                final annuncioProvider =  Provider.of<AnnuncioProvider>(context, listen: false);
-                await annuncioProvider.getAnnunciByIdArea(area.id!);
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-                List<Annuncio> annunci =  annuncioProvider.annunci;
-                // ignore: use_build_context_synchronously
-                BottomSheetUtils.showListAnnunci(context, 'Annunci di ${area.denominazione}' ,annunci);
+                try {
+                  final annuncioProvider =
+                      Provider.of<AnnuncioProvider>(context, listen: false);
+                  await annuncioProvider.getAnnunciByIdArea(area.id!);
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  List<Annuncio> annunci = annuncioProvider.annunci;
+                  // ignore: use_build_context_synchronously
+                  BottomSheetUtils.showListAnnunci(
+                      context, 'Annunci di ${area.denominazione}', annunci);
+                } catch (error) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.pop(context);
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Si è verificato un errore durante il caricamento degli annunci',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  );
+                  print('Errore durante il caricamento degli annunci: $error');
+                }
               },
               child: Row(
                 children: [

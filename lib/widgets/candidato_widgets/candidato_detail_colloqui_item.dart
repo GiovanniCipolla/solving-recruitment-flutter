@@ -24,16 +24,29 @@ class CandidatoDetailColloquiItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        showLoadingDialog(context);
-        final colloquioProvider =
-            Provider.of<ColloquioProvider>(context, listen: false);
-        await colloquioProvider.getColloquioByCandidatoByTipologia(
-            3, tipologia);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-       List<Colloquio> colloqui = colloquioProvider.colloqui;
-       // ignore: use_build_context_synchronously
-       BottomSheetUtils.showListColloqui(context, 'Lista Colloqui ${tipologia}', colloqui);
+       showLoadingDialog(context);
+try {
+  final colloquioProvider = Provider.of<ColloquioProvider>(context, listen: false);
+  await colloquioProvider.getColloquioByCandidatoByTipologia(3, tipologia);
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  List<Colloquio> colloqui = colloquioProvider.colloqui;
+  // ignore: use_build_context_synchronously
+  BottomSheetUtils.showListColloqui(context, 'Lista Colloqui $tipologia', colloqui);
+} catch (error) {
+  // ignore: use_build_context_synchronously
+  Navigator.pop(context);
+  // ignore: use_build_context_synchronously
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text(
+        'Si è verificato un errore durante il caricamento dei colloqui',
+        style: TextStyle(color: Colors.red),
+      ),
+    ),
+  );
+  print('Errore durante il caricamento dei colloqui: $error');
+}
       },
       child: Card(
           elevation: 5,
