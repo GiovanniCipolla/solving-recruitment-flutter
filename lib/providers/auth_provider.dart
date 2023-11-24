@@ -5,8 +5,10 @@ import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:http/http.dart' as http;
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/user.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthProvider extends ChangeNotifier {
+  final _storage = const FlutterSecureStorage();
   User? _user;
   String? _username;
   String? _password;
@@ -30,6 +32,24 @@ class AuthProvider extends ChangeNotifier {
 
   User? get user {
     return _user;
+  }
+
+  Future<void> _saveCredentials(String email, String password) async {
+    await _storage.write(key: 'email', value: email);
+    await _storage.write(key: 'password', value: password);
+  }
+
+Future<void> _removeCredentials() async {
+  await _storage.delete(key: 'email');
+  await _storage.delete(key: 'password');
+}
+  Future<void> tryLogin() async {
+    final savedEmail = await _storage.read(key: 'email');
+    final savedPassword = await _storage.read(key: 'password');
+
+    if (savedEmail != null && savedPassword != null) {
+      await doLogin(savedEmail, savedPassword);
+    }
   }
 
   Future<bool> doLogin(String email, String password) async {
@@ -57,7 +77,9 @@ class AuthProvider extends ChangeNotifier {
       _token = null;
       return false;
     }
-    await sendToken(token!) ? confirm = true : _token = null;
+    await sendToken(token!)
+        ? (confirm = true, _saveCredentials(email, password))
+        : _token = null;
     return confirm;
   }
 
@@ -65,6 +87,7 @@ class AuthProvider extends ChangeNotifier {
     _token = null;
     _username = null;
     _password = null;
+    _removeCredentials();
     notifyListeners();
   }
 
@@ -74,7 +97,6 @@ class AuthProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'authorization': 'Bearer $token',
     });
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       final jsonData = json.decode(response.body);
       _user = User.fromJson(jsonData);

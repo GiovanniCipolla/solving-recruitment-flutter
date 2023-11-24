@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
+import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
@@ -128,6 +129,7 @@ final List<Map<String, dynamic>> drawerItems = [
     'title': 'Logout',
     'onTap': (context) {
       // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+      Provider.of<AuthProvider>(context, listen: false).doLogout();
       Navigator.pushNamedAndRemoveUntil(
           context, LoginScreen.routeName, (route) => false);
     },

@@ -41,6 +41,7 @@ dependencies:
   fl_chart: ^0.64.0
   autocomplete_textfield: ^2.0.1
   amazon_cognito_identity_dart_2: ^3.6.0
+  flutter_secure_storage: ^9.0.0
 
 dev_dependencies:
   flutter_test:

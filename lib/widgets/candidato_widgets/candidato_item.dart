@@ -16,21 +16,32 @@ class CandidatoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        showLoadingDialog(context);
-        Candidato candidatoDetail = await  Provider.of<CandidatoProvider>(context, listen: false).getCandidato(candidato.id);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return CandidatoDetailScreen(candidato: candidatoDetail);
-            },
-          ),
-        );
-      },
+     onTap: () async {
+    showLoadingDialog(context);
+    try {
+      Candidato candidatoDetail = await Provider.of<CandidatoProvider>(context, listen: false).getCandidato(candidato.id);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context); 
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CandidatoDetailScreen(candidato: candidatoDetail),
+        ),
+      );
+    } catch (error) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(
+          content: Text(
+            ' si è verificato un errore durante il caricamento', style: TextStyle(color: Colors.red),
+          )
+        )
+      );
+    }
+  },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
         padding: const EdgeInsets.all(8),

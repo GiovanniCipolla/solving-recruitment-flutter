@@ -87,7 +87,15 @@ class MyApp extends StatelessWidget {
                 splashColor: Colors.transparent,
                 hoverColor: Colors.transparent,
               ),
-              home: const LoginScreen(),
+              home: authProvider.isLoggedIn ?  Home() : FutureBuilder(future: authProvider.tryLogin() , builder: 
+              (ctx, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return const LoginScreen();
+              }),
               routes: {
                 LoginScreen.routeName: (ctx) => const LoginScreen(),
                 AreaScreen.routeName: (ctx) => const AreaScreen(),
