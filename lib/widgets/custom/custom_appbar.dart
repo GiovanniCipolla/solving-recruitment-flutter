@@ -12,7 +12,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) => AppBar(
         title: Text(title, style: TextStyle(color: Theme.of(context).colorScheme.primary),),
         leading: IconButton(
-          icon: Image.asset("assets/images/logoNavbarCoge.png"),
+          icon: Icon(Icons.home_filled, color: Theme.of(context).colorScheme.primary),
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(
                 context, Home.routeName, (route) => false);
