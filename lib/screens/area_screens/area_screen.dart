@@ -15,7 +15,8 @@ class AreaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final aree = Provider.of<AreaProvider>(context).aree;
+    final areaProvider = Provider.of<AreaProvider>(context, listen: false);
+    
     return WillPopScope(
       onWillPop: () async {
         return backHome(context);
@@ -31,7 +32,30 @@ class AreaScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ...aree.map((item) => AreaItem(area: item)).toList(),
+                      FutureBuilder(
+                          future: areaProvider.getAreas(),
+                          builder: (context, snapshot) {
+                            final aree = areaProvider.aree;
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text(snapshot.error.toString());
+                            } else if (aree.isEmpty) {
+                              return const Center(
+                                  child: Text(
+                                'Non ci sono aree',
+                              ));
+                            } else {
+                              return Column(children: [
+                                ...aree
+                                    .map((item) => AreaItem(area: item))
+                                    .toList(),
+                              ]);
+                            }
+                          }),
                       SizedBox(
                         height: heightSize(context) * 0.15,
                       ),

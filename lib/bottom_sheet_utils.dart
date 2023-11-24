@@ -343,9 +343,9 @@ class BottomSheetUtils {
               _buildInfoRow('Residenza', candidato.residenza),
               // _buildInfoRow(
               //     'Percorso Academy', candidato.percorsoAcademy! ? 'SI' : 'No'),
-              _buildInfoRow('Annuncio', candidato.annuncio!.titolo),
+              _buildInfoRow('Annuncio', candidato.titoloAnnuncio),
               _buildInfoRow('Area di riferimento',
-                  candidato.annuncio!.area!.denominazione),
+                  candidato.denominazioneArea),
             ],
           ),
         );

@@ -15,8 +15,9 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tipologiaANnunci =
-        Provider.of<TipologiaAnnuncioProvider>(context).tipologiaAnnuncio;
+    final tipologiaAnnuncioProvider =
+        Provider.of<TipologiaAnnuncioProvider>(context, listen: false);
+
     return WillPopScope(
       onWillPop: () async {
         return backHome(context);
@@ -29,17 +30,36 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ...tipologiaANnunci
-                          .map((item) =>
-                              TipologiaAnnuncioItem(tipologiaAnnuncio: item))
-                          .toList(),
-                    ],
-                  ),
-                ),
-              ),
+                  child: FutureBuilder(
+                      future: tipologiaAnnuncioProvider.getTipologiaAnnuncio(),
+                      builder: (context, snapshot) {
+                        final tipologiaANnunci =
+                            tipologiaAnnuncioProvider.tipologiaAnnuncio;
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else if (tipologiaANnunci.isEmpty) {
+                          return const Center(
+                              child: Text(
+                            'Non ci sono tipologie',
+                          ));
+                        } else {
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                ...tipologiaANnunci
+                                    .map((item) => TipologiaAnnuncioItem(
+                                        tipologiaAnnuncio: item))
+                                    .toList(),
+                              ],
+                            ),
+                          );
+                        }
+                      })),
               CustomButtonAdd(
                 titleShowDialog: 'Aggiungi Tipologia',
                 descrizioneShowDialog:

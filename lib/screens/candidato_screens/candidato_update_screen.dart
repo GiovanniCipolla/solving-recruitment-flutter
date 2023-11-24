@@ -124,13 +124,13 @@ String formattaData(DateTime data) {
         Provider.of<CandidatoProvider>(context, listen: false);
     final Candidato candidatoToSend =
         await candidatoProvider.getCandidato(candidato.id);
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => CandidatoDetailScreen(
-                  candidato: candidatoToSend,
-                )),
-        (route) => false);
+        Navigator.pop(context);
+   // ignore: use_build_context_synchronously
+   Navigator.push(context, MaterialPageRoute(
+     builder: (context) {
+       return CandidatoDetailScreen(candidato: candidatoToSend);
+     }
+   ));
   }
 
 

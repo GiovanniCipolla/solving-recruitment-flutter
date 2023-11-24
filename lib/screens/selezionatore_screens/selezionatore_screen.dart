@@ -16,8 +16,8 @@ class SelezionatoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selezionatori =
-        Provider.of<SelezionatoreProvider>(context).selezionatori;
+    final selezionatoreProvider =
+        Provider.of<SelezionatoreProvider>(context, listen: false);
 
     return WillPopScope(
       onWillPop: () async {
@@ -32,18 +32,37 @@ class SelezionatoreScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ...selezionatori.map(
-                        (item) => SelezionatoreItem(
-                          selezionatore: item,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                  child: FutureBuilder(
+                      future: selezionatoreProvider.getSelezionatori(),
+                      builder: (context, snapshot) {
+                        final selezionatori =
+                            selezionatoreProvider.selezionatori;
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else if (selezionatori.isEmpty) {
+                          return const Center(
+                              child: Text(
+                            'Non ci sono selezionatori',
+                          ));
+                        } else {
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                ...selezionatori.map(
+                                  (item) => SelezionatoreItem(
+                                    selezionatore: item,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }
+                      })),
               CustomButtonAdd(
                   titleShowDialog: 'Aggiungi Selezionatore',
                   descrizioneShowDialog:

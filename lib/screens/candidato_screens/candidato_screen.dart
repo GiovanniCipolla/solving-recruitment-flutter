@@ -4,7 +4,7 @@ import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_insert_screen.dart';
-import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_item.dart';
+import 'package:solving_recruitment_flutter/widgets/colloquio_widgets/candidato_widgets/candidato_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
@@ -16,8 +16,7 @@ class CandidatoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final candidatoProvider = Provider.of<CandidatoProvider>(context);
-    final candidati = candidatoProvider.candidati;
+    final candidatoProvider = Provider.of<CandidatoProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
         return backHome(context);
@@ -104,21 +103,38 @@ class CandidatoScreen extends StatelessWidget {
               height: heightSize(context) * 0.02,
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: candidati.length,
-                  shrinkWrap: true,
-                  physics:
-                      const ClampingScrollPhysics(), // Questa opzione impedisce il rollio eccessivo
-                  itemBuilder: (context, index) {
-                    return CandidatoItem(candidato: candidati[index]);
-                  },
-                ),
-              ),
-            ),
+                child: FutureBuilder(
+                    future: candidatoProvider.getCandidati(),
+                    builder: (context, snapshot) {
+                      final candidati = candidatoProvider.candidati;
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        print(candidati.length);
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      } else if (candidati.isEmpty) {
+                        return const Center(
+                            child: Text(
+                          'Non ci sono candidati',
+                        ));
+                      } else {
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
+                          itemCount: candidati.length,
+                          shrinkWrap: true,
+                          physics:
+                              const ClampingScrollPhysics(), // Questa opzione impedisce il rollio eccessivo
+                          itemBuilder: (context, index) {
+                            return CandidatoItem(candidato: candidati[index]);
+                          },
+                        );
+                      }
+                    })),
             CustomButtonAdd(
                 titleShowDialog: 'Aggiungi candidato',
                 descrizioneShowDialog:

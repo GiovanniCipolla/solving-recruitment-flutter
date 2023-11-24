@@ -15,7 +15,8 @@ class AnnuncioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final annunci = Provider.of<AnnuncioProvider>(context).annunci;
+    final annuncioProvider =
+        Provider.of<AnnuncioProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
         return backHome(context);
@@ -71,21 +72,37 @@ class AnnuncioScreen extends StatelessWidget {
               height: heightSize(context) * 0.02,
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: annunci.length,
-                  shrinkWrap: true,
-                  physics:
-                      const ClampingScrollPhysics(), // Questa opzione impedisce il rollio eccessivo
-                  itemBuilder: (context, index) {
-                    return AnnuncioItem(annuncio: annunci[index]);
-                  },
-                ),
-              ),
-            ),
+                child: FutureBuilder(
+                    future: annuncioProvider.getAnnunci(),
+                    builder: (context, snapshot) {
+                      final annunci = annuncioProvider.annunci;
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      } else if (annunci.isEmpty) {
+                        return const Center(
+                            child: Text(
+                          'Non ci sono annunci',
+                        ));
+                      } else {
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
+                          itemCount: annunci.length,
+                          shrinkWrap: true,
+                          physics:
+                              const ClampingScrollPhysics(), // Questa opzione impedisce il rollio eccessivo
+                          itemBuilder: (context, index) {
+                            return AnnuncioItem(annuncio: annunci[index]);
+                          },
+                        );
+                      }
+                    })),
             CustomButtonAdd(
                 titleShowDialog: 'Aggiungi annuncio',
                 descrizioneShowDialog:

@@ -16,7 +16,8 @@ class ColloquioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colloqui = Provider.of<ColloquioProvider>(context).colloqui;
+    final colloquiProvider =
+        Provider.of<ColloquioProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: () {
         return backHome(context);
@@ -72,13 +73,33 @@ class ColloquioScreen extends StatelessWidget {
             height: heightSize(context) * 0.02,
           ),
           Expanded(
-              child: SingleChildScrollView(
-            child: Column(children: [
-              ...colloqui
-                  .map((item) => ColloquioItem(colloquio: item))
-                  .toList(),
-            ]),
-          )),
+            child: FutureBuilder(
+                future: colloquiProvider.getColloqui(),
+                builder: (context, snapshot) {
+                  final colloqui = colloquiProvider.colloqui;
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else if (colloqui.isEmpty) {
+                    return const Center(
+                        child: Text(
+                      'Non ci sono colloqui',
+                    ));
+                  } else {
+                    return SingleChildScrollView(
+                      child: Column(children: [
+                        ...colloqui
+                            .map((item) => ColloquioItem(colloquio: item))
+                            .toList(),
+                      ]),
+                    );
+                  }
+                }),
+          ),
           CustomButtonAdd(
             titleShowDialog: 'Aggiungi Colloquio',
             descrizioneShowDialog: 'Sicuro di voler aggiungere un colloquio?',
