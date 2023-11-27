@@ -11,6 +11,7 @@ import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_update_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_card_item.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_colloqui_item.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/wrapped_text.dart';
 
 class CandidatoDetailScreen extends StatelessWidget {
   const CandidatoDetailScreen({super.key, required this.candidato});
@@ -33,18 +34,9 @@ class CandidatoDetailScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary,
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(
-                  candidato.nome ?? "Nome mancante",
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: heightSize(context) * 0.03),
-                ),
-                Text(
-                  candidato.cognome ?? "Cognome mancante",
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: heightSize(context) * 0.03),
-                ),
+                WrappedText(text:candidato.nome, limit: 17, size:heightSize(context) * 0.03, color:Theme.of(context).colorScheme.primary ,) ,
+                WrappedText(text: candidato.cognome, limit: 17, size:heightSize(context) * 0.03, color:Theme.of(context).colorScheme.primary ,) ,
+               
               ])
             ],
           ),
