@@ -78,10 +78,10 @@ TextFormField customTextFormFieldWithEmail(controller, label) {
         labelText: label,
       ),
       validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Inserisci una email valida';
+        if (value == null || value.trim().isEmpty) {
+          return null;
         }
-        if (!value.contains('@')) {
+        if ( !value.contains('@')  ) {
           return 'Inserisci una email valida';
         }
         return null;

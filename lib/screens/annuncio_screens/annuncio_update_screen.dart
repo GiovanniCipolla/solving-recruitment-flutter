@@ -9,6 +9,7 @@ import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 
 class AnnuncioUpdateScreen extends StatefulWidget {
   const AnnuncioUpdateScreen({super.key, required this.annuncio});
@@ -60,16 +61,7 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
   }
 
   Future<void> modificaRiuscita(annuncio) async {
-    final AnnuncioProvider annuncioProvider =
-        Provider.of<AnnuncioProvider>(context, listen: false);
-    await annuncioProvider.getAnnuncio(annuncio.id);
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AnnuncioDetailScreen(
-                  annuncio: annuncio,
-                )),
-        (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, AnnuncioScreen.routeName, (route) => false);
   }
 
   @override

@@ -236,7 +236,7 @@ class BottomSheetUtils {
                   'Età',
                   candidato.dataDiNascita != null
                       ? calculateAge(candidato.dataDiNascita!)
-                      : 'Valore di fallback',
+                      : '',
                 ),
                 _buildInfoRow('Email', candidato.email),
                 _buildInfoRow('Luogo di Nascita', candidato.luogoDiNascita),
@@ -245,7 +245,7 @@ class BottomSheetUtils {
                   candidato.dataDiNascita != null
                       ? DateFormat('dd/MM/yyyy')
                           .format(candidato.dataDiNascita!)
-                      : 'Valore di fallback',
+                      : '',
                 ),
                 _buildInfoRow('Residenza', candidato.residenza),
                 _buildInfoRow(
@@ -343,9 +343,9 @@ class BottomSheetUtils {
               _buildInfoRow('Residenza', candidato.residenza),
               // _buildInfoRow(
               //     'Percorso Academy', candidato.percorsoAcademy! ? 'SI' : 'No'),
-              _buildInfoRow('Annuncio', candidato.titoloAnnuncio),
+              _buildInfoRow('Annuncio', candidato.annuncio!.titolo),
               _buildInfoRow('Area di riferimento',
-                  candidato.denominazioneArea),
+                  candidato.area!.denominazione),
             ],
           ),
         );

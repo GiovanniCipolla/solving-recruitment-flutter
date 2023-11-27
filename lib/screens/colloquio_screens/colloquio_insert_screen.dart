@@ -9,6 +9,7 @@ import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
 
 class ColloquioInsertScreen extends StatefulWidget {
   const ColloquioInsertScreen({super.key});
@@ -50,11 +51,8 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
   }
 
   Future<void> inserimentoRiuscito() async {
-    final ColloquioProvider colloquioProvider =
-        Provider.of<ColloquioProvider>(context, listen: false);
-    await colloquioProvider.getColloqui();
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    Navigator.pushNamedAndRemoveUntil(
+        context, ColloquioScreen.routeName, (route) => false);
   }
 
   @override
@@ -68,8 +66,10 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
         selezionatoreProvider.selezionatori;
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
-          'Inserisci Colloquio', style: TextStyle(fontSize: 25, color: Theme.of(context).colorScheme.primary),
+        title: Text(
+          'Inserisci Colloquio',
+          style: TextStyle(
+              fontSize: 25, color: Theme.of(context).colorScheme.primary),
         ),
       ),
       body: Form(
@@ -202,7 +202,14 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                       Provider.of<ColloquioProvider>(context, listen: false);
                   final bool result =
                       await colloquioProvider.createColloquio(colloquio);
-                  result ? inserimentoRiuscito() : print('NON VAAA');
+                  // ignore: use_build_context_synchronously
+                  result
+                      ? inserimentoRiuscito()
+                      : ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(
+                              content: Text(
+                          'Errore durante l\'inserimento del colloquio',
+                        )));
                 }
               },
               child: const Text('Inserisci'),

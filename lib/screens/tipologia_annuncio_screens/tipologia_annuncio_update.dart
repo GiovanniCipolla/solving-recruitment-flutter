@@ -28,15 +28,7 @@ class _TipologiaAnnuncioUpdateScreenState
   }
 
   Future<void> modificaRiuscita(tipologiaAnnuncio) async {
-    final TipologiaAnnuncioProvider tipologiaAnnuncioProvider =
-        Provider.of<TipologiaAnnuncioProvider>(context, listen: false);
-    await tipologiaAnnuncioProvider.getTipologiaAnnuncio();
-    // ignore: use_build_context_synchronously
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const TipologiaAnnuncioScreen()),
-        (route) => false);
+   Navigator.pushNamedAndRemoveUntil(context, TipologiaAnnuncioScreen.routeName, (route) => false);
   }
 
   @override

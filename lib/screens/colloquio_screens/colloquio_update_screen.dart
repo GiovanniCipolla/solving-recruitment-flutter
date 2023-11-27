@@ -11,6 +11,7 @@ import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_detail_screen.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
 
 class ColloquioUpdateScreen extends StatefulWidget {
   const ColloquioUpdateScreen({super.key, required this.colloquio});
@@ -42,17 +43,7 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
   }
 
   Future<void> modificaRiuscita(colloquio) async {
-    final ColloquioProvider colloquioProvider =
-        Provider.of<ColloquioProvider>(context, listen: false);
-    final Colloquio colloquioToSend = await colloquioProvider.getColloquioById(colloquio.id);
-    // ignore: use_build_context_synchronously
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ColloquioDetailScreen(
-                  colloquio: colloquioToSend,
-                )),
-        (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, ColloquioScreen.routeName, (route) => false);
   }
 
   @override

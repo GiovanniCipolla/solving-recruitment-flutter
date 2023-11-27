@@ -15,7 +15,7 @@ class AnnuncioItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateFormatter = DateFormat('yyyy-MM-dd');
 
-    final dynamic? formattedDataInizio;
+    final dynamic formattedDataInizio;
 
     if (annuncio.dataInizio != null) {
       formattedDataInizio = dateFormatter.format(annuncio.dataInizio!);

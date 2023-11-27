@@ -4,6 +4,7 @@ import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_edit_screen.dart';
+import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
 
 class SelezionatoreItem extends StatelessWidget {
   const SelezionatoreItem({super.key, required this.selezionatore});
@@ -87,29 +88,39 @@ class SelezionatoreItem extends StatelessWidget {
                                       selezionatore: selezionatore)));
                         },
                       ),
-                      IconButton(
-                          onPressed: () async {
-                            final result =
-                                await Provider.of<SelezionatoreProvider>(
-                                        context,
-                                        listen: false)
-                                    .deleteSelezionatore(selezionatore.id);
-                            if (result) {
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text(
-                                    "Selezionatore eliminato correttamente"),
-                              ));
-                            } else {
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Selezionatore non cancellato'),
-                              ));
-                            }
-                          },
-                          icon: const Icon(Icons.delete, color: Colors.red)),
+                      Consumer<SelezionatoreProvider>(
+                        builder: (context, provider, child) {
+                          return IconButton(
+                            onPressed: () async {
+                              final result = await provider
+                                  .deleteSelezionatore(selezionatore.id);
+                              if (result) {
+                                // ignore: use_build_context_synchronously
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "Selezionatore eliminato correttamente"),
+                                  ),
+                                );
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  SelezionatoreScreen.routeName,
+                                  (route) => false,
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('Selezionatore non cancellato'),
+                                  ),
+                                );
+                              }
+                            },
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

@@ -70,6 +70,7 @@ class CandidatoProvider extends ChangeNotifier {
       'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
+    print(jsonData);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return Candidato.fromJson(jsonData);
     } else {
@@ -245,6 +246,7 @@ class CandidatoProvider extends ChangeNotifier {
   }
 
   Future<bool> updateCandidato(Candidato candidato) async {
+    print(' questo è il candidato nel provider ${candidato.toJson()}');
     String url = '$urlAPI/candidato/update/${candidato.id}';
     final response = await http.put(
       Uri.parse(url),
@@ -254,7 +256,7 @@ class CandidatoProvider extends ChangeNotifier {
       },
       body: json.encode(candidato.toJson()),
     );
-    print(response.body);
+        print(' Questa è la risposta  ${response.body}');
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {

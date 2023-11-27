@@ -10,6 +10,7 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_detail_screen.dart';
+import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 
 class CandidatoUpdateScreen extends StatefulWidget {
   const CandidatoUpdateScreen({super.key, required this.candidato});
@@ -34,6 +35,7 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
   late TextEditingController recapitoExtra;
   late TextEditingController cap;
   late LinguaInglese? linguaIngleseSelezionata;
+  late Stato statoSelezionato;
   late List<String> tecnologieConosciute;
   final TextEditingController nuovaTecnologiaController =
       TextEditingController();
@@ -97,6 +99,7 @@ String formattaData(DateTime data) {
         TextEditingController(text: widget.candidato.recapitoExtra ?? '');
     cap = TextEditingController(text: widget.candidato.cap ?? '');
     linguaIngleseSelezionata = widget.candidato.linguaInglese;
+    statoSelezionato = widget.candidato.stato!;
     tecnologieConosciute = widget.candidato.tecnologieConosciute ?? [];
     softSkills = widget.candidato.softSkills ?? [];
     altreCompetenze = widget.candidato.altreCompetenzeMaturate ?? [];
@@ -115,22 +118,16 @@ String formattaData(DateTime data) {
     posizioneController =
         TextEditingController(text: widget.candidato.posizione ?? '');
     noteController = TextEditingController(text: widget.candidato.note ?? '');
-    areaSelezionata = widget.candidato.area;
-    annuncioSelezionato = widget.candidato.annuncio;
+    widget.candidato.area!.id != null ? areaSelezionata = widget.candidato.area : areaSelezionata = null;
+    widget.candidato.annuncio!.id != null ? annuncioSelezionato = widget.candidato.annuncio : annuncioSelezionato = null;
   }
 
   Future<void> modificaRiuscita(candidato) async {
-    final CandidatoProvider candidatoProvider =
-        Provider.of<CandidatoProvider>(context, listen: false);
-    final Candidato candidatoToSend =
-        await candidatoProvider.getCandidato(candidato.id);
+  
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
    // ignore: use_build_context_synchronously
-   Navigator.push(context, MaterialPageRoute(
-     builder: (context) {
-       return CandidatoDetailScreen(candidato: candidatoToSend);
-     }
-   ));
+   Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
   }
 
 
@@ -365,13 +362,33 @@ String formattaData(DateTime data) {
                     labelText: 'Disponibilità Lavoro',
                   ),
                 ),
+                 DropdownButtonFormField<Stato>(
+                  value: statoSelezionato,
+                  items: Stato.values
+                      .map((Stato value) {
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(statoCandidatoMap[value] ?? ''),
+                    );
+                  }).toList(),
+                  onChanged: (Stato? value) {
+                    if (value != null) {
+                      setState(() {
+                        statoSelezionato = value;
+                      });
+                    }
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Stato candidato',
+                  ),
+                ),
                 TextFormField(
                   controller: dataPrimoContattoController,
                   decoration: const InputDecoration(
                     labelText: 'Data Primo Contatto',
                   ),
                   onTap: () {
-                    _selectDate(context, dataPrimoContattoController!,
+                    _selectDate(context, dataPrimoContattoController,
                         dataPrimoContatto);
                   },
                 ),
@@ -379,7 +396,9 @@ String formattaData(DateTime data) {
                     posizioneController, 'Posizione'),
                 customTextFormFieldWithoutValidator(noteController, 'Note'),
                 DropdownButtonFormField<int>(
-                  value: areaSelezionata?.id,
+                  value: areaSelezionata == null
+                      ? 0
+                      : areaSelezionata!.id,
                   items: [
                     // Aggiungi un elemento vuoto all'inizio della lista
                     const DropdownMenuItem<int>(
@@ -410,7 +429,7 @@ String formattaData(DateTime data) {
                   ),
                 ),
                 DropdownButtonFormField<int>(
-                  value: annuncioSelezionato?.id,
+                  value: annuncioSelezionato == null ? 0 : annuncioSelezionato!.id,
                   items: [
                     // Aggiungi un elemento vuoto all'inizio della lista
                     const DropdownMenuItem<int>(
@@ -478,6 +497,7 @@ String formattaData(DateTime data) {
                         area: areaSelezionata,
                         annuncio: annuncioSelezionato,
                       );
+                      print(candidato.toJson());
                       final result = await Provider.of<CandidatoProvider>(
                               context,
                               listen: false)

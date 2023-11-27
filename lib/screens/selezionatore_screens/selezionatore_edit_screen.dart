@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
+import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
 
 class SelezionatoreEditScreen extends StatefulWidget {
   const SelezionatoreEditScreen({super.key, required this.selezionatore});
@@ -28,10 +29,7 @@ class _SelezionatoreEditScreenState extends State<SelezionatoreEditScreen> {
   }
 
   Future<void> modificaRiuscita() async {
-    final SelezionatoreProvider selezionatoreProvider =
-        Provider.of<SelezionatoreProvider>(context, listen: false);
-    await selezionatoreProvider.getSelezionatori();
-    Navigator.pop(context);
+   Navigator.pushNamedAndRemoveUntil(context, SelezionatoreScreen.routeName, (route) => false);
   }
 
   @override

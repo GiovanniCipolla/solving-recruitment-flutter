@@ -4,7 +4,7 @@ import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_insert_screen.dart';
-import 'package:solving_recruitment_flutter/widgets/colloquio_widgets/candidato_widgets/candidato_item.dart';
+import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
@@ -108,7 +108,6 @@ class CandidatoScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       final candidati = candidatoProvider.candidati;
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        print(candidati.length);
                         return const Center(
                           child: CircularProgressIndicator(),
                         );

@@ -9,14 +9,13 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_update_screen.dart';
-import 'package:solving_recruitment_flutter/widgets/colloquio_widgets/candidato_widgets/candidato_detail_card_item.dart';
-import 'package:solving_recruitment_flutter/widgets/colloquio_widgets/candidato_widgets/candidato_detail_colloqui_item.dart';
+import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_card_item.dart';
+import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_colloqui_item.dart';
 
 class CandidatoDetailScreen extends StatelessWidget {
   const CandidatoDetailScreen({super.key, required this.candidato});
 
   final Candidato candidato;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

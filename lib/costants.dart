@@ -74,11 +74,12 @@ Map<Tipologia, String> tipologiaMap = {
 };
 
 Map<Stato, String> statoCandidatoMap = {
-  Stato.ASSUNTO: "Superato",
+  Stato.ASSUNTO: "Assunto",
   Stato.RIFIUTATO: "Rifiutato",
   Stato.IN_ATTESA: "In attesa",
   Stato.ND: "Non definito",
   Stato.ISCRITTO: "Iscritto",
+  Stato.IDONEO: "Idoneo",
 };
 Map<Stato, Icon> statoCandidatoIconMap = {
   Stato.IDONEO:

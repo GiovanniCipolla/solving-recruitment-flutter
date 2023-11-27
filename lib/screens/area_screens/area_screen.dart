@@ -56,32 +56,6 @@ class AreaScreen extends StatelessWidget {
                               ]);
                             }
                           }),
-                      SizedBox(
-                        height: heightSize(context) * 0.15,
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Text(
-                              'Vai alla gestione academy',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            const Icon(
-                              Icons.arrow_forward,
-                              color: Colors.red,
-                            ),
-                            SizedBox(
-                              width: widthSize(context) * 0.02,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 2.0,
-                        color: Colors.red,
-                      )
                     ],
                   ),
                 ),

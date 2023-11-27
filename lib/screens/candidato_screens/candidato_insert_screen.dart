@@ -9,6 +9,7 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 import 'package:solving_recruitment_flutter/utilities/dropdownButtonFormField.dart';
 
 class CandidatoInsertScreen extends StatefulWidget {
@@ -70,11 +71,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
   }
 
   Future<void> inserimentoRiuscito() async {
-    final CandidatoProvider candidatoProvider =
-        Provider.of<CandidatoProvider>(context, listen: false);
-    await candidatoProvider.getCandidati();
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+   Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
   }
 
   @override
