@@ -16,7 +16,8 @@ class CandidatoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final candidatoProvider = Provider.of<CandidatoProvider>(context, listen: false);
+    final candidatoProvider =
+        Provider.of<CandidatoProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
         return backHome(context);
@@ -103,37 +104,40 @@ class CandidatoScreen extends StatelessWidget {
               height: heightSize(context) * 0.02,
             ),
             Expanded(
-                child: FutureBuilder(
-                    future: candidatoProvider.getCandidati(),
-                    builder: (context, snapshot) {
-                      final candidati = candidatoProvider.candidati;
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text(snapshot.error.toString());
-                      } else if (candidati.isEmpty) {
-                        return const Center(
-                            child: Text(
-                          'Non ci sono candidati',
-                        ));
-                      } else {
-                        return GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                          ),
-                          itemCount: candidati.length,
-                          shrinkWrap: true,
-                          physics:
-                              const ClampingScrollPhysics(), // Questa opzione impedisce il rollio eccessivo
-                          itemBuilder: (context, index) {
-                            return CandidatoItem(candidato: candidati[index]);
-                          },
-                        );
-                      }
-                    })),
+              child: FutureBuilder(
+                future: candidatoProvider.getCandidati(),
+                builder: (context, snapshot) {
+                  final candidati = candidatoProvider.candidati;
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    print(snapshot.error.toString());
+                    return Text(snapshot.error.toString());
+                  } else if (candidati.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        'Non ci sono candidati',
+                      ),
+                    );
+                  } else {
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemCount: candidati.length,
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return CandidatoItem(candidato: candidati[index]);
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
             CustomButtonAdd(
                 titleShowDialog: 'Aggiungi candidato',
                 descrizioneShowDialog:

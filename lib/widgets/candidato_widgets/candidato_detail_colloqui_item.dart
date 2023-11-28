@@ -27,7 +27,7 @@ class CandidatoDetailColloquiItem extends StatelessWidget {
        showLoadingDialog(context);
 try {
   final colloquioProvider = Provider.of<ColloquioProvider>(context, listen: false);
-  await colloquioProvider.getColloquioByCandidatoByTipologia(3, tipologia);
+  await colloquioProvider.getColloquioByCandidatoByTipologia(candidatoId, tipologia);
   // ignore: use_build_context_synchronously
   Navigator.pop(context);
   List<Colloquio> colloqui = colloquioProvider.colloqui;
@@ -39,9 +39,9 @@ try {
   // ignore: use_build_context_synchronously
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
+      backgroundColor: Colors.red,
       content: Text(
         'Si è verificato un errore durante il caricamento dei colloqui',
-        style: TextStyle(color: Colors.red),
       ),
     ),
   );

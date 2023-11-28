@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
-import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_detail_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 
 class CandidatoUpdateScreen extends StatefulWidget {
@@ -57,24 +56,25 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
   Annuncio? annuncioSelezionato;
   late TextEditingController annuncioController;
 
- Future<void> _selectDate(BuildContext context, TextEditingController controller, DateTime? type) async {
-  final DateTime? picked = await showDatePicker(
-    context: context,
-    initialDate: type ?? DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2101),
-  );
-  if (picked != null && picked != type) {
-    setState(() {
-      dataPrimoContatto = picked;
-      controller.text = formattaData(picked);
-    });
+  Future<void> _selectDate(BuildContext context,
+      TextEditingController controller, DateTime? type) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: type ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != type) {
+      setState(() {
+        dataPrimoContatto = picked;
+        controller.text = formattaData(picked);
+      });
+    }
   }
-}
 
-String formattaData(DateTime data) {
-  return DateFormat('dd/MM/yyyy').format(data);
-}
+  String formattaData(DateTime data) {
+    return DateFormat('dd/MM/yyyy').format(data);
+  }
 
   @override
   void initState() {
@@ -118,18 +118,21 @@ String formattaData(DateTime data) {
     posizioneController =
         TextEditingController(text: widget.candidato.posizione ?? '');
     noteController = TextEditingController(text: widget.candidato.note ?? '');
-    widget.candidato.area!.id != null ? areaSelezionata = widget.candidato.area : areaSelezionata = null;
-    widget.candidato.annuncio!.id != null ? annuncioSelezionato = widget.candidato.annuncio : annuncioSelezionato = null;
+    widget.candidato.area!.id != null
+        ? areaSelezionata = widget.candidato.area
+        : areaSelezionata = null;
+    widget.candidato.annuncio!.id != null
+        ? annuncioSelezionato = widget.candidato.annuncio
+        : annuncioSelezionato = null;
   }
 
   Future<void> modificaRiuscita(candidato) async {
-  
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-   // ignore: use_build_context_synchronously
-   Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+    // ignore: use_build_context_synchronously
+    Navigator.pushNamedAndRemoveUntil(
+        context, CandidatoScreen.routeName, (route) => false);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -154,45 +157,265 @@ String formattaData(DateTime data) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                customTextFormFieldWithValidator(nomeController, 'Nome'),
-                customTextFormFieldWithValidator(cognomeController, 'Cognome'),
-                customTextFormFieldWithEmail(emailController, 'E-Mail'),
-                customTextFormFieldWithoutValidator(
-                    luogoDiNascitaController, 'Luogo di nascita'),
-                TextFormField(
-                  controller: dataDiNascitaController,
-                  decoration: const InputDecoration(
-                    labelText: 'Data Di Nascita',
-                  ),
-                  onTap: () {
-                    _selectDate(
-                        context, dataDiNascitaController, dataDiNascita);
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                        child: customTextFormFieldWithValidator(
+                            nomeController, 'Nome')),
+                    const SizedBox(width: 10),
+                    Expanded(
+                        child: customTextFormFieldWithValidator(
+                            cognomeController, 'Cognome')),
+                  ],
                 ),
-                customTextFormFieldWithoutValidator(
-                    residenzaController, 'Residenza'),
-                customTextFormFieldWithoutValidator(
-                    recapitoTelefonicoController, 'Recapito telefonico'),
-                customTextFormFieldWithoutValidator(
-                    recapitoExtra, 'Recapito extra'),
-                customTextFormFieldWithoutValidator(cap, 'CAP'),
-                DropdownButtonFormField<LinguaInglese>(
-                  value: linguaIngleseSelezionata,
-                  items: LinguaInglese.values.map((LinguaInglese value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(linguaIngleseMap[value] ?? ''),
-                    );
-                  }).toList(),
-                  onChanged: (LinguaInglese? value) {
-                    if (value != null) {
-                      setState(() {
-                        linguaIngleseSelezionata = value;
-                      });
-                    }
+                Row(children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: dataDiNascitaController,
+                      decoration: const InputDecoration(
+                        labelText: 'Data Di Nascita',
+                      ),
+                      onTap: () {
+                        _selectDate(
+                            context, dataDiNascitaController, dataDiNascita);
+                      },
+                      validator: (value) {
+                        if (dataDiNascita != null) {
+                          final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                          if (!dateFormat.hasMatch(value ?? '')) {
+                            return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: dataPrimoContattoController,
+                      decoration: const InputDecoration(
+                        labelText: 'Data Primo Contatto',
+                      ),
+                      onTap: () {
+                        _selectDate(context, dataPrimoContattoController,
+                            dataPrimoContatto);
+                      },
+                      validator: (value) {
+                        if (dataPrimoContatto != null) {
+                          final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                          if (!dateFormat.hasMatch(value ?? '')) {
+                            return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ]),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 7,
+                        child: customTextFormFieldWithEmail(
+                            emailController, 'E-Mail')),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 3,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: cap,
+                        decoration: const InputDecoration(
+                          labelText: 'Cap',
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Row(children: [
+                  Expanded(
+                    child: customTextFormFieldWithoutValidator(
+                        luogoDiNascitaController, 'Luogo di nascita'),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: customTextFormFieldWithoutValidator(
+                        residenzaController, 'Residenza'),
+                  ),
+                ]),
+                Row(children: [
+                  Expanded(
+                    child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: recapitoTelefonicoController,
+                        decoration: const InputDecoration(
+                          labelText: 'Recapito telefonico',
+                        )),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: recapitoExtra,
+                        decoration: const InputDecoration(
+                          labelText: 'Recapito extra',
+                        )),
+                  ),
+                ]),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<LinguaInglese>(
+                        value: linguaIngleseSelezionata,
+                        items: LinguaInglese.values.map((LinguaInglese value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(linguaIngleseMap[value] ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (LinguaInglese? value) {
+                          if (value != null) {
+                            setState(() {
+                              linguaIngleseSelezionata = value;
+                            });
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'Lingua Inglese',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: DropdownButtonFormField<Stato>(
+                        value: statoSelezionato,
+                        items: Stato.values.map((Stato value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(statoCandidatoMap[value] ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (Stato? value) {
+                          if (value != null) {
+                            setState(() {
+                              statoSelezionato = value;
+                            });
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'Stato candidato',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(children: [
+                  Expanded(
+                    child: DropdownButtonFormField<Seniority>(
+                      value: senioritySelezionata,
+                      items: Seniority.values.map((Seniority value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(seniorityMap[value] ?? ''),
+                        );
+                      }).toList(),
+                      onChanged: (Seniority? value) {
+                        if (value != null) {
+                          setState(() {
+                            senioritySelezionata = value;
+                          });
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Seniority',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: DropdownButtonFormField<DisponibilitaLavoro>(
+                      value: disponibilitaLavoroSelezionata,
+                      items: DisponibilitaLavoro.values
+                          .map((DisponibilitaLavoro value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(disponibilitaLavoroMap[value] ?? ''),
+                        );
+                      }).toList(),
+                      onChanged: (DisponibilitaLavoro? value) {
+                        if (value != null) {
+                          setState(() {
+                            disponibilitaLavoroSelezionata = value;
+                          });
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Disponibilità',
+                      ),
+                    ),
+                  ),
+                ]),
+                DropdownButtonFormField<int>(
+                  value: areaSelezionata == null ? 0 : areaSelezionata!.id,
+                  items: [
+                    // Aggiungi un elemento vuoto all'inizio della lista
+                    const DropdownMenuItem<int>(
+                      value: 0,
+                      child: Text(' - '),
+                    ),
+                    // Aggiungi gli altri elementi
+                    ...areas.map((Area area) {
+                      return DropdownMenuItem<int>(
+                        value: area.id,
+                        child: Text(area.denominazione ?? 'errore'),
+                      );
+                    }).toList(),
+                  ],
+                  onChanged: (int? value) {
+                    setState(() {
+                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                      if (value == 0) {
+                        areaSelezionata = null;
+                      } else {
+                        areaSelezionata =
+                            areas.firstWhere((area) => area.id == value);
+                      }
+                    });
                   },
                   decoration: const InputDecoration(
-                    labelText: 'Lingua Inglese',
+                    labelText: 'Area',
+                  ),
+                ),
+                DropdownButtonFormField<int>(
+                  value:
+                      annuncioSelezionato == null ? 0 : annuncioSelezionato!.id,
+                  items: [
+                    // Aggiungi un elemento vuoto all'inizio della lista
+                    const DropdownMenuItem<int>(
+                      value: 0,
+                      child: Text(' - '),
+                    ),
+                    // Aggiungi gli altri elementi
+                    ...annunci.map((Annuncio annuncio) {
+                      return DropdownMenuItem<int>(
+                        value: annuncio.id,
+                        child: Text(annuncio.titolo ?? 'errore'),
+                      );
+                    }).toList(),
+                  ],
+                  onChanged: (int? value) {
+                    setState(() {
+                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                      if (value == 0) {
+                        annuncioSelezionato = null;
+                      } else {
+                        annuncioSelezionato = annunci
+                            .firstWhere((annuncio) => annuncio.id == value);
+                      }
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Annuncio',
                   ),
                 ),
                 const SizedBox(
@@ -362,103 +585,9 @@ String formattaData(DateTime data) {
                     labelText: 'Disponibilità Lavoro',
                   ),
                 ),
-                 DropdownButtonFormField<Stato>(
-                  value: statoSelezionato,
-                  items: Stato.values
-                      .map((Stato value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(statoCandidatoMap[value] ?? ''),
-                    );
-                  }).toList(),
-                  onChanged: (Stato? value) {
-                    if (value != null) {
-                      setState(() {
-                        statoSelezionato = value;
-                      });
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Stato candidato',
-                  ),
-                ),
-                TextFormField(
-                  controller: dataPrimoContattoController,
-                  decoration: const InputDecoration(
-                    labelText: 'Data Primo Contatto',
-                  ),
-                  onTap: () {
-                    _selectDate(context, dataPrimoContattoController,
-                        dataPrimoContatto);
-                  },
-                ),
                 customTextFormFieldWithoutValidator(
                     posizioneController, 'Posizione'),
                 customTextFormFieldWithoutValidator(noteController, 'Note'),
-                DropdownButtonFormField<int>(
-                  value: areaSelezionata == null
-                      ? 0
-                      : areaSelezionata!.id,
-                  items: [
-                    // Aggiungi un elemento vuoto all'inizio della lista
-                    const DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text(' - '),
-                    ),
-                    // Aggiungi gli altri elementi
-                    ...areas.map((Area area) {
-                      return DropdownMenuItem<int>(
-                        value: area.id,
-                        child: Text(area.denominazione ?? 'errore'),
-                      );
-                    }).toList(),
-                  ],
-                  onChanged: (int? value) {
-                    setState(() {
-                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                      if (value == 0) {
-                        areaSelezionata = null;
-                      } else {
-                        areaSelezionata =
-                            areas.firstWhere((area) => area.id == value);
-                      }
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Area',
-                  ),
-                ),
-                DropdownButtonFormField<int>(
-                  value: annuncioSelezionato == null ? 0 : annuncioSelezionato!.id,
-                  items: [
-                    // Aggiungi un elemento vuoto all'inizio della lista
-                    const DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text(' - '),
-                    ),
-                    // Aggiungi gli altri elementi
-                    ...annunci.map((Annuncio annuncio) {
-                      return DropdownMenuItem<int>(
-                        value: annuncio.id,
-                        child: Text(annuncio.titolo ?? 'errore'),
-                      );
-                    }).toList(),
-                  ],
-                  onChanged: (int? value) {
-                    setState(() {
-                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                      if (value == 0) {
-                        annuncioSelezionato = null;
-                      } else {
-                        annuncioSelezionato = annunci
-                            .firstWhere((annuncio) => annuncio.id == value);
-                      }
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Annuncio',
-                  ),
-                ),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {
@@ -497,7 +626,6 @@ String formattaData(DateTime data) {
                         area: areaSelezionata,
                         annuncio: annuncioSelezionato,
                       );
-                      print(candidato.toJson());
                       final result = await Provider.of<CandidatoProvider>(
                               context,
                               listen: false)

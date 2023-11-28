@@ -70,7 +70,6 @@ class CandidatoProvider extends ChangeNotifier {
       'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
-    print(jsonData);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return Candidato.fromJson(jsonData);
     } else {
@@ -90,7 +89,6 @@ class CandidatoProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('aaaaaa');
       List<Candidato> candidati = [];
       for (var item in jsonData) {
         candidati.add(Candidato.fromJson(item));
@@ -157,41 +155,35 @@ class CandidatoProvider extends ChangeNotifier {
 
   Future<void> getCandidatiFiltratiAutoComplete(String filtro) async {
     try {
-      if (filtro != null) {
-        String url = '$urlAPI/candidato/filtrataMobile?filtro=$filtro';
-        final response = await http.get(Uri.parse(url), headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${authProvider!.token}',
-        });
+      String url = '$urlAPI/candidato/filtrataMobile?filtro=$filtro';
+      final response = await http.get(Uri.parse(url), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
+      });
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        List<Candidato> candidati = [];
+        final jsonData = json.decode(response.body);
 
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          List<Candidato> candidati = [];
-          final jsonData = json.decode(response.body);
-
-          for (var item in jsonData) {
-            candidati.add(Candidato.fromJsonGetAllCandidato(item));
-          }
-
-          this.candidati.clear();
-          this.candidati.addAll(candidati);
-          notifyListeners();
-        } else {
-          throw HttpException(
-            statusCode: response.statusCode,
-            title: 'Errore di rete',
-            description: 'Errore durante la chiamata al server',
-          );
+        for (var item in jsonData) {
+          candidati.add(Candidato.fromJsonGetAllCandidato(item));
         }
+        this.candidati.clear();
+        this.candidati.addAll(candidati);
+        notifyListeners();
+      } else {
+        throw HttpException(
+          statusCode: response.statusCode,
+          title: 'Errore di rete',
+          description: 'Errore durante la chiamata al server',
+        );
       }
     } catch (error) {
-      print('Errore durante la chiamata: $error');
       // Tratta l'errore come desiderato
     }
   }
 
   Future<void> getCandidatisearchAndPagination(filtro) async {
     String url = '$urlAPI/search';
-
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -203,9 +195,7 @@ class CandidatoProvider extends ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Candidato> candidati = [];
-
       var decodedResponse = json.decode(response.body);
-
       if (decodedResponse is List) {
         for (var item in decodedResponse) {
           if (item is Map<String, dynamic>) {
@@ -227,7 +217,6 @@ class CandidatoProvider extends ChangeNotifier {
   }
 
   Future<bool> createCandidato(candidato) async {
-    print('SONO ENTRATO ');
     String url = '$urlAPI/candidato';
     final response = await http.post(
       Uri.parse(url),
@@ -237,8 +226,8 @@ class CandidatoProvider extends ChangeNotifier {
       },
       body: json.encode(candidato.toJson()),
     );
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      notifyListeners();
       return true;
     } else {
       return false;
@@ -246,7 +235,6 @@ class CandidatoProvider extends ChangeNotifier {
   }
 
   Future<bool> updateCandidato(Candidato candidato) async {
-    print(' questo è il candidato nel provider ${candidato.toJson()}');
     String url = '$urlAPI/candidato/update/${candidato.id}';
     final response = await http.put(
       Uri.parse(url),
@@ -256,8 +244,8 @@ class CandidatoProvider extends ChangeNotifier {
       },
       body: json.encode(candidato.toJson()),
     );
-        print(' Questa è la risposta  ${response.body}');
     if (response.statusCode == 200 || response.statusCode == 201) {
+      notifyListeners();
       return true;
     } else {
       return false;
@@ -271,6 +259,7 @@ class CandidatoProvider extends ChangeNotifier {
       'Authorization': 'Bearer ${authProvider!.token}',
     });
     if (response.statusCode == 200 || response.statusCode == 201) {
+      notifyListeners();
       return true;
     } else {
       return false;

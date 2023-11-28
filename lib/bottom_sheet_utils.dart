@@ -126,9 +126,12 @@ class BottomSheetUtils {
                   fontSize: 16,
                 ),
               ),
+              const SizedBox(
+                width: 15,
+              ),
               Flexible(
                 child: Text(
-                  value ?? 'N/A',
+                  value ?? '',
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -177,7 +180,7 @@ class BottomSheetUtils {
             if (values == null || values.isEmpty)
               const Padding(
                 padding: EdgeInsets.only(left: 16),
-                child: Text('N/A'),
+                child: Text(''),
               ),
             const Divider(
               thickness: 0.5,
@@ -336,7 +339,7 @@ class BottomSheetUtils {
                   candidato.categoriaProtetta! ? 'SI' : 'No'),
               _buildInfoRow('Ral richiesta', candidato.ral.toString()),
               _buildInfoRow(
-                  'Seniority', seniorityMap[candidato.seniority] ?? 'N/A'),
+                  'Seniority', seniorityMap[candidato.seniority] ?? ''),
               _buildInfoRow('Posizione', candidato.posizione),
               _buildInfoRow('Disponibilità Lavoro',
                   disponibilitaLavoroMap[candidato.disponibilitaLavoro]),

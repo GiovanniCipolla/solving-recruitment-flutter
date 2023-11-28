@@ -63,7 +63,7 @@ TextFormField customTextFormFieldWithValidator(controller, label) {
     ),
     validator: (value) {
       if (value == null || value.trim().isEmpty) {
-        return 'Il campo $label non può essere vuoto.';
+        return 'Campo obbligatorio!';
       }
       return null;
     },

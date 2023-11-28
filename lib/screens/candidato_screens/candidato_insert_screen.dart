@@ -71,7 +71,8 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
   }
 
   Future<void> inserimentoRiuscito() async {
-   Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, CandidatoScreen.routeName, (route) => false);
   }
 
   @override
@@ -100,35 +101,235 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                customTextFormFieldWithValidator(nomeController, 'Nome'),
-                customTextFormFieldWithValidator(cognomeController, 'Cognome'),
-                customTextFormFieldWithEmail(emailController, 'E-Mail'),
-                customTextFormFieldWithoutValidator(
-                    luogoDiNascitaController, 'Luogo di nascita'),
-                TextFormField(
-                  controller: dataDiNascitaController,
-                  decoration: const InputDecoration(
-                    labelText: 'Data Di Nascita',
-                  ),
-                  onTap: () {
-                    _selectDate(
-                        context, dataDiNascitaController, dataDiNascita);
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                        child: customTextFormFieldWithValidator(
+                            nomeController, 'Nome')),
+                    const SizedBox(width: 10),
+                    Expanded(
+                        child: customTextFormFieldWithValidator(
+                            cognomeController, 'Cognome')),
+                  ],
                 ),
-                customTextFormFieldWithoutValidator(
-                    residenzaController, 'Residenza'),
-                customTextFormFieldWithoutValidator(
-                    recapitoTelefonicoController, 'Recapito telefonico'),
-                customTextFormFieldWithoutValidator(
-                    recapitoExtra, 'Recapito extra'),
-                customTextFormFieldWithoutValidator(cap, 'CAP'),
-                showLinguaInglese(
-                  linguaIngleseSelezionata ?? LinguaInglese.ND,
-                  (LinguaInglese? value) {
+                Row(children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: dataDiNascitaController,
+                      decoration: const InputDecoration(
+                        labelText: 'Data Di Nascita',
+                      ),
+                      onTap: () {
+                        _selectDate(
+                            context, dataDiNascitaController, dataDiNascita);
+                      },
+                      validator: (value) {
+                        if (dataDiNascita != null) {
+                          final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                          if (!dateFormat.hasMatch(value ?? '')) {
+                            return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      controller: dataPrimoContattoController,
+                      decoration: const InputDecoration(
+                        labelText: 'Data Primo Contatto',
+                      ),
+                      onTap: () {
+                        _selectDate(context, dataPrimoContattoController,
+                            dataPrimoContatto);
+                      },
+                      validator: (value) {
+                        if (dataPrimoContatto != null) {
+                          final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                          if (!dateFormat.hasMatch(value ?? '')) {
+                            return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ]),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 7,
+                        child: customTextFormFieldWithEmail(
+                            emailController, 'E-Mail')),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 3,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: cap,
+                        decoration: const InputDecoration(
+                          labelText: 'Cap',
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Row(children: [
+                  Expanded(
+                    child: customTextFormFieldWithoutValidator(
+                        luogoDiNascitaController, 'Luogo di nascita'),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: customTextFormFieldWithoutValidator(
+                        residenzaController, 'Residenza'),
+                  ),
+                ]),
+                Row(children: [
+                  Expanded(
+                    child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: recapitoTelefonicoController,
+                        decoration: const InputDecoration(
+                          labelText: 'Recapito telefonico',
+                        )),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: recapitoExtra,
+                        decoration: const InputDecoration(
+                          labelText: 'Recapito extra',
+                        )),
+                  ),
+                ]),
+                Row(children: [
+                  Expanded(
+                    child: DropdownButtonFormField<Seniority>(
+                      value: senioritySelezionata,
+                      items: Seniority.values.map((Seniority value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(seniorityMap[value] ?? ''),
+                        );
+                      }).toList(),
+                      onChanged: (Seniority? value) {
+                        if (value != null) {
+                          setState(() {
+                            senioritySelezionata = value;
+                          });
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Seniority',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: DropdownButtonFormField<DisponibilitaLavoro>(
+                      value: disponibilitaLavoroSelezionata,
+                      items: DisponibilitaLavoro.values
+                          .map((DisponibilitaLavoro value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(disponibilitaLavoroMap[value] ?? ''),
+                        );
+                      }).toList(),
+                      onChanged: (DisponibilitaLavoro? value) {
+                        if (value != null) {
+                          setState(() {
+                            disponibilitaLavoroSelezionata = value;
+                          });
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Disponibilità',
+                      ),
+                    ),
+                  ),
+                ]),
+                Row(children: [
+                  Expanded(
+                    child: showLinguaInglese(
+                      linguaIngleseSelezionata ?? LinguaInglese.ND,
+                      (LinguaInglese? value) {
+                        setState(() {
+                          linguaIngleseSelezionata = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: customTextFormFieldWithoutValidator(
+                        posizioneController, 'Posizione'),
+                  ),
+                ]),
+                DropdownButtonFormField<int>(
+                  value: areaSelezionata?.id,
+                  items: [
+                    // Aggiungi un elemento vuoto all'inizio della lista
+                    const DropdownMenuItem<int>(
+                      value: 0,
+                      child: Text(' - '),
+                    ),
+                    // Aggiungi gli altri elementi
+                    ...areas.map((Area area) {
+                      return DropdownMenuItem<int>(
+                        value: area.id,
+                        child: Text(area.denominazione ?? 'errore'),
+                      );
+                    }).toList(),
+                  ],
+                  onChanged: (int? value) {
                     setState(() {
-                      linguaIngleseSelezionata = value;
+                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                      if (value == 0) {
+                        areaSelezionata = null;
+                      } else {
+                        areaSelezionata =
+                            areas.firstWhere((area) => area.id == value);
+                      }
                     });
                   },
+                  decoration: const InputDecoration(
+                    labelText: 'Area',
+                  ),
+                ),
+                DropdownButtonFormField<int>(
+                  value: annuncioSelezionato?.id,
+                  items: [
+                    // Aggiungi un elemento vuoto all'inizio della lista
+                    const DropdownMenuItem<int>(
+                      value: 0,
+                      child: Text(' - '),
+                    ),
+                    // Aggiungi gli altri elementi
+                    ...annunci.map((Annuncio annuncio) {
+                      return DropdownMenuItem<int>(
+                        value: annuncio.id,
+                        child: Text(annuncio.titolo ?? 'errore'),
+                      );
+                    }).toList(),
+                  ],
+                  onChanged: (int? value) {
+                    setState(() {
+                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                      if (value == 0) {
+                        annuncioSelezionato = null;
+                      } else {
+                        annuncioSelezionato = annunci
+                            .firstWhere((annuncio) => annuncio.id == value);
+                      }
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Annuncio',
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -231,17 +432,6 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                     }
                   },
                 ),
-                ListTile(
-                  title: const Text('Categoria Protetta'),
-                  trailing: Checkbox(
-                    value: categoriaProtetta ?? false,
-                    onChanged: (value) {
-                      setState(() {
-                        categoriaProtetta = value;
-                      });
-                    },
-                  ),
-                ),
                 TextFormField(
                     controller: ralController,
                     keyboardType:
@@ -258,120 +448,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                       }
                       return null;
                     }),
-                DropdownButtonFormField<Seniority>(
-                  value: senioritySelezionata,
-                  items: Seniority.values.map((Seniority value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(seniorityMap[value] ?? ''),
-                    );
-                  }).toList(),
-                  onChanged: (Seniority? value) {
-                    if (value != null) {
-                      setState(() {
-                        senioritySelezionata = value;
-                      });
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Seniority',
-                  ),
-                ),
-                DropdownButtonFormField<DisponibilitaLavoro>(
-                  value: disponibilitaLavoroSelezionata,
-                  items: DisponibilitaLavoro.values
-                      .map((DisponibilitaLavoro value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(disponibilitaLavoroMap[value] ?? ''),
-                    );
-                  }).toList(),
-                  onChanged: (DisponibilitaLavoro? value) {
-                    if (value != null) {
-                      setState(() {
-                        disponibilitaLavoroSelezionata = value;
-                      });
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Disponibilità Lavoro',
-                  ),
-                ),
-                TextFormField(
-                  controller: dataPrimoContattoController,
-                  decoration: const InputDecoration(
-                    labelText: 'Data Primo Contatto',
-                  ),
-                  onTap: () {
-                    _selectDate(context, dataPrimoContattoController,
-                        dataPrimoContatto);
-                  },
-                ),
-                customTextFormFieldWithoutValidator(
-                    posizioneController, 'Posizione'),
                 customTextFormFieldWithoutValidator(noteController, 'Note'),
-                DropdownButtonFormField<int>(
-                  value: areaSelezionata?.id,
-                  items: [
-                    // Aggiungi un elemento vuoto all'inizio della lista
-                    const DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text(' - '),
-                    ),
-                    // Aggiungi gli altri elementi
-                    ...areas.map((Area area) {
-                      return DropdownMenuItem<int>(
-                        value: area.id,
-                        child: Text(area.denominazione ?? 'errore'),
-                      );
-                    }).toList(),
-                  ],
-                  onChanged: (int? value) {
-                    setState(() {
-                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                      if (value == 0) {
-                        areaSelezionata = null;
-                      } else {
-                        areaSelezionata =
-                            areas.firstWhere((area) => area.id == value);
-                      }
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Area',
-                  ),
-                ),
-                DropdownButtonFormField<int>(
-                  value: annuncioSelezionato?.id,
-                  items: [
-                    // Aggiungi un elemento vuoto all'inizio della lista
-                    const DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text(' - '),
-                    ),
-                    // Aggiungi gli altri elementi
-                    ...annunci.map((Annuncio annuncio) {
-                      return DropdownMenuItem<int>(
-                        value: annuncio.id,
-                        child: Text(annuncio.titolo ?? 'errore'),
-                      );
-                    }).toList(),
-                  ],
-                  onChanged: (int? value) {
-                    setState(() {
-                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                      if (value == 0) {
-                        annuncioSelezionato = null;
-                      } else {
-                        annuncioSelezionato = annunci
-                            .firstWhere((annuncio) => annuncio.id == value);
-                      }
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Annuncio',
-                  ),
-                ),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {
@@ -417,9 +494,27 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                       // ignore: use_build_context_synchronously
 
                       result
-                          // ignore: use_build_context_synchronously
                           ? inserimentoRiuscito()
-                          : print('aaaaaa');
+                          // ignore: use_build_context_synchronously
+                          : showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Attenzione'),
+                                  content:
+                                      const Text('Inserimento non riuscito.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(
+                                            context); // Chiudi il dialog
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                     }
                   },
                   child: const Text('Inserisci'),

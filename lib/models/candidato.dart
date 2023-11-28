@@ -166,12 +166,12 @@ class Candidato {
       'cognome': cognome,
       'email': email,
       'stato': (stato != null) ? stato.toString().split('.').last : 'ND',
-      'luogoDiNascita': luogoDiNascita,
-      'dataDiNascita':
+      'luogoNascita': luogoDiNascita,
+      'dataNascita':
           dataDiNascita != null ? dataDiNascita!.toIso8601String() : null,
       'residenza': residenza,
       'recapitoTelefonico': recapitoTelefonico,
-      'recapitoExtra': recapitoExtra,
+      'recapitoTelefonicoExtra': recapitoExtra,
       'cap': cap,
       'linguaInglese': linguaInglese != null
           ? linguaInglese.toString().split('.').last
@@ -181,6 +181,7 @@ class Candidato {
       'altreCompetenzeMaturate': altreCompetenzeMaturate,
       'categoriaProtetta': categoriaProtetta,
       'ral': ral,
+      'note': note,
       'seniority':
           (seniority != null) ? seniority.toString().split('.').last : 'ND',
       'disponibilitaLavoro': (disponibilitaLavoro != null)

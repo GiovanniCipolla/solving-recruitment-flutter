@@ -60,13 +60,7 @@ class AreaScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              CustomButtonAdd(
-                  titleShowDialog: 'Aggiungi Area',
-                  descrizioneShowDialog:
-                      'Sicuro di voler aggiungere un\' area ?',
-                  metodoShowDialog: () {
-                    showAlertDialog(context);
-                  }),
+             
             ],
           ),
         ),
