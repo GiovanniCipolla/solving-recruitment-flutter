@@ -41,7 +41,7 @@ class Annuncio {
           : null,
       area: json['area'] != null ? Area.fromJson(json['area']) : null,
     );
-  }
+  } 
   factory Annuncio.fromJsonGetAllAnnunci(Map<String, dynamic> json) {
     return Annuncio(
       id: json['id'] != null ? json['id'] as int : null,

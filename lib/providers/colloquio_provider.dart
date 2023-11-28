@@ -106,6 +106,8 @@ class ColloquioProvider extends ChangeNotifier {
       body: json.encode(colloquio.toJson()),
     );
     if( response.statusCode == 200 || response.statusCode == 201) {
+      notifyListeners();
+      print(response.body);
       return true;
     } else {
       return false;

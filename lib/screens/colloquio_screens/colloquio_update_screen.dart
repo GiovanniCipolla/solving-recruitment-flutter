@@ -2,7 +2,6 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
@@ -10,7 +9,6 @@ import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
-import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_detail_screen.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
 
 class ColloquioUpdateScreen extends StatefulWidget {
@@ -22,24 +20,30 @@ class ColloquioUpdateScreen extends StatefulWidget {
 
 class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController note;
+
   late TextEditingController dataController;
   Selezionatore? selezionatoreSelezionato;
-  final TextEditingController selezionatoreController = TextEditingController();
   DateTime? data;
   Tipologia? tipologiaSelezionata;
   FeedBackColloquio? feedbackSelezionato;
-  final  TextEditingController candidatoController = TextEditingController();
+  late  TextEditingController candidatoController = TextEditingController();
   Candidato? candidato;
+  late TextEditingController? noteController;
 
   String formattaData(DateTime data) {
     return DateFormat('dd/MM/yyyy').format(data);
   }
 
-  Future<void> candidatoSelezionato(id) async {
+  Future<Candidato> candidatoSelezionato(id) async {
     final CandidatoProvider candidatoProvider =
         Provider.of<CandidatoProvider>(context, listen: false);
-    candidato = await candidatoProvider.getCandidato(id);
+    return candidato = await candidatoProvider.getCandidato(id);
+  }
+
+  Future<Selezionatore> selezionatoreSelezionatoTrova(id) async {
+    final SelezionatoreProvider selezionatoreProvider =
+        Provider.of<SelezionatoreProvider>(context, listen: false);
+     return selezionatoreSelezionato = await selezionatoreProvider.getSelezionatore(id);
   }
 
   Future<void> modificaRiuscita(colloquio) async {
@@ -49,9 +53,10 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
   @override
   void initState() {
     super.initState();
-
-    note = TextEditingController(text: widget.colloquio.note);
-    dataController = TextEditingController(
+    selezionatoreSelezionatoTrova(widget.colloquio.idSelezionatore).then((value) => setState(() {}));
+  candidatoController.text = '${widget.colloquio.nomeCandidato ?? ''} ${widget.colloquio.cognomeCandidato ?? ''}';
+  candidatoSelezionato(widget.colloquio.idCandidato);
+        dataController = TextEditingController(
       text: widget.colloquio.data != null
           ? formattaData(widget.colloquio.data!)
           : '',
@@ -59,6 +64,7 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
     data = widget.colloquio.data;
     tipologiaSelezionata = widget.colloquio.tipologia;
     feedbackSelezionato = widget.colloquio.feedback;
+    noteController = TextEditingController(text: widget.colloquio.note);
   }
 
   @override
@@ -79,7 +85,6 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  customTextFormFieldWithoutValidator(note, 'Note'),
                   DropdownButtonFormField<int>(
                     value: selezionatoreSelezionato?.id,
                     items: [
@@ -88,7 +93,6 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
                         value: 0,
                         child: Text(' - '),
                       ),
-                      // Aggiungi gli altri elementi
                       ...selezionatori.map((Selezionatore selezionatore) {
                         return DropdownMenuItem<int>(
                           value: selezionatore.id,
@@ -191,7 +195,7 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
                     textInputAction: TextInputAction.go,
                     suggestions: candidatoProvider.candidati,
                     textChanged: (value) async {
-                      if (value.length >= 1) {
+                      if (value.isNotEmpty) {
                         await candidatoProvider
                             .getCandidatiFiltratiAutoComplete(value);
                       }
@@ -206,12 +210,20 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
                       }
                     },
                   ),
+                  TextFormField(
+              controller: noteController,
+              decoration: const InputDecoration(
+                labelText: 'Note',
+              ),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+            ),
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final colloquio = Colloquio(
                           id: widget.colloquio.id,
-                          note: note.text,
+                          note: noteController == null ? null : noteController!.text,
                           data: (dataController.text.isNotEmpty && data != null)
                               ? DateFormat('dd/MM/yyyy')
                                   .parse(dataController.text)

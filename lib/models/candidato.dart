@@ -192,7 +192,6 @@ class Candidato {
           : null,
       'posizione': posizione,
       'percorsoAcademy': percorsoAcademy,
-      'note': note,
       'dareRiscontro': dareRiscontro,
       'riscontroInviato': riscontroInviato,
       'annuncio': annuncio != null ? annuncio!.toJson() : null,

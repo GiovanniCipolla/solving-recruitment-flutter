@@ -38,9 +38,9 @@ class Colloquio {
   final String? cognomeSelezionatore;
 
   factory Colloquio.fromJson(Map<String, dynamic> json) {
-    FeedBackColloquio? feedback = json['feedback'] != null
+    FeedBackColloquio? feedback = json['feedBack'] != null
         ? FeedBackColloquio.values.firstWhere(
-            (element) => element.toString() == 'FeedBack.${json['feedback']}')
+            (element) => element.toString() == 'FeedBack.${json['feedBack']}')
         : null;
 
     Tipologia? tipologia = json['tipologia'] != null
@@ -52,7 +52,7 @@ class Colloquio {
       id: json['id'] != null ? json['id'] as int : null,
       data: json['data'] != null ? DateTime.parse(json['data']) : null,
       tipologia: json['tipologia'] != null ? tipologia : null,
-      feedback: json['feedback'] != null ? feedback : null,
+      feedback: json['feedBack'] != null ? feedback : null,
       candidato: json['candidato'] != null
           ? Candidato.fromJson(json['candidato'])
           : null,
@@ -70,10 +70,12 @@ class Colloquio {
           ? Tipologia.values.firstWhere((element) =>
               element.toString() == 'Tipologia.${json['tipologia']}')
           : null,
-      feedback: json['feedback'] != null
-          ? FeedBackColloquio.values.firstWhere(
-              (element) => element.toString() == 'FeedBack.${json['feedback']}')
-          : null,
+    feedback: json['feedBack'] != null
+    ? FeedBackColloquio.values.firstWhere(
+        (element) => element.toString().split('.').last == json['feedBack'],
+        orElse: () => FeedBackColloquio.DUBBIO,
+      )
+    : null,
       idCandidato: json['idCandidato'],
       idSelezionatore: json['idSelezionatore'],
       nomeCandidato: json['nomeCandidato'],
@@ -89,7 +91,7 @@ class Colloquio {
       'id': id,
       'data': data != null ? data!.toIso8601String() : null,
       'tipologia': tipologia.toString().split('.').last,
-      'feedback': feedback != null ? feedback.toString().split('.').last : null,
+      'feedBack': feedback != null ? feedback.toString().split('.').last : null,
       'candidato': candidato?.toJson(),
       'selezionatore': selezionatore?.toJson(),
       'note': note

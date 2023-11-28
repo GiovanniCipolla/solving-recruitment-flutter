@@ -216,7 +216,6 @@ try {
       ),
     ),
   );
-  print('Errore durante il caricamento dei selezionatori: $error');
 }
 
                   },

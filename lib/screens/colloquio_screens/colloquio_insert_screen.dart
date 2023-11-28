@@ -28,6 +28,8 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
   Candidato? candidato;
   Selezionatore? selezionatoreSelezionato;
   final TextEditingController selezionatoreController = TextEditingController();
+  TextEditingController? noteController = TextEditingController();
+
 
   Future<void> _selectDate(BuildContext context, contoller, type) async {
     final DateTime? picked = await showDatePicker(
@@ -184,6 +186,14 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                 labelText: 'Selezionatore',
               ),
             ),
+            TextFormField(
+              controller: noteController,
+              decoration: const InputDecoration(
+                labelText: 'Note',
+              ),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+            ),
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
@@ -195,8 +205,7 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                         : null,
                     candidato: candidato,
                     selezionatore: selezionatoreSelezionato,
-                    note:
-                        'Ricorda di scrivere una nota, perchè il dto sta fuori di testa',
+                    note: noteController != null ? noteController!.text : null,
                   );
                   final colloquioProvider =
                       Provider.of<ColloquioProvider>(context, listen: false);

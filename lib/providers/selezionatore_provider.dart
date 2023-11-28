@@ -38,6 +38,24 @@ class SelezionatoreProvider extends ChangeNotifier {
     }
   }
 
+  Future<Selezionatore> getSelezionatore(id) async {
+    String url = '$urlAPI/selezionatore/get/$id';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return Selezionatore.fromJson(jsonData);
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
+
   Future<bool> createSelezionatore(selezionatore) async {
     String url = '$urlAPI/selezionatore';
     final response = await http.post(
@@ -66,6 +84,8 @@ class SelezionatoreProvider extends ChangeNotifier {
       body: json.encode(selezionatore.toJson()),
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
+      notifyListeners();
+      print(response.body);
       return true;
     } else {
       return false;
