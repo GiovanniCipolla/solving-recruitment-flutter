@@ -12,6 +12,8 @@ class CandidatoProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
   List<Candidato> candidati = [];
   List<Colloquio> colloqui = [];
+  bool filterActive = false;
+  CandidatoFiltro candidatoFiltro = CandidatoFiltro();
 
   CandidatoProvider({required this.authProvider, required this.candidati});
 
@@ -23,6 +25,7 @@ class CandidatoProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
       List<Candidato> candidati = [];
       for (var item in jsonData) {
         candidati.add(Candidato.fromJsonGetAllCandidato(item));
@@ -47,6 +50,8 @@ class CandidatoProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
+
       List<Candidato> candidati = [];
       for (var item in jsonData) {
         candidati.add(Candidato.fromJsonGetAllCandidato(item));
@@ -89,6 +94,8 @@ class CandidatoProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
+
       List<Candidato> candidati = [];
       for (var item in jsonData) {
         candidati.add(Candidato.fromJson(item));
@@ -113,6 +120,8 @@ class CandidatoProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
+
       List<Candidato> candidati = [];
       for (var item in jsonData) {
         candidati.add(Candidato.fromJson(item));
@@ -264,5 +273,49 @@ class CandidatoProvider extends ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  Future<void> getCandidatiByFilter(CandidatoFiltro filtro) async {
+    String url = '$urlAPI/candidato/searchMobile';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
+      },
+      body: json.encode(filtro.toJson()),
+    );
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = checkFilterActive(filtro);
+      List<Candidato> candidati = [];
+      for (var item in jsonData) {
+        candidati.add(Candidato.fromJsonGetAllCandidato(item));
+      }
+      this.candidati.clear();
+      this.candidati.addAll(candidati);
+      candidatoFiltro = filtro;
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: jsonData['statusCode'],
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
+
+  bool checkFilterActive(CandidatoFiltro filtro) {
+    return filtro.nome != null ||
+        filtro.cognome != null ||
+        filtro.stato != null ||
+        filtro.dataNascita != null ||
+        filtro.email != null ||
+        filtro.etaMin != null ||
+        filtro.etaMax != null ||
+        filtro.recapitoTelefonico != null ||
+        filtro.dataPrimoContatto != null ||
+        filtro.area != null ||
+        filtro.annuncio != null;
   }
 }

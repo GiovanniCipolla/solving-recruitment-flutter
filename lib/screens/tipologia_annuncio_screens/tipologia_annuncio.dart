@@ -27,6 +27,7 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
         endDrawer: const CustomEndDrawer(),
         body: Container(
           margin: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Expanded(

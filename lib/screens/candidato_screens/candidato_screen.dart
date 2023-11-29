@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_item.dart';
@@ -16,6 +17,7 @@ class CandidatoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool filterActive = false;
     final candidatoProvider =
         Provider.of<CandidatoProvider>(context, listen: false);
     return WillPopScope(
@@ -41,59 +43,14 @@ class CandidatoScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  onPressed: () async {
-                    // final String filter = await showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return FiltriDialog(
-                    //       onSearch: (filter) {
-                    //         // Non è necessario chiamare il metodo del provider qui
-                    //         // Rimuovi la chiamata a getCandidatisearchAndPagination(filter);
-                    //         Navigator.pop(context,
-                    //             filter); // Chiudi il dialogo e restituisci il filtro
-                    //       },
-                    //     );
-                    //   },
-                    // );
-
-                    // // ignore: use_build_context_synchronously
-                    // await Provider.of<CandidatoProvider>(context, listen: false)
-                    //     .getCandidatisearchAndPagination(filter);
-                    showAlertDialog(context);
+                  onPressed: () {
+                    openFilterModal(context);
                   },
                   child: const Row(
                     children: [
-                      Text('Cerca per'),
+                      Text('Applica filtri'),
                       Icon(
                         Icons.filter_list,
-                      )
-                    ],
-                  ),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  onPressed: () {
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return OrdinamentoDialog(
-                    //       onSelected: (value) {
-                    //         // Gestisci l'opzione di ordinamento selezionata
-                    //       },
-                    //       context: context, // Passa il context
-                    //     );
-                    //   },
-                    // );
-                    showAlertDialog(context);
-                  },
-                  child: const Row(
-                    children: [
-                      Text('Ordina per'),
-                      Icon(
-                        Icons.sort,
                       )
                     ],
                   ),

@@ -63,7 +63,6 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
         Provider.of<CandidatoProvider>(context, listen: false);
     final SelezionatoreProvider selezionatoreProvider =
         Provider.of<SelezionatoreProvider>(context, listen: false);
-    selezionatoreProvider.getSelezionatori();
     final List<Selezionatore> selezionatori =
         selezionatoreProvider.selezionatori;
     return Scaffold(

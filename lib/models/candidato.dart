@@ -204,3 +204,71 @@ class Candidato {
     return '$nome $cognome';
   }
 }
+
+class CandidatoFiltro {
+  int? id;
+  String? nome;
+  String? cognome;
+  Stato? stato;
+  DateTime? dataNascita;
+  String? email;
+  int? etaMin;
+  int? etaMax;
+  String? recapitoTelefonico;
+  DateTime? dataPrimoContatto;
+  int? pageNo;
+  int? pageSize;
+  String? sortBy;
+  String? sortDirection;
+  Seniority? seniority;
+  DisponibilitaLavoro? disponibilitaLavoro;
+  String? posizione;
+  Area? area;
+  Annuncio? annuncio;
+
+  CandidatoFiltro(
+      {this.id,
+      this.nome,
+      this.cognome,
+      this.stato,
+      this.dataNascita,
+      this.email,
+      this.etaMin,
+      this.etaMax,
+      this.recapitoTelefonico,
+      this.dataPrimoContatto,
+      this.pageNo,
+      this.pageSize,
+      this.sortBy,
+      this.sortDirection,
+      this.seniority,
+      this.disponibilitaLavoro,
+      this.posizione,
+      this.area,
+      this.annuncio});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nome': nome,
+      'cognome': cognome,
+      'stato': (stato != null) ? stato.toString().split('.').last : 'ND',
+      'dataNascita':
+          dataNascita != null ? dataNascita!.toIso8601String() : null,
+      'email': email,
+      'etaMin': etaMin,
+      'etaMax': etaMax,
+      'recapitoTelefonico': recapitoTelefonico,
+      'dataPrimoContatto': dataPrimoContatto != null ? dataPrimoContatto!.toIso8601String() : null,
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+      'sortBy': sortBy,
+      'sortDirection': sortDirection,
+      'seniority': (seniority != null) ? seniority.toString().split('.').last : 'ND',
+      'disponibilitaLavoro': (disponibilitaLavoro != null) ? disponibilitaLavoro.toString().split('.').last : 'ND',
+      'posizione': posizione,
+      'area': area != null ? area!.toJson() : null,
+      'annuncio': annuncio != null ? annuncio!.toJson() : null
+    };
+  }
+}

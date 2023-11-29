@@ -4,6 +4,8 @@ import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class BottomSheetUtils {
   static Widget _buildInfoCandidati(Candidato candidato) {
@@ -241,7 +243,39 @@ class BottomSheetUtils {
                       ? calculateAge(candidato.dataDiNascita!)
                       : '',
                 ),
-                _buildInfoRow('Email', candidato.email),
+               Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'E-Mail',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Flexible(
+                child: Text(
+                  candidato.email ?? '',
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Divider(
+            thickness: 0.5,
+          )
+        ],
+      ),
+    ),
                 _buildInfoRow('Luogo di Nascita', candidato.luogoDiNascita),
                 _buildInfoRow(
                   'Data di Nascita',
