@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/providers/area_provider.dart';
+import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/annuncio_widgets/annuncio_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
@@ -107,7 +109,12 @@ class AnnuncioScreen extends StatelessWidget {
                 titleShowDialog: 'Aggiungi annuncio',
                 descrizioneShowDialog:
                     'Sicuro di voler aggiungere un annuncio?',
-                metodoShowDialog: () {
+                metodoShowDialog: () async {
+                  await Provider.of<TipologiaAnnuncioProvider>(context, listen: false)
+                      .getTipologiaAnnuncio();
+                  // ignore: use_build_context_synchronously
+                  await Provider.of<AreaProvider>(context, listen: false).getAreas();
+                  // ignore: use_build_context_synchronously
                   Navigator.push(
                       context,
                       MaterialPageRoute(

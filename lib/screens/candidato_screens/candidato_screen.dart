@@ -113,7 +113,6 @@ class CandidatoScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasError) {
-                    print(snapshot.error.toString());
                     return Text(snapshot.error.toString());
                   } else if (candidati.isEmpty) {
                     return const Center(
@@ -126,6 +125,7 @@ class CandidatoScreen extends StatelessWidget {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
+                        mainAxisExtent: 200.0,
                       ),
                       itemCount: candidati.length,
                       shrinkWrap: true,

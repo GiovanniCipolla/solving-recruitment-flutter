@@ -36,7 +36,7 @@ class ColloquioProvider extends ChangeNotifier {
     }
   }
 
-  Future<Colloquio> getColloquioById( id) async {
+  Future<Colloquio> getColloquioById(id) async {
     String url = '$urlAPI/colloquio/getMobile/$id';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
@@ -55,11 +55,38 @@ class ColloquioProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getColloquioByCandidatoByTipologia(id,tipologia) async {
-    String url = '$urlAPI/colloquio/colloquioWithNomeCognome/$id/tipologia/$tipologia';
+  Future<void> getColloquioByCandidatoByTipologia(id, tipologia) async {
+    String url =
+        '$urlAPI/colloquio/colloquioWithNomeCognome/$id/tipologia/$tipologia';
     final response = await http.get(Uri.parse(url), headers: {
-'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${authProvider!.token}',    });
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
+    final jsonData = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<Colloquio> colloqui = [];
+      for (var item in jsonData) {
+        colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
+      }
+      this.colloqui.clear();
+      this.colloqui.addAll(colloqui);
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+  }
+
+  Future<void> getColloquiBySelezionatore(id) async {
+    String url = '$urlAPI/colloquio/colloquioBySelezionatore/$id';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
     final jsonData = json.decode(response.body);
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -84,12 +111,13 @@ class ColloquioProvider extends ChangeNotifier {
     final response = await http.post(
       Uri.parse(url),
       headers: {
-'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${authProvider!.token}',      },
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
+      },
       body: json.encode(colloquio.toJson()),
     );
     print(response.body);
-    if( response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
       return false;
@@ -101,11 +129,12 @@ class ColloquioProvider extends ChangeNotifier {
     final response = await http.put(
       Uri.parse(url),
       headers: {
-'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${authProvider!.token}',      },
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
+      },
       body: json.encode(colloquio.toJson()),
     );
-    if( response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       notifyListeners();
       print(response.body);
       return true;

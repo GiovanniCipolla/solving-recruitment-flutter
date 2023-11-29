@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/bottom_sheet_utils.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
+import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_edit_screen.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
@@ -109,6 +111,7 @@ class SelezionatoreItem extends StatelessWidget {
                                   (route) => false,
                                 );
                               } else {
+                                // ignore: use_build_context_synchronously
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content:
@@ -127,16 +130,24 @@ class SelezionatoreItem extends StatelessWidget {
               ],
             ),
             SizedBox(height: heightSize(context) * 0.02),
+            Text(selezionatore.email ?? "Email mancante",
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 16)),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Expanded(
-                    child: Text(selezionatore.email ?? "Email mancante",
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary))),
                 TextButton(
-                  onPressed: () {
-                    // Azione da eseguire quando viene premuto il pulsante "Mostra candidati"
+                  onPressed: () async {
+                    final colloquioProvider =
+                        Provider.of<ColloquioProvider>(context, listen: false);
+                    await colloquioProvider
+                        .getColloquiBySelezionatore(selezionatore.id);
+                    // ignore: use_build_context_synchronously
+                    BottomSheetUtils.showListColloqui(
+                        context,
+                        'Lisa colloqui effetuati da ${selezionatore.nome}',
+                        colloquioProvider.colloqui);
                   },
                   child: Row(
                     children: [

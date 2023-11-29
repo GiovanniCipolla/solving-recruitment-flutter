@@ -27,7 +27,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<AuthProvider, CandidatoProvider>(
             create: (ctx) =>
                 CandidatoProvider(authProvider: null, candidati: []),
-            update: (ctx, authProvider, previous) => CandidatoProvider(
+            update: (ctx, authProvider, previous) => CandidatoProvider( 
                 authProvider: authProvider, candidati: previous!.candidati)),
         ChangeNotifierProxyProvider<AuthProvider, AreaProvider>(
           create: (ctx) => AreaProvider(

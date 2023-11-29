@@ -61,7 +61,8 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
   }
 
   Future<void> modificaRiuscita(annuncio) async {
-    Navigator.pushNamedAndRemoveUntil(context, AnnuncioScreen.routeName, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, AnnuncioScreen.routeName, (route) => false);
   }
 
   @override
@@ -101,6 +102,15 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
                   ),
                   onTap: () {
                     _selectDate(context);
+                  },
+                  validator: (value) {
+                    if (dataInizio != null) {
+                      final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                      if (!dateFormat.hasMatch(value ?? '')) {
+                        return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                      }
+                    }
+                    return null;
                   },
                 ),
                 DropdownButtonFormField<int>(

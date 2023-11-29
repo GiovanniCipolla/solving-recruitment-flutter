@@ -14,6 +14,8 @@ class SelezionatoreEditScreen extends StatefulWidget {
 }
 
 class _SelezionatoreEditScreenState extends State<SelezionatoreEditScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   late TextEditingController nomeController;
   late TextEditingController cognomeController;
   late TextEditingController emailController;
@@ -29,7 +31,8 @@ class _SelezionatoreEditScreenState extends State<SelezionatoreEditScreen> {
   }
 
   Future<void> modificaRiuscita() async {
-   Navigator.pushNamedAndRemoveUntil(context, SelezionatoreScreen.routeName, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, SelezionatoreScreen.routeName, (route) => false);
   }
 
   @override
@@ -40,31 +43,35 @@ class _SelezionatoreEditScreenState extends State<SelezionatoreEditScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            customTextFormFieldWithValidator(nomeController, 'Nome'),
-            customTextFormFieldWithValidator(cognomeController, 'Cognome'),
-            customTextFormFieldWithEmail(emailController, 'E-Mail'),
-            ElevatedButton(
-              onPressed: () async {
-                final nuovoSelezionatore = Selezionatore(
-                  id: widget.selezionatore.id,
-                  nome: nomeController.text,
-                  cognome: cognomeController.text,
-                  email: emailController.text,
-                );
-
-                final result = await Provider.of<SelezionatoreProvider>(
-                  context,
-                  listen: false,
-                ).updateSelezionatore(nuovoSelezionatore);
-
-                result ? modificaRiuscita() : null;
-              },
-              child: const Text('Modifica'),
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              customTextFormFieldWithValidator(nomeController, 'Nome'),
+              customTextFormFieldWithValidator(cognomeController, 'Cognome'),
+              customTextFormFieldWithEmail(emailController, 'E-Mail'),
+              ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    final nuovoSelezionatore = Selezionatore(
+                      id: widget.selezionatore.id,
+                      nome: nomeController.text,
+                      cognome: cognomeController.text,
+                      email: emailController.text,
+                    );
+                    final result = await Provider.of<SelezionatoreProvider>(
+                      context,
+                      listen: false,
+                    ).updateSelezionatore(nuovoSelezionatore);
+                    result ? modificaRiuscita() : null;
+                  }
+                  ;
+                },
+                child: const Text('Modifica'),
+              ),
+            ],
+          ),
         ),
       ),
     );

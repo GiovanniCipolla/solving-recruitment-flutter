@@ -54,8 +54,6 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<TipologiaAnnuncioProvider>(context).getTipologiaAnnuncio();
-    Provider.of<AreaProvider>(context).getAreas();
     final tipologiaAnnunci =
         Provider.of<TipologiaAnnuncioProvider>(context).tipologiaAnnuncio;
     final areas = Provider.of<AreaProvider>(context).aree;
@@ -75,7 +73,21 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                customTextFormFieldWithValidator(titoloController, 'Titolo'),
+                TextFormField(
+                  controller: titoloController,
+                  decoration: const InputDecoration(
+                    labelText: 'Titolo',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Inserisci un titolo';
+                    }
+                    if (value.length > 20 || value.length < 3) {
+                      return 'Inserisci un titolo compreso tra 3 e 20 caratteri';
+                    }
+                    return null;
+                    }
+                ),
                 customTextFormFieldWithValidator(
                     descrizioneController, 'Descrizione'),
                 TextFormField(
@@ -85,6 +97,15 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                   ),
                   onTap: () {
                     _selectDate(context);
+                  },
+                  validator: (value) {
+                     if (dataInizio != null) {
+                          final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                          if (!dateFormat.hasMatch(value ?? '')) {
+                            return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                          }
+                        }
+                        return null;
                   },
                 ),
                 DropdownButtonFormField<int>(
@@ -107,6 +128,11 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                   decoration: const InputDecoration(
                     labelText: 'Tipologia Annuncio',
                   ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Seleziona una tipologia';
+                    }
+                  },
                 ),
                 DropdownButtonFormField<int>(
                   value: areaSelezionata?.id,
@@ -127,6 +153,11 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                   decoration: const InputDecoration(
                     labelText: 'Area',
                   ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Seleziona una area';
+                    }
+                  }
                 ),
                 ElevatedButton(
                     onPressed: () async {
