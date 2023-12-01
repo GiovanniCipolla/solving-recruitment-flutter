@@ -276,7 +276,8 @@ class CandidatoProvider extends ChangeNotifier {
   }
 
   Future<void> getCandidatiByFilter(CandidatoFiltro filtro) async {
-    String url = '$urlAPI/candidato/searchMobile';
+    if (filterActive) {
+      String url = '$urlAPI/candidato/searchMobile';
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -286,15 +287,15 @@ class CandidatoProvider extends ChangeNotifier {
       body: json.encode(filtro.toJson()),
     );
     final jsonData = json.decode(response.body);
+    print(jsonData);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      filterActive = checkFilterActive(filtro);
+      checkFilterActive(filtro);
       List<Candidato> candidati = [];
-      for (var item in jsonData) {
+      for (var item in jsonData['content']) {
         candidati.add(Candidato.fromJsonGetAllCandidato(item));
       }
       this.candidati.clear();
       this.candidati.addAll(candidati);
-      candidatoFiltro = filtro;
       notifyListeners();
     } else {
       throw HttpException(
@@ -303,19 +304,29 @@ class CandidatoProvider extends ChangeNotifier {
         description: jsonData['description'],
       );
     }
+    } else {
+      getCandidati();
+    }
+    
   }
 
-  bool checkFilterActive(CandidatoFiltro filtro) {
-    return filtro.nome != null ||
-        filtro.cognome != null ||
-        filtro.stato != null ||
-        filtro.dataNascita != null ||
-        filtro.email != null ||
-        filtro.etaMin != null ||
-        filtro.etaMax != null ||
-        filtro.recapitoTelefonico != null ||
-        filtro.dataPrimoContatto != null ||
-        filtro.area != null ||
-        filtro.annuncio != null;
-  }
+void checkFilterActive(CandidatoFiltro filtro) {
+  print(filtro.toJson());
+  candidatoFiltro = filtro;
+  filterActive = (filtro.nome != null && filtro.nome!.trim().isNotEmpty) ||
+      (filtro.cognome != null && filtro.cognome!.trim().isNotEmpty) ||
+      filtro.stato != null ||
+      filtro.dataNascita != null ||
+      (filtro.email != null && filtro.email!.trim().isNotEmpty) ||
+      filtro.etaMin != null ||
+      filtro.etaMax != null ||
+      (filtro.recapitoTelefonico != null &&
+          filtro.recapitoTelefonico!.trim().isNotEmpty) ||
+      filtro.dataPrimoContatto != null ||
+      filtro.area != null ||
+      filtro.annuncio != null;
+  notifyListeners();
+  print(filterActive);
+}
+
 }

@@ -20,7 +20,7 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 final kColorScheme = ColorScheme.fromSeed(
   seedColor:  Colors.blueAccent,
 );
-
+ 
 void main() {
   runApp(const MyApp());
 }

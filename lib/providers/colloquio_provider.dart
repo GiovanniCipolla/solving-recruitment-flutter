@@ -43,7 +43,6 @@ class ColloquioProvider extends ChangeNotifier {
       'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return Colloquio.fromJsonGetAllColloqui(jsonData);
     } else {
@@ -63,7 +62,6 @@ class ColloquioProvider extends ChangeNotifier {
       'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
@@ -88,7 +86,6 @@ class ColloquioProvider extends ChangeNotifier {
       'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
@@ -116,7 +113,6 @@ class ColloquioProvider extends ChangeNotifier {
       },
       body: json.encode(colloquio.toJson()),
     );
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
@@ -136,7 +132,6 @@ class ColloquioProvider extends ChangeNotifier {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       notifyListeners();
-      print(response.body);
       return true;
     } else {
       return false;

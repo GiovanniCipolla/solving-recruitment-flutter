@@ -29,4 +29,26 @@ class Area {
       'countAnnunci': countAnnunci
     };
   }
+  Map<String, dynamic> toJsonForFilterCandidato() {
+    return {
+      'id': id,
+      'denominazione': denominazione,
+    };
+  }
+}
+
+class StatsArea{
+  StatsArea({  this.candidatiStaffTecnico,  this.candidatiStaffInterno, this.candidatoAltro});
+
+   final int? candidatiStaffTecnico;
+    final int? candidatiStaffInterno;
+    final int? candidatoAltro;
+
+    factory StatsArea.fromJson(Map<String, dynamic> json) {
+      return StatsArea(
+        candidatiStaffTecnico: json['candidatiStaffTecnico'] != null ? json['candidatiStaffTecnico'] as int : null,
+        candidatiStaffInterno: json['candidatiStaffInterno'] != null ? json['candidatiStaffInterno'] as int : null,
+        candidatoAltro: json['candidatoAltro'] != null ? json['candidatoAltro'] as int : null,
+      );
+    }
 }

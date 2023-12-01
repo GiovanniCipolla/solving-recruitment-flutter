@@ -107,7 +107,6 @@ class AnnuncioProvider extends ChangeNotifier {
   }
 
   Future<bool> createAnnuncio(annuncio) async {
-    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ${annuncio.toJson()}');
     String url = '$urlAPI/annuncio';
     final response = await http.post(
       Uri.parse(url),
@@ -117,7 +116,6 @@ class AnnuncioProvider extends ChangeNotifier {
       },
       body: json.encode(annuncio.toJson()),
     );
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       notifyListeners();
       return true;

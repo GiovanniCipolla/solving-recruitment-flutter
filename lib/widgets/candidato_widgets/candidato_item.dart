@@ -26,13 +26,14 @@ class CandidatoItem extends StatelessWidget {
               await Provider.of<CandidatoProvider>(context, listen: false)
                   .getCandidato(candidato.id);
           // ignore: use_build_context_synchronously
-                await  Provider.of<AreaProvider>(context, listen: false).getAreas();
-                  // ignore: use_build_context_synchronously
-                await  Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+          await Provider.of<AreaProvider>(context, listen: false).getAreas();
+          // ignore: use_build_context_synchronously
+          await Provider.of<AnnuncioProvider>(context, listen: false)
+              .getAnnunci();
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
           // ignore: use_build_context_synchronously
-          Navigator.push( 
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>

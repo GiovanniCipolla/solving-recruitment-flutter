@@ -4,7 +4,7 @@ import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 
 
 class BottomSheetUtils {
@@ -48,35 +48,40 @@ class BottomSheetUtils {
     );
   }
 
-  static Widget _buildInfoAnnuncio(Annuncio annuncio) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                annuncio.titolo ?? "Titolo mancante",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const Spacer(),
-              Text(DateFormat('yyyy-MM-dd').format(annuncio.dataInizio ?? DateTime.now()),
+  static Widget _buildInfoAnnuncio(Annuncio annuncio, BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AnnuncioDetailScreen(annuncio: annuncio)));
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  annuncio.titolo ?? "Titolo mancante",
                   style: const TextStyle(
-                    fontSize: 14,
-                  ))
-            ],
-          ),
-          const Divider(
-            thickness: 0.5,
-          )
-        ],
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                const Spacer(),
+                Text(DateFormat('yyyy-MM-dd').format(annuncio.dataInizio ?? DateTime.now()),
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ))
+              ],
+            ),
+            const Divider(
+              thickness: 0.5,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -501,7 +506,7 @@ class BottomSheetUtils {
                 ? const Text('Nessun annuncio trovato', style: TextStyle(fontSize: 20))
                 : Column(
                     children: annunci.map((Annuncio annuncio) {
-                      return _buildInfoAnnuncio(annuncio);
+                      return _buildInfoAnnuncio(annuncio, context);
                     }).toList(),
                   ),
             ],

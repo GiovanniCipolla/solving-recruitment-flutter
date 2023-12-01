@@ -13,9 +13,9 @@ import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_
 
 class FilterModal extends StatefulWidget {
   const FilterModal({super.key, required this.candidatoFiltro});
-final CandidatoFiltro candidatoFiltro;
+  final CandidatoFiltro candidatoFiltro;
   @override
-  _FilterModalState createState() => _FilterModalState();
+  State<FilterModal> createState() => _FilterModalState();
 }
 
 class _FilterModalState extends State<FilterModal> {
@@ -38,6 +38,24 @@ class _FilterModalState extends State<FilterModal> {
   Annuncio? annuncioSelezionato;
   late TextEditingController annuncioController = TextEditingController();
 
+  void _resetFields() {
+  setState(() {
+    _nomeController.text = '';
+    _cognomeController.text = '';
+    statoSelezionato = null;
+    dataDiNascitaController.text = '';
+    dataDiNascita = null;
+    emailController.text = '';
+    etaMinController.text = '';
+    etaMaxController.text = '';
+    recapitoTelefonicoController.text = '';
+    dataPrimoContattoController.text = '';
+    dataPrimoContatto = null;
+    areaSelezionata = null;
+    annuncioSelezionato = null;
+  });
+}
+
   Future<void> _selectDate(BuildContext context, contoller, type) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -52,37 +70,48 @@ class _FilterModalState extends State<FilterModal> {
       });
     }
   }
-String formattaData(DateTime data) {
+
+  String formattaData(DateTime data) {
     return DateFormat('dd/MM/yyyy').format(data);
   }
-@override
+
+  @override
   void initState() {
     super.initState();
     _nomeController = TextEditingController(text: widget.candidatoFiltro.nome);
-    _cognomeController = TextEditingController(text: widget.candidatoFiltro.cognome);
+    _cognomeController =
+        TextEditingController(text: widget.candidatoFiltro.cognome);
     statoSelezionato = widget.candidatoFiltro.stato;
-  dataDiNascitaController = TextEditingController(
-      text: widget.candidatoFiltro.dataNascita != null
-          ? formattaData(widget.candidatoFiltro.dataNascita!)
-          : '');
-  emailController = TextEditingController(text: widget.candidatoFiltro.email);
-  etaMinController = TextEditingController(
-      text: widget.candidatoFiltro.etaMin != null ? widget.candidatoFiltro.etaMin.toString() : '');
-  etaMaxController = TextEditingController(
-      text: widget.candidatoFiltro.etaMax != null ? widget.candidatoFiltro.etaMax.toString() : '');
-  recapitoTelefonicoController = TextEditingController(
-      text: widget.candidatoFiltro.recapitoTelefonico);
-  dataPrimoContattoController = TextEditingController(
-      text: widget.candidatoFiltro.dataPrimoContatto != null ? formattaData(widget.candidatoFiltro.dataPrimoContatto!) : '');
-   widget.candidatoFiltro.area!.id != null
+    dataDiNascitaController = TextEditingController(
+        text: widget.candidatoFiltro.dataNascita != null
+            ? formattaData(widget.candidatoFiltro.dataNascita!)
+            : '');
+    emailController = TextEditingController(text: widget.candidatoFiltro.email);
+    etaMinController = TextEditingController(
+        text: widget.candidatoFiltro.etaMin != null
+            ? widget.candidatoFiltro.etaMin.toString()
+            : '');
+    etaMaxController = TextEditingController(
+        text: widget.candidatoFiltro.etaMax != null
+            ? widget.candidatoFiltro.etaMax.toString()
+            : '');
+    recapitoTelefonicoController =
+        TextEditingController(text: widget.candidatoFiltro.recapitoTelefonico);
+    dataPrimoContattoController = TextEditingController(
+        text: widget.candidatoFiltro.dataPrimoContatto != null
+            ? formattaData(widget.candidatoFiltro.dataPrimoContatto!)
+            : '');
+    widget.candidatoFiltro.area != null
         ? areaSelezionata = widget.candidatoFiltro.area
         : areaSelezionata = null;
- widget.candidatoFiltro.annuncio!.id != null
+    widget.candidatoFiltro.annuncio != null
         ? annuncioSelezionato = widget.candidatoFiltro.annuncio
         : annuncioSelezionato = null;
   }
+
   @override
   Widget build(BuildContext context) {
+
     final areaProvider = Provider.of<AreaProvider>(context, listen: false);
     // ignore: use_build_context_synchronously
     final annuncioProvider =
@@ -100,6 +129,7 @@ String formattaData(DateTime data) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                  controller: _nomeController,
                   decoration: const InputDecoration(labelText: 'Nome'),
                   onChanged: (value) {
                     setState(() {
@@ -110,6 +140,7 @@ String formattaData(DateTime data) {
                     return null;
                   }),
               TextFormField(
+                  controller: _cognomeController,
                   decoration: const InputDecoration(labelText: 'Cognome'),
                   onChanged: (value) {
                     setState(() {
@@ -243,101 +274,110 @@ String formattaData(DateTime data) {
                   validator: (value) {
                     return null;
                   }),
-                   DropdownButtonFormField<int>(
-                  value: areaSelezionata?.id,
-                  items: [
-                    // Aggiungi un elemento vuoto all'inizio della lista
-                    const DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text(' - '),
-                    ),
-                    // Aggiungi gli altri elementi
-                    ...areas.map((Area area) {
-                      return DropdownMenuItem<int>(
-                        value: area.id,
-                        child: Text(area.denominazione ?? 'errore'),
-                      );
-                    }).toList(),
-                  ],
-                  onChanged: (int? value) {
-                    setState(() {
-                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                      if (value == 0) {
-                        areaSelezionata = null;
-                      } else {
-                        areaSelezionata =
-                            areas.firstWhere((area) => area.id == value);
-                      }
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Area',
+              DropdownButtonFormField<int>(
+                value: areaSelezionata?.id,
+                items: [
+                  // Aggiungi un elemento vuoto all'inizio della lista
+                  const DropdownMenuItem<int>(
+                    value: 0,
+                    child: Text(' - '),
                   ),
-                ),
-                DropdownButtonFormField<int>(
-                  value: annuncioSelezionato?.id,
-                  items: [
-                    // Aggiungi un elemento vuoto all'inizio della lista
-                    const DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text(' - '),
-                    ),
-                    // Aggiungi gli altri elementi
-                    ...annunci.map((Annuncio annuncio) {
-                      return DropdownMenuItem<int>(
-                        value: annuncio.id,
-                        child: Text(annuncio.titolo ?? 'errore'),
-                      );
-                    }).toList(),
-                  ],
-                  onChanged: (int? value) {
-                    setState(() {
-                      // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                      if (value == 0) {
-                        annuncioSelezionato = null;
-                      } else {
-                        annuncioSelezionato = annunci
-                            .firstWhere((annuncio) => annuncio.id == value);
-                      }
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Annuncio',
-                  ),
-                ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate())  {
-                    CandidatoFiltro filter = CandidatoFiltro(
-                      nome: _nomeController.text,
-                      cognome: _cognomeController.text,
-                      stato: statoSelezionato,
-                      dataNascita: (dataDiNascitaController.text.isNotEmpty)
-                          ? DateFormat('dd/MM/yyyy')
-                              .parse(dataDiNascitaController.text)
-                          : null,
-                      email: emailController.text,
-                      etaMin: (etaMinController.text.isNotEmpty)
-                          ? int.tryParse(etaMinController.text)
-                          : null,
-                      etaMax: (etaMaxController.text.isNotEmpty)
-                          ? int.tryParse(etaMaxController.text)
-                          : null,
-                      recapitoTelefonico: recapitoTelefonicoController.text,
-                      dataPrimoContatto:
-                          (dataPrimoContattoController.text.isNotEmpty)
-                              ? DateFormat('dd/MM/yyyy')
-                                  .parse(dataPrimoContattoController.text)
-                              : null,
-                      area: areaSelezionata,
-                      annuncio: annuncioSelezionato,
+                  // Aggiungi gli altri elementi
+                  ...areas.map((Area area) {
+                    return DropdownMenuItem<int>(
+                      value: area.id,
+                      child: Text(area.denominazione ?? 'errore'),
                     );
-                    await Provider.of<CandidatoProvider>(context, listen: false).getCandidatisearchAndPagination(filter);
-                    // ignore: use_build_context_synchronously
-                    Navigator.pop(context);
-                  }
+                  }).toList(),
+                ],
+                onChanged: (int? value) {
+                  setState(() {
+                    // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                    if (value == 0) {
+                      areaSelezionata = null;
+                    } else {
+                      areaSelezionata =
+                          areas.firstWhere((area) => area.id == value);
+                    }
+                  });
                 },
-                child: const Text('Applica filtri'),
+                decoration: const InputDecoration(
+                  labelText: 'Area',
+                ),
+              ),
+              DropdownButtonFormField<int>(
+                value: annuncioSelezionato?.id,
+                items: [
+                  // Aggiungi un elemento vuoto all'inizio della lista
+                  const DropdownMenuItem<int>(
+                    value: 0,
+                    child: Text(' - '),
+                  ),
+                  // Aggiungi gli altri elementi
+                  ...annunci.map((Annuncio annuncio) {
+                    return DropdownMenuItem<int>(
+                      value: annuncio.id,
+                      child: Text(annuncio.titolo ?? 'errore'),
+                    );
+                  }).toList(),
+                ],
+                onChanged: (int? value) {
+                  setState(() {
+                    // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                    if (value == 0) {
+                      annuncioSelezionato = null;
+                    } else {
+                      annuncioSelezionato = annunci
+                          .firstWhere((annuncio) => annuncio.id == value);
+                    }
+                  });
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Annuncio',
+                ),
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: ()  {
+                      if (_formKey.currentState!.validate()) { 
+                        CandidatoFiltro filter = CandidatoFiltro(
+                          nome: _nomeController.text,
+                          cognome: _cognomeController.text,
+                          stato: statoSelezionato,
+                          dataNascita: (dataDiNascitaController.text.isNotEmpty)
+                              ? DateFormat('dd/MM/yyyy')
+                                  .parse(dataDiNascitaController.text)
+                              : null,
+                          email: emailController.text,
+                          etaMin: (etaMinController.text.isNotEmpty)
+                              ? int.tryParse(etaMinController.text)
+                              : null,
+                          etaMax: (etaMaxController.text.isNotEmpty)
+                              ? int.tryParse(etaMaxController.text)
+                              : null,
+                          recapitoTelefonico: recapitoTelefonicoController.text,
+                          dataPrimoContatto:
+                              (dataPrimoContattoController.text.isNotEmpty)
+                                  ? DateFormat('dd/MM/yyyy')
+                                      .parse(dataPrimoContattoController.text)
+                                  : null,
+                          area: areaSelezionata,
+                          annuncio: annuncioSelezionato,
+                          pageNo: 0,
+                          pageSize: 10,
+                          sortBy: 'nome',
+                          sortDirection: 'asc',
+                        );
+                       Provider.of<CandidatoProvider>(context, listen: false).checkFilterActive(filter);
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
+                      }
+                    },
+                    child: const Text('Applica filtri'),
+                  ),
+                  TextButton(onPressed: _resetFields, child: const Text('Resetta filtri')),
+                ],
               ),
             ],
           ),

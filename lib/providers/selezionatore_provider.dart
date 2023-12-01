@@ -85,7 +85,6 @@ class SelezionatoreProvider extends ChangeNotifier {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       notifyListeners();
-      print(response.body);
       return true;
     } else {
       return false;

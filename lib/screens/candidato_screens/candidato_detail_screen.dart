@@ -20,6 +20,7 @@ class CandidatoDetailScreen extends StatelessWidget {
   final Candidato candidato;
   @override
   Widget build(BuildContext context) {
+    print(candidato.toJson());
     return WillPopScope(
       onWillPop: () async {
         await Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);

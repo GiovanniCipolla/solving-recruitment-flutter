@@ -252,7 +252,7 @@ class CandidatoFiltro {
       'id': id,
       'nome': nome,
       'cognome': cognome,
-      'stato': (stato != null) ? stato.toString().split('.').last : 'ND',
+      'stato': (stato != null) ? stato.toString().split('.').last : null,
       'dataNascita':
           dataNascita != null ? dataNascita!.toIso8601String() : null,
       'email': email,
@@ -267,7 +267,7 @@ class CandidatoFiltro {
       'seniority': (seniority != null) ? seniority.toString().split('.').last : 'ND',
       'disponibilitaLavoro': (disponibilitaLavoro != null) ? disponibilitaLavoro.toString().split('.').last : 'ND',
       'posizione': posizione,
-      'area': area != null ? area!.toJson() : null,
+      'area': area != null ? area!.toJsonForFilterCandidato() : null,
       'annuncio': annuncio != null ? annuncio!.toJson() : null
     };
   }

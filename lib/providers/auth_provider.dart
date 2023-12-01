@@ -72,17 +72,17 @@ Future<void> _removeCredentials() async {
       _username = email;
       _password = password;
       notifyListeners();
-    } catch (e) {
-      print('Errore durante l\'autenticazione: $e');
-      _token = null;
-      return false;
-    }
+   } catch (e, stackTrace) {
+  print('Errore durante l\'autenticazione: $e');
+  _token = null;
+  return false;
+}
+
     await sendToken(token!)
         ? (confirm = true, _saveCredentials(email, password))
         : _token = null;
     return confirm;
   }
-
   void doLogout() {
     _token = null;
     _username = null;

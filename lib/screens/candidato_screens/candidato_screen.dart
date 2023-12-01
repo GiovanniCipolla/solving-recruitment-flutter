@@ -17,9 +17,9 @@ class CandidatoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool filterActive = false;
     final candidatoProvider =
         Provider.of<CandidatoProvider>(context, listen: false);
+    bool activeFilter = candidatoProvider.filterActive;
     return WillPopScope(
       onWillPop: () async {
         return backHome(context);
@@ -35,8 +35,7 @@ class CandidatoScreen extends StatelessWidget {
               height: heightSize(context) * 0.02,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment
-                  .spaceEvenly, // Allinea i pulsanti orizzontalmente
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
@@ -44,17 +43,41 @@ class CandidatoScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () {
-                    openFilterModal(context);
+                    final candidatoFiltro =
+                        Provider.of<CandidatoProvider>(context, listen: false)
+                            .candidatoFiltro;
+                    openFilterModal(context, candidatoFiltro);
                   },
-                  child: const Row(
+                  child: Stack(
                     children: [
-                      Text('Applica filtri'),
-                      Icon(
-                        Icons.filter_list,
-                      )
+                      const Row(
+                        children: [
+                          Text('Applica filtri'),
+                          Icon(
+                            Icons.filter_list,
+                          )
+                        ],
+                      ),
+                      if (activeFilter)
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: const Icon(
+                              Icons.brightness_1,
+                              color: Colors.white,
+                              size: 10,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
-                ),
+                )
               ],
             ),
             SizedBox(
@@ -62,7 +85,10 @@ class CandidatoScreen extends StatelessWidget {
             ),
             Expanded(
               child: FutureBuilder(
-                future: candidatoProvider.getCandidati(),
+                future: activeFilter
+                    ? candidatoProvider
+                        .getCandidatiByFilter(candidatoProvider.candidatoFiltro)
+                    : candidatoProvider.getCandidati(),
                 builder: (context, snapshot) {
                   final candidati = candidatoProvider.candidati;
                   if (snapshot.connectionState == ConnectionState.waiting) {

@@ -45,4 +45,24 @@ class AreaProvider extends ChangeNotifier {
       );
     }
   }
+
+
+  Future<StatsArea> getStatsArea() async {
+    String url = '$urlAPI/candidato/getNumeroCandidatyByArea';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return StatsArea.fromJson(jsonData);
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: jsonData['title'],
+        description: jsonData['description'],
+      );
+    }
+    
+  }
 }
