@@ -278,55 +278,50 @@ class CandidatoProvider extends ChangeNotifier {
   Future<void> getCandidatiByFilter(CandidatoFiltro filtro) async {
     if (filterActive) {
       String url = '$urlAPI/candidato/searchMobile';
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${authProvider!.token}',
-      },
-      body: json.encode(filtro.toJson()),
-    );
-    final jsonData = json.decode(response.body);
-    print(jsonData);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      checkFilterActive(filtro);
-      List<Candidato> candidati = [];
-      for (var item in jsonData['content']) {
-        candidati.add(Candidato.fromJsonGetAllCandidato(item));
-      }
-      this.candidati.clear();
-      this.candidati.addAll(candidati);
-      notifyListeners();
-    } else {
-      throw HttpException(
-        statusCode: jsonData['statusCode'],
-        title: jsonData['title'],
-        description: jsonData['description'],
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${authProvider!.token}',
+        },
+        body: json.encode(filtro.toJson()),
       );
-    }
+      final jsonData = json.decode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        checkFilterActive(filtro);
+        List<Candidato> candidati = [];
+        for (var item in jsonData['content']) {
+          candidati.add(Candidato.fromJsonGetAllCandidato(item));
+        }
+        this.candidati.clear();
+        this.candidati.addAll(candidati);
+        notifyListeners();
+      } else {
+        throw HttpException(
+          statusCode: jsonData['statusCode'],
+          title: jsonData['title'],
+          description: jsonData['description'],
+        );
+      }
     } else {
       getCandidati();
     }
-    
   }
 
-void checkFilterActive(CandidatoFiltro filtro) {
-  print(filtro.toJson());
-  candidatoFiltro = filtro;
-  filterActive = (filtro.nome != null && filtro.nome!.trim().isNotEmpty) ||
-      (filtro.cognome != null && filtro.cognome!.trim().isNotEmpty) ||
-      filtro.stato != null ||
-      filtro.dataNascita != null ||
-      (filtro.email != null && filtro.email!.trim().isNotEmpty) ||
-      filtro.etaMin != null ||
-      filtro.etaMax != null ||
-      (filtro.recapitoTelefonico != null &&
-          filtro.recapitoTelefonico!.trim().isNotEmpty) ||
-      filtro.dataPrimoContatto != null ||
-      filtro.area != null ||
-      filtro.annuncio != null;
-  notifyListeners();
-  print(filterActive);
-}
-
+  void checkFilterActive(CandidatoFiltro filtro) {
+    candidatoFiltro = filtro;
+    filterActive = (filtro.nome != null && filtro.nome!.trim().isNotEmpty) ||
+        (filtro.cognome != null && filtro.cognome!.trim().isNotEmpty) ||
+        filtro.stato != null ||
+        filtro.dataNascita != null ||
+        (filtro.email != null && filtro.email!.trim().isNotEmpty) ||
+        filtro.etaMin != null ||
+        filtro.etaMax != null ||
+        (filtro.recapitoTelefonico != null &&
+            filtro.recapitoTelefonico!.trim().isNotEmpty) ||
+        filtro.dataPrimoContatto != null ||
+        filtro.area != null ||
+        filtro.annuncio != null;
+    notifyListeners();
+  }
 }

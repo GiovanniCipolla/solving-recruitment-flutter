@@ -17,10 +17,10 @@ class Colloquio {
     this.note,
     this.idSelezionatore,
     this.idCandidato,
-     this.nomeCandidato,
-     this.cognomeCandidato,
-     this.nomeSelezionatore,
-     this.cognomeSelezionatore,
+    this.nomeCandidato,
+    this.cognomeCandidato,
+    this.nomeSelezionatore,
+    this.cognomeSelezionatore,
   });
 
   final int? id;
@@ -70,12 +70,13 @@ class Colloquio {
           ? Tipologia.values.firstWhere((element) =>
               element.toString() == 'Tipologia.${json['tipologia']}')
           : null,
-    feedback: json['feedBack'] != null
-    ? FeedBackColloquio.values.firstWhere(
-        (element) => element.toString().split('.').last == json['feedBack'],
-        orElse: () => FeedBackColloquio.DUBBIO,
-      )
-    : null,
+      feedback: json['feedBack'] != null
+          ? FeedBackColloquio.values.firstWhere(
+              (element) =>
+                  element.toString().split('.').last == json['feedBack'],
+              orElse: () => FeedBackColloquio.DUBBIO,
+            )
+          : null,
       idCandidato: json['idCandidato'],
       idSelezionatore: json['idSelezionatore'],
       nomeCandidato: json['nomeCandidato'],
@@ -95,6 +96,50 @@ class Colloquio {
       'candidato': candidato?.toJson(),
       'selezionatore': selezionatore?.toJson(),
       'note': note
+    };
+  }
+}
+
+class ColloquioFiltro {
+  int? id;
+  DateTime? data;
+  String? note;
+  Tipologia? tipologia;
+  FeedBackColloquio? feedback;
+  Candidato? candidato;
+  Selezionatore? selezionatore;
+  int? pageNo;
+  int? pageSize;
+  String? sortBy;
+  String? sortDirection;
+
+  ColloquioFiltro(
+      {this.id,
+      this.data,
+      this.note,
+      this.tipologia,
+      this.feedback,
+      this.candidato,
+      this.selezionatore,
+      this.pageNo,
+      this.pageSize,
+      this.sortBy,
+      this.sortDirection});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'data': data != null ? data!.toIso8601String() : null,
+      'tipologia':
+          (tipologia != null) ? tipologia.toString().split('.').last : null,
+      'feedBack': feedback != null ? feedback.toString().split('.').last : null,
+      'candidato': candidato != null ? candidato!.toJson() : null,
+      'selezionatore': selezionatore?.toJson(),
+      'note': note,
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+      'sortBy': sortBy,
+      'sortDirection': sortDirection
     };
   }
 }

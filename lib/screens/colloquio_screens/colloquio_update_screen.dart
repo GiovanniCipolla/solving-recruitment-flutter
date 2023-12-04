@@ -40,11 +40,7 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
     return candidato = await candidatoProvider.getCandidato(id);
   }
 
-  Future<Selezionatore> selezionatoreSelezionatoTrova(id) async {
-    final SelezionatoreProvider selezionatoreProvider =
-        Provider.of<SelezionatoreProvider>(context, listen: false);
-     return selezionatoreSelezionato = await selezionatoreProvider.getSelezionatore(id);
-  }
+ 
 
   Future<void> modificaRiuscita(colloquio) async {
     Navigator.pushNamedAndRemoveUntil(context, ColloquioScreen.routeName, (route) => false);
@@ -53,14 +49,11 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
   @override
   void initState() {
     super.initState();
-    selezionatoreSelezionatoTrova(widget.colloquio.idSelezionatore).then((value) => setState(() {}));
-  candidatoController.text = '${widget.colloquio.nomeCandidato ?? ''} ${widget.colloquio.cognomeCandidato ?? ''}';
-  candidatoSelezionato(widget.colloquio.idCandidato);
-        dataController = TextEditingController(
-      text: widget.colloquio.data != null
-          ? formattaData(widget.colloquio.data!)
-          : '',
-    );
+     Future<Selezionatore> selezionatoreSelezionatoTrova(id) async {
+    final SelezionatoreProvider selezionatoreProvider =
+        Provider.of<SelezionatoreProvider>(context, listen: false);
+     return selezionatoreSelezionato = await selezionatoreProvider.getSelezionatore(id);
+  }
     data = widget.colloquio.data;
     tipologiaSelezionata = widget.colloquio.tipologia;
     feedbackSelezionato = widget.colloquio.feedback;

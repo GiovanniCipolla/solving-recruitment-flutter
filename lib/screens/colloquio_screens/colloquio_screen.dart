@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_insert_screen.dart';
@@ -19,6 +21,7 @@ class ColloquioScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colloquiProvider =
         Provider.of<ColloquioProvider>(context, listen: false);
+    bool activeFilter = colloquiProvider.filterActive;
     return WillPopScope(
       onWillPop: () {
         return backHome(context);
@@ -31,43 +34,56 @@ class ColloquioScreen extends StatelessWidget {
             height: heightSize(context) * 0.02,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment
-                .spaceEvenly, // Allinea i pulsanti orizzontalmente
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
-                onPressed: () {
-                  showAlertDialog(context);
+                onPressed: () async {
+                  await Provider.of<CandidatoProvider>(context, listen: false)
+                      .getCandidati();
+                  // ignore: use_build_context_synchronously
+                  await Provider.of<SelezionatoreProvider>(context,
+                          listen: false)
+                      .getSelezionatori();
+                  final filtro =
+                      // ignore: use_build_context_synchronously
+                      Provider.of<ColloquioProvider>(context, listen: false)
+                          .colloquioFiltro;
+                  openFilterModalColloquio(context, filtro);
                 },
-                child: const Row(
+                child: Stack(
                   children: [
-                    Text('Cerca per'),
-                    Icon(
-                      Icons.filter_list,
-                    )
+                    const Row(
+                      children: [
+                        Text('Applica filtri'),
+                        Icon(
+                          Icons.filter_list,
+                        )
+                      ],
+                    ),
+                    if (activeFilter)
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: const Icon(
+                            Icons.brightness_1,
+                            color: Colors.white,
+                            size: 10,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                ),
-                onPressed: () {
-                  showAlertDialog(context);
-                },
-                child: const Row(
-                  children: [
-                    Text('Ordina per'),
-                    Icon(
-                      Icons.sort,
-                    )
-                  ],
-                ),
-              ),
+              )
             ],
           ),
           SizedBox(
@@ -75,7 +91,10 @@ class ColloquioScreen extends StatelessWidget {
           ),
           Expanded(
             child: FutureBuilder(
-                future: colloquiProvider.getColloqui(),
+                future: activeFilter
+                    ? colloquiProvider
+                        .getCandidatiByFilter(colloquiProvider.colloquioFiltro)
+                    : colloquiProvider.getColloqui(),
                 builder: (context, snapshot) {
                   final colloqui = colloquiProvider.colloqui;
 
@@ -105,9 +124,9 @@ class ColloquioScreen extends StatelessWidget {
             titleShowDialog: 'Aggiungi Colloquio',
             descrizioneShowDialog: 'Sicuro di voler aggiungere un colloquio?',
             metodoShowDialog: () async {
-                 final SelezionatoreProvider selezionatoreProvider =
-        Provider.of<SelezionatoreProvider>(context, listen: false);
-     await selezionatoreProvider.getSelezionatori();
+              final SelezionatoreProvider selezionatoreProvider =
+                  Provider.of<SelezionatoreProvider>(context, listen: false);
+              await selezionatoreProvider.getSelezionatori();
               // ignore: use_build_context_synchronously
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return const ColloquioInsertScreen();

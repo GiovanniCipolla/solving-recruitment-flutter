@@ -11,6 +11,8 @@ class ColloquioProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
   List<Colloquio> colloqui = [];
   ColloquioProvider({required this.authProvider, required this.colloqui});
+  bool filterActive = false;
+  ColloquioFiltro colloquioFiltro = ColloquioFiltro();
 
   Future<void> getColloqui() async {
     String url = '$urlAPI/colloquio/getMobile';
@@ -20,6 +22,7 @@ class ColloquioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
         colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
@@ -44,6 +47,7 @@ class ColloquioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
       return Colloquio.fromJsonGetAllColloqui(jsonData);
     } else {
       throw HttpException(
@@ -63,6 +67,7 @@ class ColloquioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
         colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
@@ -87,6 +92,7 @@ class ColloquioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
         colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
@@ -136,5 +142,49 @@ class ColloquioProvider extends ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  Future<void> getCandidatiByFilter(ColloquioFiltro filtro) async {
+    if (filterActive) {
+      String url = '$urlAPI/colloquio/searchMobile';
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${authProvider!.token}',
+        },
+        body: json.encode(filtro.toJson()),
+      );
+      final jsonData = json.decode(response.body);
+      print(jsonData);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        checkFilterActive(filtro);
+        List<Colloquio> colloqui = [];
+        for (var item in jsonData['content']) {
+          colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
+        }
+        this.colloqui.clear();
+        this.colloqui.addAll(colloqui);
+        notifyListeners();
+      } else {
+        throw HttpException(
+          statusCode: jsonData['statusCode'],
+          title: jsonData['title'],
+          description: jsonData['description'],
+        );
+      }
+    } else {
+      getColloqui();
+    }
+  }
+
+  void checkFilterActive(ColloquioFiltro filtro) {
+    print(filtro.toJson());
+    colloquioFiltro = filtro;
+    filterActive = filtro.candidato != null ||
+        filtro.selezionatore != null ||
+        filtro.tipologia != null ||
+        filtro.feedback != null;
+    notifyListeners();
   }
 }
