@@ -33,21 +33,23 @@ Future<void> openFilterModal(
         builder: (BuildContext context, StateSetter setState) {
           return Container(
             padding: EdgeInsets.all(heightSize(context  ) * 0.015),
-            child: Column(children: [
-              SizedBox(
-                height: heightSize(context  ) * 0.0545,
-              ),
-               Text('Applica i filtri per la ricerca ', style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.primary),),
-               Divider(
-                 color: Theme.of(context).colorScheme.primary,
-                 thickness: 2,
-               ),
-              SingleChildScrollView(
-                child: FilterModal(
-                  candidatoFiltro: filtro,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                SizedBox(
+                  height: heightSize(context  ) * 0.0545,
                 ),
-              ),
-            ]),
+                 Text('Applica i filtri per la ricerca ', style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.primary),),
+                 Divider(
+                   color: Theme.of(context).colorScheme.primary,
+                   thickness: 2,
+                 ),
+                SingleChildScrollView(
+                  child: FilterModal(
+                    candidatoFiltro: filtro,
+                  ),
+                ),
+              ]),
+            ),
           );
         },
       );
@@ -65,21 +67,23 @@ Future<void> openFilterModalColloquio(
         builder: (BuildContext context, StateSetter setState) {
           return Container(
             padding: EdgeInsets.all(heightSize(context  ) * 0.015),
-            child: Column(children: [
-              SizedBox(
-                height: heightSize(context  ) * 0.0545,
-              ),
-               Text('Applica i filtri per personalizzare la tua ricerca', style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.primary),),
-               Divider(
-                 color: Theme.of(context).colorScheme.primary,
-                 thickness: 2,
-               ),
-              SingleChildScrollView(
-                child: FilterModalColloquio(
-                  colloquioFiltro: filtro,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                SizedBox(
+                  height: heightSize(context  ) * 0.0545,
                 ),
-              ),
-            ]),
+                 Text('Applica i filtri per la ricerca ', style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.primary),),
+                 Divider(
+                   color: Theme.of(context).colorScheme.primary,
+                   thickness: 2,
+                 ),
+                SingleChildScrollView(
+                  child: FilterModalColloquio(
+                    colloquioFiltro: filtro,
+                  ),
+                ),
+              ]),
+            ),
           );
         },
       );
