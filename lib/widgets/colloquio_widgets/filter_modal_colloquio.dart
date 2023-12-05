@@ -23,26 +23,33 @@ class FilterModalColloquio extends StatefulWidget {
 }
 
 class _FilterModalColloquioState extends State<FilterModalColloquio> {
+  GlobalKey<AutoCompleteTextFieldState<Candidato>> key = GlobalKey();
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController candidatoController = TextEditingController();
+  TextEditingController candidatoController = TextEditingController();
   Candidato? candidato;
   late TextEditingController selezionatoreController = TextEditingController();
   Selezionatore? selezionatoreSelezionato;
   FeedBackColloquio? feedBackColloquioSelezionato;
   Tipologia? tipologiaColloquioSelezionata;
 
-  late FocusNode candidatoFocusNode;
-
   Future<void> candidatoSelezionato(id) async {
     final CandidatoProvider candidatoProvider =
         Provider.of<CandidatoProvider>(context, listen: false);
-    await candidatoProvider.getCandidato(id);
+    candidato = await candidatoProvider.getCandidato(id);
+  }
+
+  Future<void> selezionatoreSelezionatoTrova(id) async {
+    final SelezionatoreProvider selezionatoreProvider =
+        Provider.of<SelezionatoreProvider>(context, listen: false);
+    selezionatoreSelezionato = await selezionatoreProvider.getSelezionatore(id);
   }
 
   void _resetFields() {
     setState(() {
       candidatoController.text = '';
       selezionatoreController.text = '';
+      selezionatoreSelezionato = null;
+      candidato = null;
       tipologiaColloquioSelezionata = null;
       feedBackColloquioSelezionato = null;
     });
@@ -51,38 +58,36 @@ class _FilterModalColloquioState extends State<FilterModalColloquio> {
   @override
   void initState() {
     super.initState();
-    candidatoFocusNode = FocusNode();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      candidatoController.text = widget.colloquioFiltro.candidato != null
-          ? '${widget.colloquioFiltro.candidato!.nome ?? ''} ${widget.colloquioFiltro.candidato!.cognome ?? ''}'
-          : '';
-      candidatoSelezionato(widget.colloquioFiltro.candidato != null
-          ? widget.colloquioFiltro.candidato!.id
-          : null);
-      widget.colloquioFiltro.selezionatore != null
-          ? selezionatoreSelezionato = widget.colloquioFiltro.selezionatore
-          : selezionatoreSelezionato = null;
-      feedBackColloquioSelezionato = widget.colloquioFiltro.feedback;
-      tipologiaColloquioSelezionata = widget.colloquioFiltro.tipologia;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (widget.colloquioFiltro.selezionatore != null) {
+        selezionatoreSelezionatoTrova(widget.colloquioFiltro.selezionatore!.id)
+            .then((value) => setState(() {}));
+      }
+
+      setState(() {
+        feedBackColloquioSelezionato = widget.colloquioFiltro.feedback;
+        tipologiaColloquioSelezionata = widget.colloquioFiltro.tipologia;
+      });
+
+      if (widget.colloquioFiltro.candidato != null) {
+        candidatoSelezionato(widget.colloquioFiltro.candidato!.id);
+      }
     });
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Verifica se è necessario aggiornare le variabili in base alle nuove dipendenze
-    // Aggiorna feedBackColloquioSelezionato se necessario
     if (widget.colloquioFiltro.feedback != feedBackColloquioSelezionato) {
       setState(() {
         feedBackColloquioSelezionato = widget.colloquioFiltro.feedback;
       });
     }
-  }
-
-  @override
-  void dispose() {
-    candidatoFocusNode.dispose();
-    super.dispose();
+    candidatoController = TextEditingController(
+      text: widget.colloquioFiltro.candidato != null
+          ? '${widget.colloquioFiltro.candidato!.nome} ${widget.colloquioFiltro.candidato!.cognome}'
+          : '',
+    );
   }
 
   @override
@@ -105,8 +110,7 @@ class _FilterModalColloquioState extends State<FilterModalColloquio> {
             children: [
               AutoCompleteTextField<Candidato>(
                 controller: candidatoController,
-                focusNode: candidatoFocusNode,
-                key: GlobalKey(),
+                key: key,
                 clearOnSubmit: false,
                 itemBuilder: (context, suggestion) => ListTile(
                   title: Text('${suggestion.nome} ${suggestion.cognome}'),
@@ -132,7 +136,8 @@ class _FilterModalColloquioState extends State<FilterModalColloquio> {
                 textInputAction: TextInputAction.go,
                 suggestions: candidatoProvider.candidati,
                 textChanged: (value) async {
-                  if (value.isNotEmpty) {
+                  // Effettua la chiamata solo se il testo ha almeno tre caratteri
+                  if (value.length >= 1) {
                     await candidatoProvider
                         .getCandidatiFiltratiAutoComplete(value);
                   }
@@ -240,7 +245,6 @@ class _FilterModalColloquioState extends State<FilterModalColloquio> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print(feedBackColloquioSelezionato);
                         ColloquioFiltro filter = ColloquioFiltro(
                           candidato: candidato,
                           selezionatore: selezionatoreSelezionato,

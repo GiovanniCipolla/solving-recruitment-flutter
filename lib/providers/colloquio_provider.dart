@@ -185,6 +185,5 @@ class ColloquioProvider extends ChangeNotifier {
         filtro.tipologia != null ||
         filtro.feedback != null;
     notifyListeners();
-    print(colloquioFiltro.toJson());
   }
 }
