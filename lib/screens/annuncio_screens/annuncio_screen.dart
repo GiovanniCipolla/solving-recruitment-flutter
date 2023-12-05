@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
@@ -19,6 +20,7 @@ class AnnuncioScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final annuncioProvider =
         Provider.of<AnnuncioProvider>(context, listen: false);
+    bool activeFilter = annuncioProvider.filterActive;
     return WillPopScope(
       onWillPop: () async {
         return backHome(context);
@@ -40,34 +42,41 @@ class AnnuncioScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () {
-                    showAlertDialog(context);
+                    final annuncioFiltro =
+                        Provider.of<AnnuncioProvider>(context, listen: false)
+                            .annuncioFiltro;
+                    openFilterModalAnnuncio(context, annuncioFiltro);
                   },
-                  child: const Row(
+                  child: Stack(
                     children: [
-                      Text('Cerca per'),
-                      Icon(
-                        Icons.filter_list,
-                      )
+                      const Row(
+                        children: [
+                          Text('Applica filtri'),
+                          Icon(
+                            Icons.filter_list,
+                          )
+                        ],
+                      ),
+                      if (activeFilter)
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: const Icon(
+                              Icons.brightness_1,
+                              color: Colors.white,
+                              size: 10,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  onPressed: () {
-                    showAlertDialog(context);
-                  },
-                  child: const Row(
-                    children: [
-                      Text('Ordina per'),
-                      Icon(
-                        Icons.sort,
-                      )
-                    ],
-                  ),
-                ),
+                )
               ],
             ),
             SizedBox(

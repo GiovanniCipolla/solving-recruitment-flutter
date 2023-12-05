@@ -19,6 +19,8 @@ class AnnuncioProvider extends ChangeNotifier {
   List<Annuncio> annunci = [];
   List<Candidato> candidati = [];
   Area? area;
+  bool filterActive = false;
+  AnnuncioFiltro annuncioFiltro = AnnuncioFiltro();
 
   final AuthProvider? authProvider;
 
@@ -30,6 +32,7 @@ class AnnuncioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
         annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
@@ -54,6 +57,7 @@ class AnnuncioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
       return Annuncio.fromJson(jsonData);
     } else {
       throw HttpException(
@@ -72,6 +76,8 @@ class AnnuncioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
+
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
         annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
@@ -97,6 +103,8 @@ class AnnuncioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
+
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
         annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
@@ -152,5 +160,45 @@ class AnnuncioProvider extends ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  Future<void> getAnnunciByFilter(AnnuncioFiltro filtro) async {
+    if (filterActive) {
+      String url = '$urlAPI/annuncio/searchMobile';
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${authProvider!.token}',
+        },
+        body: json.encode(filtro.toJson()),
+      );
+      final jsonData = json.decode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        checkFIlterActive(filtro);
+        List<Annuncio> annunci = [];
+        for (var item in jsonData) {
+          annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
+        }
+        this.annunci.clear();
+        this.annunci.addAll(annunci);
+        notifyListeners();
+      } else {
+        throw HttpException(
+          statusCode: jsonData['statusCode'],
+          title: jsonData['title'],
+          description: jsonData['description'],
+        );
+      }
+    }
+  }
+
+  void checkFIlterActive(AnnuncioFiltro filtro) {
+    annuncioFiltro = filtro;
+    filterActive = filtro.titolo != null && filtro.titolo!.trim().isNotEmpty ||
+        filtro.dataInizio != null ||
+        filtro.tipologiaAnnuncio != null ||
+        filtro.area != null;
+    notifyListeners();
   }
 }

@@ -13,7 +13,7 @@ class StatsItemWidget extends StatelessWidget {
     stats.candidatoAltro ?? 0;
     final totaleCandidati = stats.candidatiStaffInterno! +
         stats.candidatiStaffTecnico! +
-        stats.candidatiStaffTecnico!;
+        stats.candidatoAltro!;
 
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,

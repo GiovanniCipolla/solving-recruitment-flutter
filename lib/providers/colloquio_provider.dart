@@ -166,7 +166,6 @@ class ColloquioProvider extends ChangeNotifier {
         this.colloqui.addAll(colloqui);
         notifyListeners();
       } else {
-        print('aaaaaaaaaaaaaaaa');
         throw HttpException(
           statusCode: jsonData['statusCode'],
           title: jsonData['title'],

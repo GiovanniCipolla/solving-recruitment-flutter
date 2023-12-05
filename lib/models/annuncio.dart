@@ -1,7 +1,6 @@
 import 'package:solving_recruitment_flutter/models/area.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 
-
 class Annuncio {
   Annuncio({
     this.id,
@@ -41,7 +40,7 @@ class Annuncio {
           : null,
       area: json['area'] != null ? Area.fromJson(json['area']) : null,
     );
-  } 
+  }
   factory Annuncio.fromJsonGetAllAnnunci(Map<String, dynamic> json) {
     return Annuncio(
       id: json['id'] != null ? json['id'] as int : null,
@@ -68,7 +67,44 @@ class Annuncio {
       'dataInizio': dataInizio != null ? dataInizio!.toIso8601String() : null,
       'dataFine': dataFine != null ? dataFine!.toIso8601String() : null,
       'tipologiaAnnuncio': tipologia != null ? tipologia!.toJson() : null,
-      'area': area != null ?  area!.toJson() : null,
+      'area': area != null ? area!.toJson() : null,
+    };
+  }
+}
+
+class AnnuncioFiltro {
+  int? id;
+  String? titolo;
+  Area? area;
+  DateTime? dataInizio;
+  TipologiaAnnuncio? tipologiaAnnuncio;
+  int? pageNo;
+  int? pageSize;
+  String? sortBy;
+  String? sortDirection;
+
+  AnnuncioFiltro(
+      {this.id,
+      this.titolo,
+      this.area,
+      this.dataInizio,
+      this.tipologiaAnnuncio,
+      this.pageNo,
+      this.pageSize,
+      this.sortBy,
+      this.sortDirection});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'titolo': titolo,
+      'area': area != null ? area!.toJson() : null,
+      'dataInizio': dataInizio != null ? dataInizio!.toIso8601String() : null,
+      'tipologiaAnnuncio': tipologiaAnnuncio != null ? tipologiaAnnuncio!.toJson() : null,
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+      'sortBy': sortBy,
+      'sortDirection': sortDirection
     };
   }
 }
