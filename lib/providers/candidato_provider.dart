@@ -286,6 +286,7 @@ class CandidatoProvider extends ChangeNotifier {
         },
         body: json.encode(filtro.toJson()),
       );
+      
       final jsonData = json.decode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         checkFilterActive(filtro);
@@ -309,6 +310,7 @@ class CandidatoProvider extends ChangeNotifier {
   }
 
   void checkFilterActive(CandidatoFiltro filtro) {
+    print(filtro);
     candidatoFiltro = filtro;
     filterActive = (filtro.nome != null && filtro.nome!.trim().isNotEmpty) ||
         (filtro.cognome != null && filtro.cognome!.trim().isNotEmpty) ||

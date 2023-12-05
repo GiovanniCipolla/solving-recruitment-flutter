@@ -37,7 +37,7 @@ Future<void> openFilterModal(
               SizedBox(
                 height: heightSize(context  ) * 0.0545,
               ),
-               Text('Applica i filtri per personalizzare la tua ricerca', style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.primary),),
+               Text('Applica i filtri per la ricerca ', style: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.primary),),
                Divider(
                  color: Theme.of(context).colorScheme.primary,
                  thickness: 2,

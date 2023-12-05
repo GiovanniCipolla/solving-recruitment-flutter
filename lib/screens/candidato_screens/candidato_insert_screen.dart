@@ -515,6 +515,14 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                                 );
                               },
                             );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Errore nella validazione, controlla i campi',
+                      )
+                    )
+                  );
                     }
                   },
                   child: const Text('Inserisci'),

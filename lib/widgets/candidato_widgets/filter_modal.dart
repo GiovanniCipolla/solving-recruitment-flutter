@@ -12,8 +12,9 @@ import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 
 class FilterModal extends StatefulWidget {
-  const FilterModal({super.key, required this.candidatoFiltro});
+  const FilterModal({Key? key, required this.candidatoFiltro}) : super(key: key);
   final CandidatoFiltro candidatoFiltro;
+
   @override
   State<FilterModal> createState() => _FilterModalState();
 }
@@ -39,22 +40,22 @@ class _FilterModalState extends State<FilterModal> {
   late TextEditingController annuncioController = TextEditingController();
 
   void _resetFields() {
-  setState(() {
-    _nomeController.text = '';
-    _cognomeController.text = '';
-    statoSelezionato = null;
-    dataDiNascitaController.text = '';
-    dataDiNascita = null;
-    emailController.text = '';
-    etaMinController.text = '';
-    etaMaxController.text = '';
-    recapitoTelefonicoController.text = '';
-    dataPrimoContattoController.text = '';
-    dataPrimoContatto = null;
-    areaSelezionata = null;
-    annuncioSelezionato = null;
-  });
-}
+    setState(() {
+      _nomeController.text = '';
+      _cognomeController.text = '';
+      statoSelezionato = null;
+      dataDiNascitaController.text = '';
+      dataDiNascita = null;
+      emailController.text = '';
+      etaMinController.text = '';
+      etaMaxController.text = '';
+      recapitoTelefonicoController.text = '';
+      dataPrimoContattoController.text = '';
+      dataPrimoContatto = null;
+      areaSelezionata = null;
+      annuncioSelezionato = null;
+    });
+  }
 
   Future<void> _selectDate(BuildContext context, contoller, type) async {
     final DateTime? picked = await showDatePicker(
@@ -111,295 +112,259 @@ class _FilterModalState extends State<FilterModal> {
 
   @override
   Widget build(BuildContext context) {
-
     final areaProvider = Provider.of<AreaProvider>(context, listen: false);
-    // ignore: use_build_context_synchronously
     final annuncioProvider =
         Provider.of<AnnuncioProvider>(context, listen: false);
     areaProvider.getAreas();
     annuncioProvider.getAnnunci();
     final areas = areaProvider.aree;
     final annunci = annuncioProvider.annunci;
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.all(16),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: TextFormField(
-                    controller: _nomeController,
-                    decoration: const InputDecoration(labelText: 'Nome'),
-                    onChanged: (value) {
-                      setState(() {
-                        _nomeController.text = value;
-                      });
-                    },
-                    validator: (value) {
-                      return null;
-                    }),
-              ),
-              const SizedBox( width: 10,),
+              Row(
+                children: [
                   Expanded(
                     child: TextFormField(
-                                  controller: _cognomeController,
-                                  decoration: const InputDecoration(labelText: 'Cognome'),
-                                  onChanged: (value) {
-                                    setState(() {
-                    _cognomeController.text = value;
-                                    });
-                                  },
-                                  validator: (value) {
-                                    return null;
-                                  }),
-                  ),
-            ],
-          ),
-          Row(
-            children: [
-              const Expanded(child: Text('Filtra per stato')),
-              DropdownButton<Stato>(
-                value: statoSelezionato,
-                onChanged: (Stato? newValue) {
-                  setState(() {
-                    statoSelezionato = newValue;
-                  });
-                },
-                items: [
-                  // Primo elemento con testo "Seleziona stato" e valore nullo
-                  const DropdownMenuItem<Stato>(
-                    value: null,
-                    child: Text(' - '),
-                  ),
-                  ...Stato.values.map((Stato stato) {
-                    return DropdownMenuItem<Stato>(
-                      value: stato,
-                      child: Text(statoCandidatoMap[stato]!),
-                    );
-                  }),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context)
-                        .requestFocus(FocusNode()); // Chiudi la tastiera
-                    _selectDate(context, dataDiNascitaController, dataDiNascita);
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: dataDiNascitaController,
-                      decoration: const InputDecoration(
-                        labelText: 'Data Di Nascita',
-                      ),
+                      controller: _nomeController,
+                      decoration: const InputDecoration(labelText: 'Nome'),
+                      onChanged: (value) {
+                        setState(() {
+                          _nomeController.text = value;
+                        });
+                      },
                       validator: (value) {
-                        if (dataDiNascita != null) {
-                          final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
-                          if (!dateFormat.hasMatch(value ?? '')) {
-                            return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
-                          }
-                        }
                         return null;
                       },
                     ),
                   ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _cognomeController,
+                      decoration:
+                          const InputDecoration(labelText: 'Cognome'),
+                      onChanged: (value) {
+                        setState(() {
+                          _cognomeController.text = value;
+                        });
+                      },
+                      validator: (value) {
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  const Expanded(child: Text('Filtra per stato')),
+                  DropdownButton<Stato>(
+                    value: statoSelezionato,
+                    onChanged: (Stato? newValue) {
+                      setState(() {
+                        statoSelezionato = newValue;
+                      });
+                    },
+                    items: [
+                      const DropdownMenuItem<Stato>(
+                        value: null,
+                        child: Text(' - '),
+                      ),
+                      ...Stato.values.map((Stato stato) {
+                        return DropdownMenuItem<Stato>(
+                          value: stato,
+                          child: Text(statoCandidatoMap[stato]!),
+                        );
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context)
+                            .requestFocus(FocusNode());
+                        _selectDate(
+                            context, dataDiNascitaController, dataDiNascita);
+                      },
+                      child: AbsorbPointer(
+                        child: TextFormField(
+                          controller: dataDiNascitaController,
+                          decoration: const InputDecoration(
+                            labelText: 'Data Di Nascita',
+                          ),
+                          validator: (value) {
+                            if (dataDiNascita != null) {
+                              final dateFormat =
+                                  RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                              if (!dateFormat.hasMatch(value ?? '')) {
+                                return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                              }
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context)
+                            .requestFocus(FocusNode());
+                        _selectDate(
+                            context, dataPrimoContattoController, dataPrimoContatto);
+                      },
+                      child: AbsorbPointer(
+                        child: TextFormField(
+                          controller: dataPrimoContattoController,
+                          decoration: const InputDecoration(
+                            labelText: 'Data Primo contatto',
+                          ),
+                          validator: (value) {
+                            if (dataPrimoContatto != null) {
+                              final dateFormat =
+                                  RegExp(r'^\d{2}/\d{2}/\d{4}$');
+                              if (!dateFormat.hasMatch(value ?? '')) {
+                                return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
+                              }
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              DropdownButtonFormField<int>(
+                value: areaSelezionata?.id,
+                items: [
+                  const DropdownMenuItem<int>(
+                    value: 0,
+                    child: Text(' - '),
+                  ),
+                  ...areas.map((Area area) {
+                    return DropdownMenuItem<int>(
+                      value: area.id,
+                      child: Text(area.denominazione ?? 'errore'),
+                    );
+                  }).toList(),
+                ],
+                onChanged: (int? value) {
+                  setState(() {
+                    if (value == 0) {
+                      areaSelezionata = null;
+                    } else {
+                      areaSelezionata =
+                          areas.firstWhere((area) => area.id == value);
+                    }
+                  });
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Area',
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-               Expanded(
-                 child: GestureDetector(
-                             onTap: () {
-                               FocusScope.of(context)
-                    .requestFocus(FocusNode()); // Chiudi la tastiera
-                               _selectDate(
-                    context, dataPrimoContattoController, dataPrimoContatto);
-                             },
-                             child: AbsorbPointer(
-                               child: TextFormField(
-                  controller: dataPrimoContattoController,
-                  decoration: const InputDecoration(
-                    labelText: 'Data Primo contatto',
+              DropdownButtonFormField<int>(
+                value: annuncioSelezionato?.id,
+                items: [
+                  const DropdownMenuItem<int>(
+                    value: 0,
+                    child: Text(' - '),
                   ),
-                  validator: (value) {
-                    if (dataPrimoContatto != null) {
-                      final dateFormat = RegExp(r'^\d{2}/\d{2}/\d{4}$');
-                      if (!dateFormat.hasMatch(value ?? '')) {
-                        return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
-                      }
-                    }
-                    return null;
-                  },
-                               ),
-                             ),
-                           ),
-               ),
-            ],
-          ),
-          // TextFormField(
-          //   controller: etaMinController,
-          //   decoration: const InputDecoration(
-          //     labelText: 'Età Minima',
-          //   ),
-          //   keyboardType: TextInputType.number,
-          //   validator: (value) {
-          //     if (value != null && value.isNotEmpty) {
-          //       final int etaMin = int.tryParse(value) ?? 0;
-          //       if (etaMin < 0) {
-          //         return 'Inserisci un numero positivo per l\'età minima';
-          //       }
-          //     }
-          //     return null;
-          //   },
-          // ),
-          // TextFormField(
-          //   controller: etaMaxController,
-          //   decoration: const InputDecoration(
-          //     labelText: 'Età Massima',
-          //   ),
-          //   keyboardType: TextInputType.number,
-          //   validator: (value) {
-          //     if (value != null && value.isNotEmpty) {
-          //       final int etaMax = int.tryParse(value) ?? 0;
-          //       if (etaMax < 0) {
-          //         return 'Inserisci un numero positivo per l\'età massima';
-          //       }
-          //       if (etaMinController.text.isNotEmpty) {
-          //         final int etaMin =
-          //             int.tryParse(etaMinController.text) ?? 0;
-          //         if (etaMax < etaMin) {
-          //           return 'L\'età massima deve essere maggiore o uguale all\'età minima';
-          //         }
-          //       }
-          //     }
-          //     return null;
-          //   },
-          // ),
-          // TextFormField(
-          //     controller: recapitoTelefonicoController,
-          //     keyboardType: TextInputType.phone,
-          //     decoration: const InputDecoration(
-          //       labelText: 'Recapito telefonico',
-          //     ),
-          //     validator: (value) {
-          //       return null;
-          //     }),
-          DropdownButtonFormField<int>(
-            value: areaSelezionata?.id,
-            items: [
-              // Aggiungi un elemento vuoto all'inizio della lista
-              const DropdownMenuItem<int>(
-                value: 0,
-                child: Text(' - '),
-              ),
-              // Aggiungi gli altri elementi
-              ...areas.map((Area area) {
-                return DropdownMenuItem<int>(
-                  value: area.id,
-                  child: Text(area.denominazione ?? 'errore'),
-                );
-              }).toList(),
-            ],
-            onChanged: (int? value) {
-              setState(() {
-                // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                if (value == 0) {
-                  areaSelezionata = null;
-                } else {
-                  areaSelezionata =
-                      areas.firstWhere((area) => area.id == value);
-                }
-              });
-            },
-            decoration: const InputDecoration(
-              labelText: 'Area',
-            ),
-          ),
-          DropdownButtonFormField<int>(
-            value: annuncioSelezionato?.id,
-            items: [
-              // Aggiungi un elemento vuoto all'inizio della lista
-              const DropdownMenuItem<int>(
-                value: 0,
-                child: Text(' - '),
-              ),
-              // Aggiungi gli altri elementi
-              ...annunci.map((Annuncio annuncio) {
-                return DropdownMenuItem<int>(
-                  value: annuncio.id,
-                  child: Text(annuncio.titolo ?? 'errore'),
-                );
-              }).toList(),
-            ],
-            onChanged: (int? value) {
-              setState(() {
-                // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                if (value == 0) {
-                  annuncioSelezionato = null;
-                } else {
-                  annuncioSelezionato = annunci
-                      .firstWhere((annuncio) => annuncio.id == value);
-                }
-              });
-            },
-            decoration: const InputDecoration(
-              labelText: 'Annuncio',
-            ),
-          ),
-          SizedBox(
-            height: heightSize(context) * 0.15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: ()  {
-                  if (_formKey.currentState!.validate()) { 
-                    CandidatoFiltro filter = CandidatoFiltro(
-                      nome: _nomeController.text,
-                      cognome: _cognomeController.text,
-                      stato: statoSelezionato,
-                      dataNascita: (dataDiNascitaController.text.isNotEmpty)
-                          ? DateFormat('dd/MM/yyyy')
-                              .parse(dataDiNascitaController.text)
-                          : null,
-                      email: emailController.text,
-                      etaMin: (etaMinController.text.isNotEmpty)
-                          ? int.tryParse(etaMinController.text)
-                          : null,
-                      etaMax: (etaMaxController.text.isNotEmpty)
-                          ? int.tryParse(etaMaxController.text)
-                          : null,
-                      recapitoTelefonico: recapitoTelefonicoController.text,
-                      dataPrimoContatto:
-                          (dataPrimoContattoController.text.isNotEmpty)
-                              ? DateFormat('dd/MM/yyyy')
-                                  .parse(dataPrimoContattoController.text)
-                              : null,
-                      area: areaSelezionata,
-                      annuncio: annuncioSelezionato,
-                      pageNo: 0,
-                      pageSize: 10,
-                      sortBy: 'nome',
-                      sortDirection: 'asc',
+                  ...annunci.map((Annuncio annuncio) {
+                    return DropdownMenuItem<int>(
+                      value: annuncio.id,
+                      child: Text(annuncio.titolo ?? 'errore'),
                     );
-                   Provider.of<CandidatoProvider>(context, listen: false).checkFilterActive(filter);
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
-                  }
+                  }).toList(),
+                ],
+                onChanged: (int? value) {
+                  setState(() {
+                    if (value == 0) {
+                      annuncioSelezionato = null;
+                    } else {
+                      annuncioSelezionato =
+                          annunci.firstWhere((annuncio) => annuncio.id == value);
+                    }
+                  });
                 },
-                child: const Text('Applica filtri'),
+                decoration: const InputDecoration(
+                  labelText: 'Annuncio',
+                ),
               ),
-              TextButton(onPressed: _resetFields, child: const Text('Resetta filtri')),
+              SizedBox(
+                height: heightSize(context) * 0.15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        CandidatoFiltro filter = CandidatoFiltro(
+                          nome: _nomeController.text,
+                          cognome: _cognomeController.text,
+                          stato: statoSelezionato,
+                          dataNascita: (dataDiNascitaController.text.isNotEmpty)
+                              ? DateFormat('dd/MM/yyyy')
+                                  .parse(dataDiNascitaController.text)
+                              : null,
+                          email: emailController.text,
+                          etaMin: (etaMinController.text.isNotEmpty)
+                              ? int.tryParse(etaMinController.text)
+                              : null,
+                          etaMax: (etaMaxController.text.isNotEmpty)
+                              ? int.tryParse(etaMaxController.text)
+                              : null,
+                          recapitoTelefonico:
+                              recapitoTelefonicoController.text,
+                          dataPrimoContatto:
+                              (dataPrimoContattoController.text.isNotEmpty)
+                                  ? DateFormat('dd/MM/yyyy').parse(
+                                      dataPrimoContattoController.text)
+                                  : null,
+                          area: areaSelezionata,
+                          annuncio: annuncioSelezionato,
+                          pageNo: 0,
+                          pageSize: 10,
+                          sortBy: 'nome',
+                          sortDirection: 'asc',
+                        );
+                        Provider.of<CandidatoProvider>(context, listen: false)
+                            .checkFilterActive(filter);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, CandidatoScreen.routeName, (route) => false);
+                      }
+                    },
+                    child: const Text('Applica filtri'),
+                  ),
+                  TextButton(
+                    onPressed: _resetFields,
+                    child: const Text('Resetta filtri'),
+                  ),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

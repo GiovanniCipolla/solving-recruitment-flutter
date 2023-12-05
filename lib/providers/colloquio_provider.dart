@@ -156,7 +156,6 @@ class ColloquioProvider extends ChangeNotifier {
         body: json.encode(filtro.toJson()),
       );
       final jsonData = json.decode(response.body);
-      print(jsonData);
       if (response.statusCode == 200 || response.statusCode == 201) {
         checkFilterActive(filtro);
         List<Colloquio> colloqui = [];
@@ -167,6 +166,7 @@ class ColloquioProvider extends ChangeNotifier {
         this.colloqui.addAll(colloqui);
         notifyListeners();
       } else {
+        print('aaaaaaaaaaaaaaaa');
         throw HttpException(
           statusCode: jsonData['statusCode'],
           title: jsonData['title'],
@@ -179,12 +179,12 @@ class ColloquioProvider extends ChangeNotifier {
   }
 
   void checkFilterActive(ColloquioFiltro filtro) {
-    print(filtro.toJson());
     colloquioFiltro = filtro;
     filterActive = filtro.candidato != null ||
         filtro.selezionatore != null ||
         filtro.tipologia != null ||
         filtro.feedback != null;
     notifyListeners();
+    print(colloquioFiltro.toJson());
   }
 }

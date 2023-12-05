@@ -26,7 +26,7 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
   DateTime? data;
   Tipologia? tipologiaSelezionata;
   FeedBackColloquio? feedbackSelezionato;
-  late  TextEditingController candidatoController = TextEditingController();
+  late TextEditingController candidatoController = TextEditingController();
   Candidato? candidato;
   late TextEditingController? noteController;
 
@@ -34,26 +34,36 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
     return DateFormat('dd/MM/yyyy').format(data);
   }
 
-  Future<Candidato> candidatoSelezionato(id) async {
+  Future<void> candidatoSelezionato(id) async {
     final CandidatoProvider candidatoProvider =
         Provider.of<CandidatoProvider>(context, listen: false);
-    return candidato = await candidatoProvider.getCandidato(id);
+     await candidatoProvider.getCandidato(id);
   }
 
- 
+  Future<void> selezionatoreSelezionatoTrova(id) async {
+    final SelezionatoreProvider selezionatoreProvider =
+        Provider.of<SelezionatoreProvider>(context, listen: false);
+    selezionatoreSelezionato = await selezionatoreProvider.getSelezionatore(id);
+  }
 
   Future<void> modificaRiuscita(colloquio) async {
-    Navigator.pushNamedAndRemoveUntil(context, ColloquioScreen.routeName, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, ColloquioScreen.routeName, (route) => false);
   }
 
   @override
   void initState() {
     super.initState();
-     Future<Selezionatore> selezionatoreSelezionatoTrova(id) async {
-    final SelezionatoreProvider selezionatoreProvider =
-        Provider.of<SelezionatoreProvider>(context, listen: false);
-     return selezionatoreSelezionato = await selezionatoreProvider.getSelezionatore(id);
-  }
+    selezionatoreSelezionatoTrova(widget.colloquio.idSelezionatore)
+        .then((value) => setState(() {}));
+    candidatoController.text =
+        '${widget.colloquio.nomeCandidato ?? ''} ${widget.colloquio.cognomeCandidato ?? ''}';
+    candidatoSelezionato(widget.colloquio.idCandidato);
+    dataController = TextEditingController(
+      text: widget.colloquio.data != null
+          ? formattaData(widget.colloquio.data!)
+          : '',
+    );
     data = widget.colloquio.data;
     tipologiaSelezionata = widget.colloquio.tipologia;
     feedbackSelezionato = widget.colloquio.feedback;
@@ -69,7 +79,11 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
             .selezionatori;
     return Scaffold(
         appBar: AppBar(
-          title:  Text('Modifica colloquio', style: TextStyle(fontSize: 25, color: Theme.of(context).colorScheme.primary),),
+          title: Text(
+            'Modifica colloquio',
+            style: TextStyle(
+                fontSize: 25, color: Theme.of(context).colorScheme.primary),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -204,19 +218,21 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
                     },
                   ),
                   TextFormField(
-              controller: noteController,
-              decoration: const InputDecoration(
-                labelText: 'Note',
-              ),
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-            ),
+                    controller: noteController,
+                    decoration: const InputDecoration(
+                      labelText: 'Note',
+                    ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                  ),
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final colloquio = Colloquio(
                           id: widget.colloquio.id,
-                          note: noteController == null ? null : noteController!.text,
+                          note: noteController == null
+                              ? null
+                              : noteController!.text,
                           data: (dataController.text.isNotEmpty && data != null)
                               ? DateFormat('dd/MM/yyyy')
                                   .parse(dataController.text)

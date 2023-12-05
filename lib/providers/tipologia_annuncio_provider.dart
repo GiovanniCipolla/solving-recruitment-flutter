@@ -66,7 +66,6 @@ class TipologiaAnnuncioProvider extends ChangeNotifier {
       },
       body: json.encode(tipologiaAnnuncio.toJson()),
     );
-    print(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
