@@ -5,7 +5,6 @@ import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/area_widgets/area_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
-import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class AreaScreen extends StatelessWidget {
