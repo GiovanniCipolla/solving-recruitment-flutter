@@ -1,4 +1,6 @@
 // creazione enum tipologia_annuncio
+// ignore_for_file: prefer_null_aware_operators, constant_identifier_names
+
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 

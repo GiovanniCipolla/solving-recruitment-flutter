@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:http/http.dart' as http;
@@ -39,10 +38,11 @@ class AuthProvider extends ChangeNotifier {
     await _storage.write(key: 'password', value: password);
   }
 
-Future<void> _removeCredentials() async {
-  await _storage.delete(key: 'email');
-  await _storage.delete(key: 'password');
-}
+  Future<void> _removeCredentials() async {
+    await _storage.delete(key: 'email');
+    await _storage.delete(key: 'password');
+  }
+
   Future<void> tryLogin() async {
     final savedEmail = await _storage.read(key: 'email');
     final savedPassword = await _storage.read(key: 'password');
@@ -72,17 +72,18 @@ Future<void> _removeCredentials() async {
       _username = email;
       _password = password;
       notifyListeners();
-   } catch (e, stackTrace) {
-  print('Errore durante l\'autenticazione: $e');
-  _token = null;
-  return false;
-}
+    } catch (e) {
+      print('Errore durante l\'autenticazione: $e');
+      _token = null;
+      return false;
+    }
 
     await sendToken(token!)
         ? (confirm = true, _saveCredentials(email, password))
         : _token = null;
     return confirm;
   }
+
   void doLogout() {
     _token = null;
     _username = null;

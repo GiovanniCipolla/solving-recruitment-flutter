@@ -38,7 +38,7 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.category,
     'title': 'Gestione Aree',
-    'onTap': (context)  {
+    'onTap': (context) {
       Navigator.pushNamedAndRemoveUntil(
           context, AreaScreen.routeName, (route) => false);
     },
@@ -62,7 +62,7 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.person_search,
     'title': 'Gestione Selezionatori',
-    'onTap': (context)  {
+    'onTap': (context) {
       Navigator.pushNamedAndRemoveUntil(
           context, SelezionatoreScreen.routeName, (route) => false);
     },
@@ -99,7 +99,7 @@ final List<Map<String, dynamic>> drawerItems = [
   {
     'icon': Icons.work,
     'title': 'Gestione Tipologia Annunci',
-    'onTap': (context)  {
+    'onTap': (context) {
       Navigator.pushNamedAndRemoveUntil(
           context, TipologiaAnnuncioScreen.routeName, (route) => false);
     },

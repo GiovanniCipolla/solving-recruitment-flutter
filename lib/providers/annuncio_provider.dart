@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
@@ -77,14 +76,12 @@ class AnnuncioProvider extends ChangeNotifier {
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       filterActive = false;
-
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
         annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
       }
       this.annunci.clear();
       this.annunci.addAll(annunci);
-
       notifyListeners();
     } else {
       throw HttpException(
@@ -104,7 +101,6 @@ class AnnuncioProvider extends ChangeNotifier {
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       filterActive = false;
-
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
         annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
@@ -174,7 +170,6 @@ class AnnuncioProvider extends ChangeNotifier {
         body: json.encode(filtro.toJson()),
       );
       final jsonData = json.decode(response.body);
-      print(jsonData);
       if (response.statusCode == 200 || response.statusCode == 201) {
         checkFIlterActive(filtro);
         List<Annuncio> annunci = [];

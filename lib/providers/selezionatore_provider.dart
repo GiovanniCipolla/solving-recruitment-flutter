@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/httpexception.dart';
@@ -10,7 +9,6 @@ import 'package:http/http.dart' as http;
 class SelezionatoreProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
   List<Selezionatore> selezionatori = [];
-
   SelezionatoreProvider(
       {required this.authProvider, required this.selezionatori});
 

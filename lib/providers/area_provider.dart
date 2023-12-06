@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
@@ -25,8 +24,8 @@ class AreaProvider extends ChangeNotifier {
   Future<void> getAreas() async {
     String url = '$urlAPI/area/getMobile';
     final response = await http.get(Uri.parse(url), headers: {
-'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${authProvider!.token}',      
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -46,7 +45,6 @@ class AreaProvider extends ChangeNotifier {
     }
   }
 
-
   Future<StatsArea> getStatsArea() async {
     String url = '$urlAPI/candidato/getNumeroCandidatyByArea';
     final response = await http.get(Uri.parse(url), headers: {
@@ -63,6 +61,5 @@ class AreaProvider extends ChangeNotifier {
         description: jsonData['description'],
       );
     }
-    
   }
 }

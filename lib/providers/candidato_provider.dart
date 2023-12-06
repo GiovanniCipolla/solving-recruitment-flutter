@@ -7,7 +7,6 @@ import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/models/httpexception.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 
 class CandidatoProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
@@ -287,7 +286,7 @@ class CandidatoProvider extends ChangeNotifier {
         },
         body: json.encode(filtro.toJson()),
       );
-      
+
       final jsonData = json.decode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         checkFilterActive(filtro);
@@ -311,7 +310,6 @@ class CandidatoProvider extends ChangeNotifier {
   }
 
   void checkFilterActive(CandidatoFiltro filtro) {
-    print(filtro);
     candidatoFiltro = filtro;
     filterActive = (filtro.nome != null && filtro.nome!.trim().isNotEmpty) ||
         (filtro.cognome != null && filtro.cognome!.trim().isNotEmpty) ||
@@ -351,6 +349,6 @@ class CandidatoProvider extends ChangeNotifier {
 //       description: jsonData['description'],
 //     );
 //   }
- 
+
 // }
 }

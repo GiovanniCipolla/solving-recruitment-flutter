@@ -1,6 +1,6 @@
 class User {
   User({this.id, this.username, this.email, this.sub, this.enabled});
-  
+
   int? id;
   String? username;
   String? email;

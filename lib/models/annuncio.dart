@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_null_aware_operators
+
 import 'package:solving_recruitment_flutter/models/area.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 
