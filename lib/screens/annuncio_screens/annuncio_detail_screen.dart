@@ -77,6 +77,16 @@ class AnnuncioDetailScreen extends StatelessWidget {
                             : 'Errore',
                       ),
                     ]),
+                    Row(
+                      children: [
+                        Text(
+                          annuncio.attivo == true ? 'Attivo' : 'Non attivo', 
+                          style: TextStyle(
+                            color: annuncio.attivo == true ? Colors.green : Colors.red
+                          )
+                        )
+                      ]
+                    )
                   ],
                 ),
               ],

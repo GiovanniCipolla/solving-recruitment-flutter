@@ -4,8 +4,10 @@ import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/area.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
+import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 
 class FilterModalAnnuncio extends StatefulWidget {
   const FilterModalAnnuncio({super.key, required this.annuncioFiltro});
@@ -24,10 +26,12 @@ class _FilterModalAnnuncioState extends State<FilterModalAnnuncio> {
   TipologiaAnnuncio? tipologiaAnnuncioSelezionata;
 
   void _resetFields() {
-    titoloController.text = '';
-    areaController.text = '';
-    areaSelezionata = null;
-    tipologiaAnnuncioSelezionata = null;
+    setState(() {
+      titoloController.text = '';
+      areaController.text = ''; // Assicurati di pulire anche il campo di testo dell'area
+      areaSelezionata = null;
+      tipologiaAnnuncioSelezionata = null;
+    });
   }
 
   @override
@@ -133,6 +137,19 @@ class _FilterModalAnnuncioState extends State<FilterModalAnnuncio> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        AnnuncioFiltro annuncioFiltro = AnnuncioFiltro(
+                          titolo: titoloController.text,
+                          area: areaSelezionata,
+                          tipologiaAnnuncio: tipologiaAnnuncioSelezionata,
+                          pageNo: 0,
+                          pageSize: 10,
+                          sortBy: 'titolo',
+                          sortDirection: 'asc',
+                        );
+                        Provider.of<AnnuncioProvider>(context, listen: false).checkFIlterActive(annuncioFiltro);
+                        Navigator.pushNamedAndRemoveUntil(context, AnnuncioScreen.routeName, (route) => false);
+                      }
                     },
                     child: const Text('Applica filtri'),
                   ),

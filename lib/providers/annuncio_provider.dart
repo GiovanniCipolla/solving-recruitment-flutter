@@ -174,10 +174,11 @@ class AnnuncioProvider extends ChangeNotifier {
         body: json.encode(filtro.toJson()),
       );
       final jsonData = json.decode(response.body);
+      print(jsonData);
       if (response.statusCode == 200 || response.statusCode == 201) {
         checkFIlterActive(filtro);
         List<Annuncio> annunci = [];
-        for (var item in jsonData) {
+        for (var item in jsonData['content']) {
           annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
         }
         this.annunci.clear();

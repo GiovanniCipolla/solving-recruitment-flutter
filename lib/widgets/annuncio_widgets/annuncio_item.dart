@@ -148,7 +148,7 @@ try {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text(
-                'Fine',
+                'Inizo',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),

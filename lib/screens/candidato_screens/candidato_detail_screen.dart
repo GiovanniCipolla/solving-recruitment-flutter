@@ -243,6 +243,8 @@ class CandidatoDetailScreen extends StatelessWidget {
                           ),
                         ),
                       );
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
                     } else {
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -12,6 +12,7 @@ class Annuncio {
     this.area,
     this.descrizioneArea,
     this.descrizioneTipologia,
+    this.attivo,
   });
 
   final int? id;
@@ -23,6 +24,7 @@ class Annuncio {
   final Area? area;
   final String? descrizioneArea;
   final String? descrizioneTipologia;
+  final bool? attivo;
 
   factory Annuncio.fromJson(Map<String, dynamic> json) {
     return Annuncio(
@@ -39,6 +41,7 @@ class Annuncio {
           ? TipologiaAnnuncio.fromJson(json['tipologiaAnnuncio'])
           : null,
       area: json['area'] != null ? Area.fromJson(json['area']) : null,
+      attivo: json['attivo'] as bool? ?? false,
     );
   }
   factory Annuncio.fromJsonGetAllAnnunci(Map<String, dynamic> json) {
@@ -56,6 +59,7 @@ class Annuncio {
       descrizioneTipologia: json['descrizioneTipologiaAnnuncio'] != null
           ? json['descrizioneTipologiaAnnuncio'] as String
           : null,
+      attivo: json['attivo'] as bool? ?? false,
     );
   }
 
@@ -68,6 +72,7 @@ class Annuncio {
       'dataFine': dataFine != null ? dataFine!.toIso8601String() : null,
       'tipologiaAnnuncio': tipologia != null ? tipologia!.toJson() : null,
       'area': area != null ? area!.toJson() : null,
+      'attivo': attivo,
     };
   }
 }
@@ -100,7 +105,8 @@ class AnnuncioFiltro {
       'titolo': titolo,
       'area': area != null ? area!.toJson() : null,
       'dataInizio': dataInizio != null ? dataInizio!.toIso8601String() : null,
-      'tipologiaAnnuncio': tipologiaAnnuncio != null ? tipologiaAnnuncio!.toJson() : null,
+      'tipologiaAnnuncio':
+          tipologiaAnnuncio != null ? tipologiaAnnuncio!.toJson() : null,
       'pageNo': pageNo,
       'pageSize': pageSize,
       'sortBy': sortBy,

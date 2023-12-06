@@ -8,7 +8,6 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 import 'package:intl/intl.dart';
-import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 
 class AnnuncioUpdateScreen extends StatefulWidget {
@@ -27,6 +26,8 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
   DateTime? dataInizio;
   TipologiaAnnuncio? tipologiaAnnuncioSelezionata;
   Area? areaSelezionata;
+    late bool? attivo;
+
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
     dataInizio = widget.annuncio.dataInizio;
     tipologiaAnnuncioSelezionata = widget.annuncio.tipologia;
     areaSelezionata = widget.annuncio.area;
+        attivo = widget.annuncio.attivo ?? false;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -67,11 +69,11 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<TipologiaAnnuncioProvider>(context).getTipologiaAnnuncio();
-    Provider.of<AreaProvider>(context).getAreas();
+    Provider.of<TipologiaAnnuncioProvider>(context, listen: false).getTipologiaAnnuncio();
+    Provider.of<AreaProvider>(context, listen: false).getAreas();
     final tipologiaAnnunci =
-        Provider.of<TipologiaAnnuncioProvider>(context).tipologiaAnnuncio;
-    final areas = Provider.of<AreaProvider>(context).aree;
+        Provider.of<TipologiaAnnuncioProvider>(context,listen: false).tipologiaAnnuncio;
+    final areas = Provider.of<AreaProvider>(context,listen: false).aree;
 
     return Scaffold(
       appBar: AppBar(
@@ -154,6 +156,16 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
                     labelText: 'Area',
                   ),
                 ),
+                if( attivo != null)
+                SwitchListTile(
+      title: const Text('Attivo'),
+      value: attivo!,
+      onChanged: (bool value) {
+        setState(() {
+          attivo = value;
+        });
+      },
+    ),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -168,6 +180,7 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
                             : null,
                         tipologia: tipologiaAnnuncioSelezionata,
                         area: areaSelezionata,
+                        attivo: attivo,
                       );
                       final annuncioProvider =
                           Provider.of<AnnuncioProvider>(context, listen: false);

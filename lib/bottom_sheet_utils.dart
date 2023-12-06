@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 
 class BottomSheetUtils {
@@ -395,6 +399,8 @@ class BottomSheetUtils {
     );
   }
 
+
+
   static void showCompetenze(BuildContext context, Candidato candidato) {
     showModalBottomSheet(
       shape: const RoundedRectangleBorder(
@@ -430,6 +436,12 @@ class BottomSheetUtils {
               _buildInfoRowForList('Soft Skills', candidato.softSkills),
               _buildInfoRowForList(
                   'Altre Competenze', candidato.altreCompetenzeMaturate),
+      //              ListTile(
+      //   title: Text('CV'),
+      //   onTap: () {
+      //     Provider.of<CandidatoProvider>(context, listen: false).getCV(candidato.id!);
+      //   },
+      // ),
             ],
           ),
         );

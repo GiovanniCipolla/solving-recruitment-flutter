@@ -84,18 +84,18 @@ final List<Map<String, dynamic>> drawerItems = [
     'divider': true,
     'thickness': 2.0,
   },
-  {
-    'icon': Icons.school,
-    'title': 'Gestione Academy',
-    'onTap': (context) {
-      // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-      // Navigator.pushNamed(context, AreaScreen.routeName);
-    },
-  },
-  {
-    'divider': true,
-    'thickness': 2.0,
-  },
+  // {
+  //   'icon': Icons.school,
+  //   'title': 'Gestione Academy',
+  //   'onTap': (context) {
+  //     // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
+  //     // Navigator.pushNamed(context, AreaScreen.routeName);
+  //   },
+  // },
+  // {
+  //   'divider': true,
+  //   'thickness': 2.0,
+  // },
   {
     'icon': Icons.work,
     'title': 'Gestione Tipologia Annunci',

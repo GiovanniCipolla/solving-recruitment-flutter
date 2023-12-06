@@ -44,6 +44,7 @@ class Candidato {
     this.areaID,
     this.denominazioneArea,
     this.titoloAnnuncio,
+    this.cvObjectKey,
   });
 
   final int? id;
@@ -77,6 +78,7 @@ class Candidato {
   final Annuncio? annuncio;
   final String? denominazioneArea;
   final String? titoloAnnuncio;
+  final String? cvObjectKey;
 
   factory Candidato.fromJson(Map<String, dynamic> json) {
     Stato? stato = json['stato'] != null
@@ -140,6 +142,7 @@ class Candidato {
       annuncio:
           json['annuncio'] != null ? Annuncio.fromJson(json['annuncio']) : null,
       area: json['area'] != null ? Area.fromJson(json['area']) : null,
+      cvObjectKey: json['cvObjectKey'],
     );
   }
 
@@ -196,6 +199,7 @@ class Candidato {
       'riscontroInviato': riscontroInviato,
       'annuncio': annuncio != null ? annuncio!.toJson() : null,
       'area': area != null ? area!.toJson() : null,
+      'cvObjectKey': cvObjectKey,
     };
   }
 
@@ -259,13 +263,18 @@ class CandidatoFiltro {
       'etaMin': etaMin,
       'etaMax': etaMax,
       'recapitoTelefonico': recapitoTelefonico,
-      'dataPrimoContatto': dataPrimoContatto != null ? dataPrimoContatto!.toIso8601String() : null,
+      'dataPrimoContatto': dataPrimoContatto != null
+          ? dataPrimoContatto!.toIso8601String()
+          : null,
       'pageNo': pageNo,
       'pageSize': pageSize,
       'sortBy': sortBy,
       'sortDirection': sortDirection,
-      'seniority': (seniority != null) ? seniority.toString().split('.').last : 'ND',
-      'disponibilitaLavoro': (disponibilitaLavoro != null) ? disponibilitaLavoro.toString().split('.').last : 'ND',
+      'seniority':
+          (seniority != null) ? seniority.toString().split('.').last : 'ND',
+      'disponibilitaLavoro': (disponibilitaLavoro != null)
+          ? disponibilitaLavoro.toString().split('.').last
+          : 'ND',
       'posizione': posizione,
       'area': area != null ? area!.toJsonForFilterCandidato() : null,
       'annuncio': annuncio != null ? annuncio!.toJson() : null

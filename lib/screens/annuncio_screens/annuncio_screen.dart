@@ -84,7 +84,7 @@ class AnnuncioScreen extends StatelessWidget {
             ),
             Expanded(
                 child: FutureBuilder(
-                    future: annuncioProvider.getAnnunci(),
+                    future: activeFilter ? annuncioProvider.getAnnunciByFilter(annuncioProvider.annuncioFiltro) : annuncioProvider.getAnnunci(),
                     builder: (context, snapshot) {
                       final annunci = annuncioProvider.annunci;
                       if (snapshot.connectionState == ConnectionState.waiting) {

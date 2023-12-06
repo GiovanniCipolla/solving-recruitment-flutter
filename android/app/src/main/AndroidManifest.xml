@@ -2,7 +2,7 @@
     <application
         android:label="solving_recruitment_flutter"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/logoinvert72">
         <activity
             android:name=".MainActivity"
             android:exported="true"

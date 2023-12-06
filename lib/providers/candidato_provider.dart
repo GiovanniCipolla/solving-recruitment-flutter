@@ -7,6 +7,7 @@ import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/models/httpexception.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class CandidatoProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
@@ -326,4 +327,30 @@ class CandidatoProvider extends ChangeNotifier {
         filtro.annuncio != null;
     notifyListeners();
   }
+
+//    void getCV(int candidatoId) async {
+//   String url = '$urlAPI/candidato/downloadFile/$candidatoId';
+//   final response = await http.get(Uri.parse(url), headers: {
+//     'Content-Type': 'application/json',
+//     'Authorization': 'Bearer ${authProvider!.token}',
+
+//   });
+//   final jsonData = json.decode(response.body);
+//   print(jsonData);
+//   if (response.statusCode == 200 || response.statusCode == 201) {
+//    try {
+//     await launch(url);
+//   } catch (e) {
+//     print('Errore durante il lancio del CV: $e'); // Debug
+//     throw 'Impossibile aprire il CV';
+//   }
+//   } else {
+//     throw HttpException(
+//       statusCode: jsonData['statusCode'],
+//       title: jsonData['title'],
+//       description: jsonData['description'],
+//     );
+//   }
+ 
+// }
 }
