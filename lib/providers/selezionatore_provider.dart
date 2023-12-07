@@ -29,9 +29,9 @@ class SelezionatoreProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: response.statusCode,
-        title: jsonData['title'],
-        description: jsonData['description'],
+       statusCode: response.statusCode,
+      title: jsonData['error'] ?? 'Errore',
+      description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -46,10 +46,10 @@ class SelezionatoreProvider extends ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return Selezionatore.fromJson(jsonData);
     } else {
-      throw HttpException(
-        statusCode: response.statusCode,
-        title: jsonData['title'],
-        description: jsonData['description'],
+     throw HttpException(
+       statusCode: response.statusCode,
+      title: jsonData['error'] ?? 'Errore',
+      description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }

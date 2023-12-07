@@ -8,12 +8,13 @@ class StatsItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    stats.candidatiStaffInterno ?? 0;
-    stats.candidatiStaffTecnico ?? 0;
-    stats.candidatoAltro ?? 0;
-    final totaleCandidati = stats.candidatiStaffInterno! +
-        stats.candidatiStaffTecnico! +
-        stats.candidatoAltro!;
+
+    final totaleCandidatiStaffTecnico = stats.candidatiStaffTecnico ?? 0;
+    final totaleCandidatiStaffInterno = stats.candidatiStaffInterno ?? 0;
+    final totaleCandidatiAltro = stats.candidatoAltro ?? 0;
+    final totaleCandidati = totaleCandidatiStaffTecnico +
+        totaleCandidatiStaffInterno +
+        totaleCandidatiAltro;
 
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
@@ -49,7 +50,7 @@ class StatsItemWidget extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
           ),
           trailing: Text(
-            stats.candidatiStaffTecnico.toString(),
+            stats.candidatiStaffTecnico == null ? ' - ' : stats.candidatiStaffTecnico.toString(),
             style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
           ),
@@ -61,7 +62,7 @@ class StatsItemWidget extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
           ),
           trailing: Text(
-            stats.candidatiStaffInterno.toString(),
+            stats.candidatiStaffInterno == null ? ' - ' : stats.candidatiStaffInterno.toString(),
             style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
           ),
@@ -73,7 +74,7 @@ class StatsItemWidget extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
           ),
           trailing: Text(
-            stats.candidatoAltro.toString(),
+            stats.candidatoAltro == null ? ' - ' : stats.candidatoAltro.toString(),
             style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
           ),

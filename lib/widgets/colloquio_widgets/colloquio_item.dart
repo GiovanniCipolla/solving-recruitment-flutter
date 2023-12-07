@@ -19,33 +19,34 @@ class ColloquioItem extends StatelessWidget {
     return InkWell(
       onTap: () async {
         showLoadingDialog(context);
-try {
-  final colloquioToSend =
-      await Provider.of<ColloquioProvider>(context, listen: false)
-          .getColloquioById(colloquio.id!);
-  // ignore: use_build_context_synchronously
-  Navigator.pop(context);
-  // ignore: use_build_context_synchronously
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => ColloquioDetailScreen(colloquio: colloquioToSend),
-    ),
-  );
-} catch (error) {
-  // ignore: use_build_context_synchronously
-  Navigator.pop(context);
-  // ignore: use_build_context_synchronously
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text(
-        'Si è verificato un errore durante il caricamento del colloquio',
-        style: TextStyle(color: Colors.red),
-      ),
-    ),
-  );
-  print('Errore durante il caricamento del colloquio: $error');
-}
+        try {
+          final colloquioToSend =
+              await Provider.of<ColloquioProvider>(context, listen: false)
+                  .getColloquioById(colloquio.id!);
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ColloquioDetailScreen(colloquio: colloquioToSend),
+            ),
+          );
+        } catch (error) {
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Si è verificato un errore durante il caricamento del colloquio',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          );
+          print('Errore durante il caricamento del colloquio: $error');
+        }
       },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
@@ -101,7 +102,7 @@ try {
                     ),
                     Text(
                       tipologiaMap[colloquio.tipologia] ??
-                          "Tipologia mancante", // Utilizza il valore predefinito se tipologiaMap[colloquio.tipologia] è null
+                          "Tipologia mancante", 
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontSize: heightSize(context) * 0.013,
@@ -119,7 +120,7 @@ try {
                         Row(
                           children: [
                             Text(
-                              colloquio.cognomeSelezionatore ?? "errore",
+                              colloquio.cognomeSelezionatore ?? "",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -132,7 +133,7 @@ try {
                         Row(
                           children: [
                             Text(
-                              colloquio.nomeSelezionatore ?? "errore",
+                              colloquio.nomeSelezionatore ?? "",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                               ),

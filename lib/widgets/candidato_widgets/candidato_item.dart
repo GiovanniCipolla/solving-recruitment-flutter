@@ -14,7 +14,6 @@ class CandidatoItem extends StatelessWidget {
   const CandidatoItem({super.key, required this.candidato});
 
   final Candidato candidato;
-  static const String variabileNulla = 'Errore';
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +76,7 @@ class CandidatoItem extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                statoCandidatoIconMap[candidato.stato] ??
-                    const Text(
-                      variabileNulla,
-                    ),
+              statoCandidatoIconMap[candidato.stato]! 
               ],
             ),
             Divider(

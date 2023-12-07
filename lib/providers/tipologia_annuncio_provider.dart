@@ -31,8 +31,8 @@ class TipologiaAnnuncioProvider extends ChangeNotifier {
     } else {
       throw HttpException(
         statusCode: response.statusCode,
-        title: jsonData['title'],
-        description: jsonData['description'],
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }

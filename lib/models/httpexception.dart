@@ -8,4 +8,9 @@ class HttpException implements Exception {
     required this.title,
     required this.description,
   });
+
+  @override
+  String toString() {
+    return 'HttpException(statusCode: $statusCode, title: $title, description: $description)';
+  }
 }

@@ -35,9 +35,9 @@ class CandidatoProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: jsonData['statusCode'],
-        title: jsonData['title'],
-        description: jsonData['description'],
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -61,9 +61,9 @@ class CandidatoProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: jsonData['statusCode'],
-        title: jsonData['title'],
-        description: jsonData['description'],
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -79,9 +79,9 @@ class CandidatoProvider extends ChangeNotifier {
       return Candidato.fromJson(jsonData);
     } else {
       throw HttpException(
-        statusCode: jsonData['statusCode'],
-        title: jsonData['title'],
-        description: jsonData['description'],
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -105,9 +105,9 @@ class CandidatoProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: jsonData['statusCode'],
-        title: jsonData['title'],
-        description: jsonData['description'],
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -131,9 +131,9 @@ class CandidatoProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: jsonData['statusCode'],
-        title: jsonData['title'],
-        description: jsonData['description'],
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -155,9 +155,9 @@ class CandidatoProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: jsonData['statusCode'],
-        title: jsonData['title'],
-        description: jsonData['description'],
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -169,6 +169,7 @@ class CandidatoProvider extends ChangeNotifier {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${authProvider!.token}',
       });
+      final jsonData = json.decode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         List<Candidato> candidati = [];
         final jsonData = json.decode(response.body);
@@ -182,8 +183,8 @@ class CandidatoProvider extends ChangeNotifier {
       } else {
         throw HttpException(
           statusCode: response.statusCode,
-          title: 'Errore di rete',
-          description: 'Errore durante la chiamata al server',
+          title: jsonData['error'] ?? 'Errore',
+          description: jsonData['trace'] ?? 'Errore sconosciuto',
         );
       }
     } catch (error) {
@@ -201,7 +202,7 @@ class CandidatoProvider extends ChangeNotifier {
       },
       body: json.encode(filtro.toJson()),
     );
-
+    final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<Candidato> candidati = [];
       var decodedResponse = json.decode(response.body);
@@ -218,9 +219,9 @@ class CandidatoProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       throw HttpException(
-        statusCode: json.decode(response.body)['statusCode'],
-        title: json.decode(response.body)['title'],
-        description: json.decode(response.body)['description'],
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -299,9 +300,9 @@ class CandidatoProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         throw HttpException(
-          statusCode: jsonData['statusCode'],
-          title: jsonData['title'],
-          description: jsonData['description'],
+          statusCode: response.statusCode,
+          title: jsonData['error'] ?? 'Errore',
+          description: jsonData['trace'] ?? 'Errore sconosciuto',
         );
       }
     } else {

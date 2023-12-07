@@ -17,9 +17,9 @@ class WrappedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      (text ?? 'Errore').length > limit
-          ? "${(text ?? 'Errore').substring(0, limit)}..."
-          : text ?? 'Errore',
+      (text ?? '').length > limit
+          ? "${(text ?? '').substring(0, limit)}..."
+          : text ?? '',
       style: TextStyle(
         color: color ?? Theme.of(context).colorScheme.onPrimary,
         fontSize: size ?? 14.0,

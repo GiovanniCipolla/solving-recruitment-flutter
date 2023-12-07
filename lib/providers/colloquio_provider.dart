@@ -32,8 +32,8 @@ class ColloquioProvider extends ChangeNotifier {
     } else {
       throw HttpException(
         statusCode: response.statusCode,
-        title: jsonData['title'],
-        description: jsonData['description'],
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -51,8 +51,8 @@ class ColloquioProvider extends ChangeNotifier {
     } else {
       throw HttpException(
         statusCode: response.statusCode,
-        title: jsonData['title'],
-        description: jsonData['description'],
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -77,8 +77,8 @@ class ColloquioProvider extends ChangeNotifier {
     } else {
       throw HttpException(
         statusCode: response.statusCode,
-        title: jsonData['title'],
-        description: jsonData['description'],
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -102,8 +102,8 @@ class ColloquioProvider extends ChangeNotifier {
     } else {
       throw HttpException(
         statusCode: response.statusCode,
-        title: jsonData['title'],
-        description: jsonData['description'],
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
       );
     }
   }
@@ -166,9 +166,9 @@ class ColloquioProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         throw HttpException(
-          statusCode: jsonData['statusCode'],
-          title: jsonData['title'],
-          description: jsonData['description'],
+          statusCode: response.statusCode,
+          title: jsonData['error'] ?? 'Errore',
+          description: jsonData['trace'] ?? 'Errore sconosciuto',
         );
       }
     } else {

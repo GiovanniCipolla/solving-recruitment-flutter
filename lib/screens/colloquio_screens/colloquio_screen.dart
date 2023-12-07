@@ -94,7 +94,7 @@ class ColloquioScreen extends StatelessWidget {
                 future: activeFilter
                     ? colloquiProvider
                         .getCandidatiByFilter(colloquiProvider.colloquioFiltro)
-                    : colloquiProvider.getColloqui(),
+                    :  colloquiProvider.getColloqui(),
                 builder: (context, snapshot) {
                   final colloqui = colloquiProvider.colloqui;
 

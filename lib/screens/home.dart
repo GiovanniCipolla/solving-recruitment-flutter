@@ -33,7 +33,7 @@ class Home extends StatelessWidget {
                   final statsArea = snapshot.data!; 
                   return Container(
                     margin: const EdgeInsets.all(15),
-                    child: StatsItemWidget(stats: statsArea));
+                    child: StatsItemWidget(stats: statsArea ),);
                 }
               }
             ),

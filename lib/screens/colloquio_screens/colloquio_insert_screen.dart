@@ -97,6 +97,11 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
               decoration: const InputDecoration(
                 labelText: 'Tipologia',
               ),
+              validator: (value) {
+                if (value == null) {
+                  return 'Seleziona una tipologia';
+                }
+              },
             ),
             TextFormField(
               controller: dataColloquioController,
@@ -184,6 +189,11 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
               decoration: const InputDecoration(
                 labelText: 'Selezionatore',
               ),
+              validator: (value) {
+                if (value == null) {
+                  return 'Seleziona un selezionatore';
+                }
+              },
             ),
             TextFormField(
               controller: noteController,
@@ -195,7 +205,7 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate() && candidato != null) {
                   final colloquio = Colloquio(
                     tipologia: tipologiaColloquioSelezionata,
                     data: (dataColloquioController.text.isNotEmpty)
@@ -213,11 +223,18 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                   // ignore: use_build_context_synchronously
                   result
                       ? inserimentoRiuscito()
+                      // ignore: use_build_context_synchronously
                       : ScaffoldMessenger.of(context)
                           .showSnackBar(const SnackBar(
                               content: Text(
                           'Errore durante l\'inserimento del colloquio',
                         )));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                    'Seleziona un candidato !',
+                      )
+                  ));
                 }
               },
               child: const Text('Inserisci'),

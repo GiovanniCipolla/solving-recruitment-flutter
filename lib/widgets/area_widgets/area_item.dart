@@ -41,7 +41,7 @@ class AreaItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      area.countAnnunci != null
+                      area.countAnnunci != null && area.countAnnunci! > 0
                           ? '${area.countAnnunci} annunci ancora in corso'
                           : 'Nessun annuncio in corso',
                       style: TextStyle(
