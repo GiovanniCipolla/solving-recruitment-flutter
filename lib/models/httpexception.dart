@@ -11,6 +11,6 @@ class HttpException implements Exception {
 
   @override
   String toString() {
-    return 'HttpException(statusCode: $statusCode, title: $title, description: $description)';
+    return  'statusCode : $statusCode, title: $title, description: $description)';
   }
 }
