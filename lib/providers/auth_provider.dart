@@ -52,8 +52,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> doLogin(String email, String password) async {
-    bool confirm = false;
+  Future<void> doLogin(String email, String password) async {
     const userPoolId = 'eu-central-1_qty1MSMmG';
     const clientId = '42ga53kdanbhav6i2gs9ko4lsb';
     final userPool = CognitoUserPool(
@@ -72,16 +71,15 @@ class AuthProvider extends ChangeNotifier {
       _username = email;
       _password = password;
       notifyListeners();
+      print(_token);
     } catch (e) {
       print('Errore durante l\'autenticazione: $e');
       _token = null;
-      return false;
     }
 
-    await sendToken(token!)
-        ? (confirm = true, _saveCredentials(email, password))
+    await sendToken(_token!)
+        ?  _saveCredentials(email, password)
         : _token = null;
-    return confirm;
   }
 
   void doLogout() {
@@ -98,6 +96,8 @@ class AuthProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'authorization': 'Bearer $token',
     });
+    print(url);
+    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       final jsonData = json.decode(response.body);
       _user = User.fromJson(jsonData);

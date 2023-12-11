@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 
-const urlAPI = 'http://192.168.1.233:8080/api';
+const urlAPI = 'https://9f607w14ge.execute-api.eu-south-1.amazonaws.com/dev/api';
 
 void showConfirmationDialog(BuildContext context, String title,
     String description, VoidCallback onConfirm) {

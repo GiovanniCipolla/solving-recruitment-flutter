@@ -23,6 +23,8 @@ class CandidatoProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${authProvider!.token}',
     });
+        print('Ecco , sono qui : ');
+
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       filterActive = false;
