@@ -101,6 +101,7 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                 if (value == null) {
                   return 'Seleziona una tipologia';
                 }
+                return null;
               },
             ),
             TextFormField(
@@ -193,6 +194,7 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
                 if (value == null) {
                   return 'Seleziona un selezionatore';
                 }
+                return null;
               },
             ),
             TextFormField(

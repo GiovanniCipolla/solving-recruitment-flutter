@@ -132,6 +132,7 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                     if (value == null) {
                       return 'Seleziona una tipologia';
                     }
+                    return null;
                   },
                 ),
                 DropdownButtonFormField<int>(
@@ -157,6 +158,7 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                     if (value == null) {
                       return 'Seleziona una area';
                     }
+                    return null;
                   }
                 ),
                 ElevatedButton(
