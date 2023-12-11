@@ -96,8 +96,6 @@ class AuthProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'authorization': 'Bearer $token',
     });
-    print(url);
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       final jsonData = json.decode(response.body);
       _user = User.fromJson(jsonData);
