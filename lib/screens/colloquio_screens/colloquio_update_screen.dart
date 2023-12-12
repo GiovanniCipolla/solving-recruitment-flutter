@@ -37,7 +37,7 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
   Future<void> candidatoSelezionato(id) async {
     final CandidatoProvider candidatoProvider =
         Provider.of<CandidatoProvider>(context, listen: false);
-     await candidatoProvider.getCandidato(id);
+    candidato = await candidatoProvider.getCandidato(id);
   }
 
   Future<void> selezionatoreSelezionatoTrova(id) async {

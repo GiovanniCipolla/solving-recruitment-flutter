@@ -5,7 +5,9 @@ import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
+import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_update_screen.dart';
 
 class ColloquioDetailScreen extends StatelessWidget {
@@ -236,7 +238,32 @@ try {
                     backgroundColor: Colors.red,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  onPressed: () {},
+                  onPressed:  () async {
+                              final result = await  Provider.of<ColloquioProvider>(context, listen: false).deleteColloquio(colloquio.id);
+                              if (result) {
+                                // ignore: use_build_context_synchronously
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "Colloquio eliminato correttamente"),
+                                  ),
+                                );
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  ColloquioScreen.routeName,
+                                  (route) => false,
+                                );
+                              } else {
+                                // ignore: use_build_context_synchronously
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('Colloquio non cancellato'),
+                                  ),
+                                );
+                              }
+                            },
                   child: const Row(
                     children: [
                       Text('Elimina Colloquio'),

@@ -143,6 +143,23 @@ class ColloquioProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> deleteColloquio(id)async {
+    String url = '$urlAPI/colloquio/delete/$id';
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
+      },
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<void> getCandidatiByFilter(ColloquioFiltro filtro) async {
     if (filterActive) {
       String url = '$urlAPI/colloquio/searchMobile';
