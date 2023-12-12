@@ -3,6 +3,7 @@ import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 
 const urlAPI = 'https://9f607w14ge.execute-api.eu-south-1.amazonaws.com/dev/api';
+// const urlAPI = 'http://192.168.1.233:8080/api';
 
 void showConfirmationDialog(BuildContext context, String title,
     String description, VoidCallback onConfirm) {
@@ -89,6 +90,7 @@ Map<Stato, Icon> statoCandidatoIconMap = {
   Stato.IN_ATTESA:  const Icon(Icons.watch_later, color: Color.fromARGB(154, 113, 237, 102)),
   Stato.ND:  const Icon(Icons.help_outline, color: Color.fromARGB(255, 243, 143, 21)),
   Stato.ISCRITTO:  const Icon(Icons.check, color: Color.fromARGB(255, 20, 218, 27)),
+  Stato.ASSUNTO:  const Icon(Icons.check, color: Color.fromARGB(255, 20, 218, 27)),
 };
 
 Map<LinguaInglese, String> linguaIngleseMap = {

@@ -7,7 +7,7 @@ enum Stato { ND, ASSUNTO, ISCRITTO, IDONEO, RIFIUTATO, IN_ATTESA }
 
 enum LinguaInglese { ND, SCARSO, SUFFICIENTE, BUONO, OTTIMO }
 
-enum PercorsoAcademy { IN_ATTESA, IN_CORSO, RITIRATO, TERMINATO }
+enum PercorsoAcademy { ND, IN_ATTESA, IN_CORSO, RITIRATO, TERMINATO}
 
 enum Seniority { ND, JUNIOR, MEDIUM, SENIOR }
 
@@ -105,6 +105,12 @@ class Candidato {
                 'DisponibilitaLavoro.${json['disponibilitaLavoro']}')
             : null;
 
+            PercorsoAcademy? percorsoAcademy = json['percorsoAcademy'] != null
+            ? PercorsoAcademy.values.firstWhere((element) =>
+                element.toString() ==
+                'PercorsoAcademy.${json['percorsoAcademy']}')
+            : null;
+
     return Candidato(
       id: json['id'],
       stato: stato,
@@ -137,7 +143,7 @@ class Candidato {
           ? DateTime.parse(json['dataPrimoContatto'])
           : null,
       posizione: json['posizione'],
-      percorsoAcademy: json['percorsoAcademy'],
+      percorsoAcademy: percorsoAcademy,
       note: json['note'],
       dareRiscontro: json['dareRiscontro'],
       riscontroInviato: json['riscontroInviato'],

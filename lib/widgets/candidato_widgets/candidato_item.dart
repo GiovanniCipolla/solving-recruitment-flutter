@@ -40,6 +40,7 @@ class CandidatoItem extends StatelessWidget {
             ),
           );
         } catch (error) {
+          print('Errore durante il caricamento del candidato: $error');
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
           // ignore: use_build_context_synchronously
@@ -71,8 +72,8 @@ class CandidatoItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    WrappedText(text: candidato.nome, limit: 10),
-                    WrappedText(text: candidato.cognome, limit: 10),
+                    WrappedText(text: candidato.nome ?? '', limit: 10),
+                    WrappedText(text: candidato.cognome ?? '', limit: 10),
                   ],
                 ),
                 const Spacer(),

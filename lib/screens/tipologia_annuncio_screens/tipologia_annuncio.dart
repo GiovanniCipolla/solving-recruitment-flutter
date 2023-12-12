@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
+import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_empty_items.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 import 'package:solving_recruitment_flutter/widgets/tipologia_annuncio_widgets/tipologia_annuncio_item.dart';
 
@@ -44,10 +46,14 @@ class TipologiaAnnuncioScreen extends StatelessWidget {
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
                         } else if (tipologiaANnunci.isEmpty) {
-                          return const Center(
-                              child: Text(
-                            'Non ci sono tipologie',
-                          ));
+                          return  Column(
+                                children: [
+                                  SizedBox(
+                                    height: heightSize(context) * 0.3,
+                                  ),
+                                  const CustomEmptyItems(text: 'Nessuna tipologia annuncio'),
+                                ],
+                              );
                         } else {
                           return SingleChildScrollView(
                             child: Column(

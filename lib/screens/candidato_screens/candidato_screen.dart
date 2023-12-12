@@ -8,6 +8,7 @@ import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_empty_items.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class CandidatoScreen extends StatelessWidget {
@@ -98,10 +99,13 @@ class CandidatoScreen extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   } else if (candidati.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        'Non ci sono candidati',
-                      ),
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: heightSize(context) * 0.3,
+                        ),
+                        const CustomEmptyItems(text: 'Nessun candidato'),
+                      ],
                     );
                   } else {
                     return GridView.builder(

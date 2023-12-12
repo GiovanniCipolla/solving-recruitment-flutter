@@ -5,6 +5,7 @@ import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/widgets/area_widgets/area_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_empty_items.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class AreaScreen extends StatelessWidget {
@@ -37,16 +38,27 @@ class AreaScreen extends StatelessWidget {
                             final aree = areaProvider.aree;
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
+                              return  Column(
+                                children: [
+                                   SizedBox(
+                                    height: heightSize(context) * 0.3,
+                                  ),
+                                  const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ],
                               );
                             } else if (snapshot.hasError) {
                               return Text(snapshot.error.toString());
                             } else if (aree.isEmpty) {
-                              return const Center(
-                                  child: Text(
-                                'Non ci sono aree',
-                              ));
+                              return  Column(
+                                children: [
+                                  SizedBox(
+                                    height: heightSize(context) * 0.3,
+                                  ),
+                                  const CustomEmptyItems(text: 'Nessuna area'),
+                                ],
+                              );
                             } else {
                               return Column(children: [
                                 ...aree

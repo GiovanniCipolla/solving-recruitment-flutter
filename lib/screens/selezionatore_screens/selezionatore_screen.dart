@@ -6,6 +6,7 @@ import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dar
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_empty_items.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 import 'package:solving_recruitment_flutter/widgets/selezionatore_widgets/selezionatore_item.dart';
 
@@ -45,10 +46,14 @@ class SelezionatoreScreen extends StatelessWidget {
                         } else if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
                         } else if (selezionatori.isEmpty) {
-                          return const Center(
-                              child: Text(
-                            'Non ci sono selezionatori',
-                          ));
+                          return  Column(
+                                children: [
+                                  SizedBox(
+                                    height: heightSize(context) * 0.3,
+                                  ),
+                                  const CustomEmptyItems(text: 'Nessun selezionatore'),
+                                ],
+                              );
                         } else {
                           return SingleChildScrollView(
                             child: Column(

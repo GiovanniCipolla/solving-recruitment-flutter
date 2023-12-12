@@ -10,6 +10,7 @@ import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_in
 import 'package:solving_recruitment_flutter/widgets/annuncio_widgets/annuncio_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_appbar.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_button_add.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/custom_empty_items.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/custom_end_drawer.dart';
 
 class AnnuncioScreen extends StatelessWidget {
@@ -94,10 +95,14 @@ class AnnuncioScreen extends StatelessWidget {
                       } else if (snapshot.hasError) {
                         return Text(snapshot.error.toString());
                       } else if (annunci.isEmpty) {
-                        return const Center(
-                            child: Text(
-                          'Non ci sono annunci',
-                        ));
+                        return  Column(
+                                children: [
+                                  SizedBox(
+                                    height: heightSize(context) * 0.3,
+                                  ),
+                                  const CustomEmptyItems(text: 'Nessun annuncio'),
+                                ],
+                              );
                       } else {
                         return GridView.builder(
                           gridDelegate:

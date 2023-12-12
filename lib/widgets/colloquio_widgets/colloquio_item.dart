@@ -7,6 +7,7 @@ import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_detail_screen.dart';
+import 'package:solving_recruitment_flutter/widgets/custom/wrapped_text.dart';
 
 class ColloquioItem extends StatelessWidget {
   const ColloquioItem({super.key, required this.colloquio});
@@ -73,19 +74,13 @@ class ColloquioItem extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(colloquio.nomeCandidato ?? "errore",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
+                            WrappedText(text:colloquio.nomeCandidato ?? "errore" , limit: 12, color: Theme.of(context).colorScheme.primary ,) ,
                         Row(
                           children: [
                             SizedBox(
                               width: widthSize(context) * 0.015,
                             ),
-                            Text(colloquio.cognomeCandidato ?? "errore",
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                )),
+                             WrappedText(text:colloquio.cognomeCandidato ?? "errore" , limit: 12, color: Theme.of(context).colorScheme.primary ,) ,
                           ],
                         )
                       ],
@@ -119,12 +114,7 @@ class ColloquioItem extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              colloquio.cognomeSelezionatore ?? "",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
+                             WrappedText(text:colloquio.cognomeSelezionatore ?? "errore" , limit: 12, color: Theme.of(context).colorScheme.primary ,) ,
                             SizedBox(
                               width: widthSize(context) * 0.015,
                             )
@@ -132,12 +122,7 @@ class ColloquioItem extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text(
-                              colloquio.nomeSelezionatore ?? "",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
+                            WrappedText(text:colloquio.nomeSelezionatore ?? "errore" , limit: 12, color: Theme.of(context).colorScheme.primary ,) ,
                             SizedBox(
                               width: widthSize(context) * 0.03,
                             )
