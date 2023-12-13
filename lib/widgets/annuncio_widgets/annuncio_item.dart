@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
-import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 
@@ -13,46 +12,45 @@ class AnnuncioItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormatter = DateFormat('yyyy-MM-dd');
+    // final dateFormatter = DateFormat('yyyy-MM-dd');
 
-    final dynamic formattedDataInizio;
+    // final dynamic formattedDataInizio;
 
-    if (annuncio.dataInizio != null) {
-      formattedDataInizio = dateFormatter.format(annuncio.dataInizio!);
-    } else {
-      formattedDataInizio = null;
-    }
+    // if (annuncio.dataInizio != null) {
+    //   formattedDataInizio = dateFormatter.format(annuncio.dataInizio!);
+    // } else {
+    //   formattedDataInizio = null;
+    // }
     return InkWell(
       onTap: () async {
         showLoadingDialog(context);
-try {
-  Annuncio annuncioDetail =
-      await Provider.of<AnnuncioProvider>(context, listen: false)
-          .getAnnuncio(annuncio.id);
-  // ignore: use_build_context_synchronously
-  Navigator.pop(context);
-  // ignore: use_build_context_synchronously
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) {
-      return AnnuncioDetailScreen(annuncio: annuncioDetail);
-    }),
-  );
-} catch (error) {
-  // ignore: use_build_context_synchronously
-  Navigator.pop(context);
-  // ignore: use_build_context_synchronously
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text(
-        'Si è verificato un errore durante il caricamento dell\'annuncio',
-        style: TextStyle(color: Colors.red),
-      ),
-    ),
-  );
-  print('Errore durante il caricamento dell\'annuncio: $error');
-}
-
+        try {
+          Annuncio annuncioDetail =
+              await Provider.of<AnnuncioProvider>(context, listen: false)
+                  .getAnnuncio(annuncio.id);
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return AnnuncioDetailScreen(annuncio: annuncioDetail);
+            }),
+          );
+        } catch (error) {
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Si è verificato un errore durante il caricamento dell\'annuncio',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          );
+          print('Errore durante il caricamento dell\'annuncio: $error');
+        }
       },
       child: Container(
         margin: EdgeInsets.all(heightSize(context) * 0.01),
@@ -146,20 +144,24 @@ try {
               color: Colors.white,
               thickness: 0.2,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                'Inizo',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    annuncio.attivo == true ? 'Attivo' : 'Non Attivo',
+                    style: TextStyle(
+                        color: annuncio.attivo ?? false
+                            ? Color.fromARGB(255, 2, 92, 5)
+                            : const Color.fromARGB(
+                                255, 245, 102, 92)), // Limita il testo a 1 riga
+                  ),
+                  Icon(annuncio.attivo == true ? Icons.check : Icons.close,
+                      color: annuncio.attivo ?? false
+                          ? const Color.fromARGB(255, 2, 92, 5)
+                          : const Color.fromARGB(255, 245, 102, 92)),
+                ],
               ),
-              Text(
-                formattedDataInizio ?? 'Data mancante',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-              )
-            ])
+            )
           ],
         ),
       ),

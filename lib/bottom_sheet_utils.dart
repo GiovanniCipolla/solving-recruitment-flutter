@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
+import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
 
 class BottomSheetUtils {
@@ -431,6 +433,17 @@ class BottomSheetUtils {
               _buildInfoRowForList('Soft Skills', candidato.softSkills),
               _buildInfoRowForList(
                   'Altre Competenze', candidato.altreCompetenzeMaturate),
+                  Row(
+                    children: [
+                      const Text('CV'),
+                      IconButton(
+                        onPressed: () {
+                          Provider.of<CandidatoProvider>(context, listen: false).getCV(candidato);
+                        },
+                        icon: const Icon(Icons.newspaper),
+                      )
+                    ]
+                  )
       //              ListTile(
       //   title: Text('CV'),
       //   onTap: () {

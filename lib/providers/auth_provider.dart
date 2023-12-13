@@ -71,7 +71,6 @@ class AuthProvider extends ChangeNotifier {
       _username = email;
       _password = password;
       notifyListeners();
-      print(_token);
     } catch (e) {
       print('Errore durante l\'autenticazione: $e');
       _token = null;

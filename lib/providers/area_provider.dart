@@ -55,7 +55,6 @@ class AreaProvider extends ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return StatsArea.fromJson(jsonData);
     } else {
-        print(jsonData);
       throw HttpException(
         statusCode: response.statusCode,
         title: jsonData['title'],

@@ -17,10 +17,27 @@ import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezi
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio.dart';
 
 
-final kColorScheme = ColorScheme.fromSeed(
-  seedColor:  const Color.fromARGB(255, 152, 203, 152),
-);
+ final kColorScheme = ColorScheme.fromSwatch(
+    primarySwatch: const MaterialColor(
+      0xFF2DB264,
+      <int, Color>{
+        50: Color(0xFF2DB264),
+        100: Color(0xFF2DB264),
+        200: Color(0xFF2DB264),
+        300: Color(0xFF2DB264),
+        400: Color(0xFF2DB264),
+        500: Color(0xFF2DB264),
+        600: Color(0xFF2DB264),
+        700: Color(0xFF2DB264),
+        800: Color(0xFF2DB264),
+        900: Color(0xFF2DB264),
+      },
+    ),
+  );
+
  
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -86,7 +103,12 @@ class MyApp extends StatelessWidget {
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 hoverColor: Colors.transparent,
-              ),
+                primaryColor: kColorScheme.primary,
+                scaffoldBackgroundColor: Colors.white,
+                canvasColor: Colors.white,
+                dialogBackgroundColor: Colors.white,
+             
+            ),
               home: authProvider.isLoggedIn ?  Home() : FutureBuilder(future: authProvider.tryLogin() , builder: 
               (ctx, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

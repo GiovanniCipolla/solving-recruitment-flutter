@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
@@ -7,6 +7,9 @@ import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/models/httpexception.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class CandidatoProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
@@ -23,8 +26,6 @@ class CandidatoProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${authProvider!.token}',
     });
-        print('Ecco , sono qui : ');
-
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       filterActive = false;
@@ -329,29 +330,38 @@ class CandidatoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//    void getCV(int candidatoId) async {
-//   String url = '$urlAPI/candidato/downloadFile/$candidatoId';
-//   final response = await http.get(Uri.parse(url), headers: {
-//     'Content-Type': 'application/json',
-//     'Authorization': 'Bearer ${authProvider!.token}',
 
-//   });
-//   final jsonData = json.decode(response.body);
-//   print(jsonData);
-//   if (response.statusCode == 200 || response.statusCode == 201) {
-//    try {
-//     await launch(url);
-//   } catch (e) {
-//     print('Errore durante il lancio del CV: $e'); // Debug
-//     throw 'Impossibile aprire il CV';
-//   }
-//   } else {
-//     throw HttpException(
-//       statusCode: jsonData['statusCode'],
-//       title: jsonData['title'],
-//       description: jsonData['description'],
-//     );
-//   }
+void getCV(Candidato candidato) async {
+  String url = '$urlAPI/candidato/downloadFile/${candidato.id}';
+  final response = await http.get(Uri.parse(url), headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${authProvider!.token}',
+  });
 
-// }
+  if (response.statusCode == 200) {
+    try {
+      String fileData = response.body;
+      if (candidato.cvObjectKey != null) {
+        Directory tempDir = await getTemporaryDirectory();
+        String fileName = '${candidato.cvObjectKey}.txt';
+        String filePath = '${tempDir.path}/$fileName';
+        File file = File(filePath);
+        await file.writeAsString(fileData);
+        await launch(file.path);
+      } else {
+        print('cvObjectKey è nullo. Impossibile scaricare il file.');
+        throw 'Impossibile aprire il CV';
+      }
+    } catch (e) {
+      print('Errore durante il salvataggio o apertura del file: $e');
+      throw 'Impossibile aprire il CV';
+    }
+  } else {
+    throw HttpException(
+      statusCode: response.statusCode,
+      title: 'Errore di download del CV',
+      description: 'Si è verificato un errore durante il download del CV',
+    );
+  }
+}
 }

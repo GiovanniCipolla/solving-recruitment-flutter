@@ -19,6 +19,7 @@ class AnnuncioDetailScreen extends StatelessWidget {
 
   AnnuncioDetailScreen({super.key, required this.annuncio});
 
+
   final Annuncio annuncio;
   final dateFormatter = DateFormat('yyyy-MM-dd');
 

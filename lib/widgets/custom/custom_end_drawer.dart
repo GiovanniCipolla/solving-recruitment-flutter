@@ -9,7 +9,7 @@ class CustomEndDrawer extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) => Drawer(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         child: ListView(
           children: drawerItems.map((item) {
             if (item.containsKey('divider')) {

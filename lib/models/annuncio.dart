@@ -29,6 +29,7 @@ class Annuncio {
   final bool? attivo;
 
   factory Annuncio.fromJson(Map<String, dynamic> json) {
+    print(json);
     return Annuncio(
       id: json['id'] != null ? json['id'] as int : null,
       titolo: json['titolo'] != null ? json['titolo'] as String : null,
@@ -43,9 +44,10 @@ class Annuncio {
           ? TipologiaAnnuncio.fromJson(json['tipologiaAnnuncio'])
           : null,
       area: json['area'] != null ? Area.fromJson(json['area']) : null,
-      attivo: json['attivo'] as bool? ?? false,
+      attivo: json['attivo'],
     );
   }
+
   factory Annuncio.fromJsonGetAllAnnunci(Map<String, dynamic> json) {
     return Annuncio(
       id: json['id'] != null ? json['id'] as int : null,
@@ -61,7 +63,7 @@ class Annuncio {
       descrizioneTipologia: json['descrizioneTipologiaAnnuncio'] != null
           ? json['descrizioneTipologiaAnnuncio'] as String
           : null,
-      attivo: json['attivo'] as bool? ?? false,
+      attivo: json['attivo'],
     );
   }
 
@@ -114,5 +116,29 @@ class AnnuncioFiltro {
       'sortBy': sortBy,
       'sortDirection': sortDirection
     };
+  }
+}
+
+class StatsAnnuncio {
+  StatsAnnuncio(
+      {this.annuncioStaffTecnico,
+      this.annuncioStaffInterno,
+      this.annuncioAltro});
+
+  final int? annuncioStaffTecnico;
+  final int? annuncioStaffInterno;
+  final int? annuncioAltro;
+
+  factory StatsAnnuncio.fromJson(Map<String, dynamic> json) {
+    return StatsAnnuncio(
+      annuncioStaffTecnico: json['annuncioStaffTecnico'] != null
+          ? json['annuncioStaffTecnico'] as int
+          : null,
+      annuncioStaffInterno: json['annuncioStaffInterno'] != null
+          ? json['annuncioStaffInterno'] as int
+          : null,
+      annuncioAltro:
+          json['annuncioAltro'] != null ? json['annuncioAltro'] as int : null,
+    );
   }
 }

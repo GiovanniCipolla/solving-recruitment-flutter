@@ -4,8 +4,6 @@ import 'package:solving_recruitment_flutter/costants.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
-import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
-import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_detail_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/wrapped_text.dart';
@@ -24,11 +22,11 @@ class CandidatoItem extends StatelessWidget {
           Candidato candidatoDetail =
               await Provider.of<CandidatoProvider>(context, listen: false)
                   .getCandidato(candidato.id);
-          // ignore: use_build_context_synchronously
-          await Provider.of<AreaProvider>(context, listen: false).getAreas();
-          // ignore: use_build_context_synchronously
-          await Provider.of<AnnuncioProvider>(context, listen: false)
-              .getAnnunci();
+          // // ignore: use_build_context_synchronously
+          // await Provider.of<AreaProvider>(context, listen: false).getAreas();
+          // // ignore: use_build_context_synchronously
+          // await Provider.of<AnnuncioProvider>(context, listen: false)
+          //     .getAnnunci();
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
           // ignore: use_build_context_synchronously

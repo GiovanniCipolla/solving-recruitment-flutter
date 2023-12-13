@@ -395,7 +395,6 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
                       value: 0,
                       child: Text(' - '),
                     ),
-                    // Aggiungi gli altri elementi
                     ...annunci.map((Annuncio annuncio) {
                       return DropdownMenuItem<int>(
                         value: annuncio.id,
@@ -607,6 +606,7 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
                         recapitoExtra: recapitoExtra.text,
                         cap: cap.text,
                         linguaInglese: linguaIngleseSelezionata,
+                        stato: statoSelezionato,
                         tecnologieConosciute: tecnologieConosciute,
                         softSkills: softSkills,
                         altreCompetenzeMaturate: altreCompetenze,

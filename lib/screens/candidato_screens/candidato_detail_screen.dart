@@ -19,18 +19,19 @@ class CandidatoDetailScreen extends StatelessWidget {
 
   final Candidato candidato;
 
-
   @override
   Widget build(BuildContext context) {
-    
     return WillPopScope(
       onWillPop: () async {
-        await Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
+        await Navigator.pushNamedAndRemoveUntil(
+            context, CandidatoScreen.routeName, (route) => false);
         return true;
       },
       child: Scaffold(
         appBar: AppBar(
-          title:  Text('Dettagli Candidato', style: TextStyle(fontSize: 25, color: Theme.of(context).colorScheme.primary)),
+          title: Text('Dettagli Candidato',
+              style: TextStyle(
+                  fontSize: 25, color: Theme.of(context).colorScheme.primary)),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,9 +44,18 @@ class CandidatoDetailScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  WrappedText(text:candidato.nome, limit: 17, size:heightSize(context) * 0.03, color:Theme.of(context).colorScheme.primary ,) ,
-                  WrappedText(text: candidato.cognome, limit: 17, size:heightSize(context) * 0.03, color:Theme.of(context).colorScheme.primary ,) ,
-                 
+                  WrappedText(
+                    text: candidato.nome,
+                    limit: 17,
+                    size: heightSize(context) * 0.03,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  WrappedText(
+                    text: candidato.cognome,
+                    limit: 17,
+                    size: heightSize(context) * 0.03,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ])
               ],
             ),
@@ -58,8 +68,11 @@ class CandidatoDetailScreen extends StatelessWidget {
                   ),
                   const Text('Area : '),
                   Text(
-                    candidato.annuncio != null && candidato.annuncio!.area != null ? 
-                    candidato.annuncio!.area!.denominazione ?? "Area mancante " : "Area mancante ",
+                    candidato.annuncio != null &&
+                            candidato.annuncio!.area != null
+                        ? candidato.annuncio!.area!.denominazione ??
+                            "Area mancante "
+                        : "Area mancante ",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -70,7 +83,8 @@ class CandidatoDetailScreen extends StatelessWidget {
                 const Text('Stato : '),
                 Text(
                   candidato.stato != null
-                      ? statoCandidatoMap[candidato.stato] ?? "Valore di fallback"
+                      ? statoCandidatoMap[candidato.stato] ??
+                          "Valore di fallback"
                       : "Stato mancante",
                   style: TextStyle(
                       color: statoCandidatoIconMap[candidato.stato]!.color),
@@ -133,7 +147,8 @@ class CandidatoDetailScreen extends StatelessWidget {
                 Text(
                   'Colloqui',
                   style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary, fontSize: 20),
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20),
                 ),
               ],
             ),
@@ -182,36 +197,45 @@ class CandidatoDetailScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () async {
-                  showLoadingDialog(context);
-      try {
-        final CandidatoProvider candidatoProvider = Provider.of<CandidatoProvider>(context, listen: false);
-        Candidato candidaoToEdit = await candidatoProvider.getCandidato(candidato.id!);
-        // ignore: use_build_context_synchronously
-        await Provider.of<AreaProvider>(context, listen: false).getAreas();
-        // ignore: use_build_context_synchronously
-        await Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CandidatoUpdateScreen(candidato: candidaoToEdit),
-      ),
-        );
-      } catch (error) {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Si è verificato un errore durante il caricamento',
-          style: TextStyle(color: Colors.red),
-        ),
-      ),
-        );
-      }
+                    showLoadingDialog(context);
+                    try {
+                      final CandidatoProvider candidatoProvider =
+                          Provider.of<CandidatoProvider>(context,
+                              listen: false);
+
+                      Candidato candidaoToEdit =
+                          await candidatoProvider.getCandidato(candidato.id!);
+                      // ignore: use_build_context_synchronously
+                      await Provider.of<AreaProvider>(context, listen: false)
+                          .getAreas();
+                      // ignore: use_build_context_synchronously
+                      await Provider.of<AnnuncioProvider>(context,
+                              listen: false)
+                          .getAnnunci();
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CandidatoUpdateScreen(candidato: candidaoToEdit),
+                        ),
+                      );
+                    } catch (error) {
+                      print('Error: $error');
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Si è verificato un errore durante il caricamento',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      );
+                    }
                   },
                   child: const Row(
                     children: [
@@ -244,7 +268,8 @@ class CandidatoDetailScreen extends StatelessWidget {
                         ),
                       );
                       // ignore: use_build_context_synchronously
-                      Navigator.pushNamedAndRemoveUntil(context, CandidatoScreen.routeName, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, CandidatoScreen.routeName, (route) => false);
                     } else {
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
