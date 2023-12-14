@@ -331,12 +331,16 @@ class CandidatoProvider extends ChangeNotifier {
   }
 
   void getCV(Candidato candidato) async {
-    String url = '$urlAPI/candidato/downloadFile/${candidato.id}';
-    final response = await http.get(Uri.parse(url), headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${authProvider!.token}',
-    });
-
+    String url =
+        '$urlAPI/candidato/downloadFile/${candidato.id}';
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authProvider!.token}',
+      },
+    );
+print('Bearer ${authProvider!.token}');
     if (response.statusCode == 200) {
       try {
         String fileData = response.body;

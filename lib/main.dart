@@ -18,14 +18,16 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 
 // --------------------------------- TODO
 
-// Mandare Email
+// Aspettare l'aggionrmaneto backend e configuare l'invio email
 // Implementare Academy , screen e tutta la logica
-// Configurare le delete
+// Configurare le delete, attendere il backend
 // Soluzione se ci sono errori , che avvisi dare
-// CV , risolvere la secretKey
 
 // ---------------------------------  TODO EXTRA
 // Nei filtri aggiungere parametri
+
+// --------------------------------- PROBLEMI
+// IL CV è una get , ma in flutter è un bel problema !!!!
 
 final kColorScheme = ColorScheme.fromSwatch(
   primarySwatch: const MaterialColor(
