@@ -201,7 +201,7 @@ class Candidato {
       'dataPrimoContatto': dataPrimoContatto != null
           ? dataPrimoContatto!.toIso8601String()
           : null,
-      'posizione': posizione,
+      'posizione': posizione ,
       'percorsoAcademy': percorsoAcademy,
       'dareRiscontro': dareRiscontro,
       'riscontroInviato': riscontroInviato,

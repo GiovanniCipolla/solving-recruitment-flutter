@@ -14,7 +14,6 @@ import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_
 class FilterModal extends StatefulWidget {
   const FilterModal({Key? key, required this.candidatoFiltro}) : super(key: key);
   final CandidatoFiltro candidatoFiltro;
-
   @override
   State<FilterModal> createState() => _FilterModalState();
 }
@@ -193,64 +192,52 @@ class _FilterModalState extends State<FilterModal> {
               ),
               Row(
                 children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        FocusScope.of(context)
-                            .requestFocus(FocusNode());
-                        _selectDate(
-                            context, dataDiNascitaController, dataDiNascita);
-                      },
-                      child: AbsorbPointer(
-                        child: TextFormField(
-                          controller: dataDiNascitaController,
-                          decoration: const InputDecoration(
-                            labelText: 'Data Di Nascita',
-                          ),
-                          validator: (value) {
-                            if (dataDiNascita != null) {
-                              final dateFormat =
-                                  RegExp(r'^\d{2}/\d{2}/\d{4}$');
-                              if (!dateFormat.hasMatch(value ?? '')) {
-                                return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
-                              }
-                            }
-                            return null;
-                          },
-                        ),
+                   Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Eta\' Minima',
                       ),
-                    ),
+                      controller: etaMinController,
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          etaMinController.text = value;
+                        });
+                      },
+                      validator: (value) {
+                        if ( value != null) {
+                          if (int.tryParse(value) != null) {
+                            return 'Valore non valido';
+                          }
+                        }
+                        return null;
+                      }
+                    )
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        FocusScope.of(context)
-                            .requestFocus(FocusNode());
-                        _selectDate(
-                            context, dataPrimoContattoController, dataPrimoContatto);
-                      },
-                      child: AbsorbPointer(
-                        child: TextFormField(
-                          controller: dataPrimoContattoController,
-                          decoration: const InputDecoration(
-                            labelText: 'Data Primo contatto',
-                          ),
-                          validator: (value) {
-                            if (dataPrimoContatto != null) {
-                              final dateFormat =
-                                  RegExp(r'^\d{2}/\d{2}/\d{4}$');
-                              if (!dateFormat.hasMatch(value ?? '')) {
-                                return 'Formato data non valido. Inserisci nel formato gg/mm/aaaa';
-                              }
-                            }
-                            return null;
-                          },
-                        ),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Eta\ Massima',
                       ),
-                    ),
+                      controller: etaMaxController,
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          etaMaxController.text = value;
+                        });
+                      },
+                      validator: (value) {
+                        if ( value != null) {
+                          if (int.tryParse(value) != null) {
+                            return 'Valore non valido';
+                          }
+                        }
+                        return null;
+                      }
+                    )
                   ),
                 ],
               ),

@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 class CandidatoProvider extends ChangeNotifier {
   final AuthProvider? authProvider;
   List<Candidato> candidati = [];
@@ -290,7 +289,8 @@ class CandidatoProvider extends ChangeNotifier {
         },
         body: json.encode(filtro.toJson()),
       );
-
+      print(
+          'Io mando questo candidatoFiltro : ${json.encode(filtro.toJson())} e ricevo come risposta ${response.body}');
       final jsonData = json.decode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         checkFilterActive(filtro);
@@ -330,38 +330,37 @@ class CandidatoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void getCV(Candidato candidato) async {
+    String url = '$urlAPI/candidato/downloadFile/${candidato.id}';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
 
-void getCV(Candidato candidato) async {
-  String url = '$urlAPI/candidato/downloadFile/${candidato.id}';
-  final response = await http.get(Uri.parse(url), headers: {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ${authProvider!.token}',
-  });
-
-  if (response.statusCode == 200) {
-    try {
-      String fileData = response.body;
-      if (candidato.cvObjectKey != null) {
-        Directory tempDir = await getTemporaryDirectory();
-        String fileName = '${candidato.cvObjectKey}.txt';
-        String filePath = '${tempDir.path}/$fileName';
-        File file = File(filePath);
-        await file.writeAsString(fileData);
-        await launch(file.path);
-      } else {
-        print('cvObjectKey è nullo. Impossibile scaricare il file.');
+    if (response.statusCode == 200) {
+      try {
+        String fileData = response.body;
+        if (candidato.cvObjectKey != null) {
+          Directory tempDir = await getTemporaryDirectory();
+          String fileName = '${candidato.cvObjectKey}.txt';
+          String filePath = '${tempDir.path}/$fileName';
+          File file = File(filePath);
+          await file.writeAsString(fileData);
+          await launch(file.path);
+        } else {
+          print('cvObjectKey è nullo. Impossibile scaricare il file.');
+          throw 'Impossibile aprire il CV';
+        }
+      } catch (e) {
+        print('Errore durante il salvataggio o apertura del file: $e');
         throw 'Impossibile aprire il CV';
       }
-    } catch (e) {
-      print('Errore durante il salvataggio o apertura del file: $e');
-      throw 'Impossibile aprire il CV';
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: 'Errore di download del CV',
+        description: 'Si è verificato un errore durante il download del CV',
+      );
     }
-  } else {
-    throw HttpException(
-      statusCode: response.statusCode,
-      title: 'Errore di download del CV',
-      description: 'Si è verificato un errore durante il download del CV',
-    );
   }
-}
 }

@@ -17,13 +17,12 @@ import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezi
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio.dart';
 
 // --------------------------------- TODO
-// Durante l'update del candidato posizione , categoria protetta e extranumero non si salvano
-// Implementare grafici statisctiche
+
+// Mandare Email
 // Implementare Academy , screen e tutta la logica
-// CV , risolvere la secretKey
 // Configurare le delete
 // Soluzione se ci sono errori , che avvisi dare
-// Mandare Email
+// CV , risolvere la secretKey
 
 // ---------------------------------  TODO EXTRA
 // Nei filtri aggiungere parametri

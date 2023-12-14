@@ -67,11 +67,11 @@ class CandidatoScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(2),
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.red,
+                              color: Colors.white,
                             ),
                             child: const Icon(
                               Icons.brightness_1,
-                              color: Colors.white,
+                              color: Colors.green,
                               size: 10,
                             ),
                           ),
