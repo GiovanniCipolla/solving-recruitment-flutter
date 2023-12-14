@@ -16,35 +16,44 @@ import 'package:solving_recruitment_flutter/screens/login_screen.dart';
 import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
 import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio.dart';
 
+// --------------------------------- TODO
+// Durante l'update del candidato posizione , categoria protetta e extranumero non si salvano
+// Implementare grafici statisctiche
+// Implementare Academy , screen e tutta la logica
+// CV , risolvere la secretKey
+// Configurare le delete
+// Soluzione se ci sono errori , che avvisi dare
+// Mandare Email
 
- final kColorScheme = ColorScheme.fromSwatch(
-    primarySwatch: const MaterialColor(
-      0xFF2DB264,
-      <int, Color>{
-        50: Color(0xFF2DB264),
-        100: Color(0xFF2DB264),
-        200: Color(0xFF2DB264),
-        300: Color(0xFF2DB264),
-        400: Color(0xFF2DB264),
-        500: Color(0xFF2DB264),
-        600: Color(0xFF2DB264),
-        700: Color(0xFF2DB264),
-        800: Color(0xFF2DB264),
-        900: Color(0xFF2DB264),
-      },
-    ),
-  );
+// ---------------------------------  TODO EXTRA
+// Nei filtri aggiungere parametri
 
- 
-
+final kColorScheme = ColorScheme.fromSwatch(
+  primarySwatch: const MaterialColor(
+    0xFF2DB264,
+    <int, Color>{
+      50: Color(0xFF2DB264),
+      100: Color(0xFF2DB264),
+      200: Color(0xFF2DB264),
+      300: Color(0xFF2DB264),
+      400: Color(0xFF2DB264),
+      500: Color(0xFF2DB264),
+      600: Color(0xFF2DB264),
+      700: Color(0xFF2DB264),
+      800: Color(0xFF2DB264),
+      900: Color(0xFF2DB264),
+    },
+  ),
+);
 
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -62,7 +71,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<AuthProvider, CandidatoProvider>(
             create: (ctx) =>
                 CandidatoProvider(authProvider: null, candidati: []),
-            update: (ctx, authProvider, previous) => CandidatoProvider( 
+            update: (ctx, authProvider, previous) => CandidatoProvider(
                 authProvider: authProvider, candidati: previous!.candidati)),
         ChangeNotifierProxyProvider<AuthProvider, AreaProvider>(
           create: (ctx) => AreaProvider(
@@ -107,17 +116,20 @@ class MyApp extends StatelessWidget {
                 scaffoldBackgroundColor: Colors.white,
                 canvasColor: Colors.white,
                 dialogBackgroundColor: Colors.white,
-             
-            ),
-              home: authProvider.isLoggedIn ?  Home() : FutureBuilder(future: authProvider.tryLogin() , builder: 
-              (ctx, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return const LoginScreen();
-              }),
+              ),
+              home: authProvider.isLoggedIn
+                  ? const Home()
+                  : FutureBuilder(
+                      future: authProvider.tryLogin(),
+                      builder: (ctx, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return const LoginScreen();
+                      }),
               routes: {
                 LoginScreen.routeName: (ctx) => const LoginScreen(),
                 AreaScreen.routeName: (ctx) => const AreaScreen(),
@@ -128,7 +140,7 @@ class MyApp extends StatelessWidget {
                     const SelezionatoreScreen(),
                 TipologiaAnnuncioScreen.routeName: (ctx) =>
                     const TipologiaAnnuncioScreen(),
-                Home.routeName: (ctx) =>  Home(),
+                Home.routeName: (ctx) => Home(),
               });
         },
       ),
