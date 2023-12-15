@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/models/selezionatore.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
+import 'package:solving_recruitment_flutter/screens/selezionatore_screens/selezionatore_screen.dart';
 
 class SelezionatoreInsertScreen extends StatefulWidget {
   const SelezionatoreInsertScreen({super.key});
@@ -18,11 +19,7 @@ class _SelezionatoreInsertScreenState extends State<SelezionatoreInsertScreen> {
   final TextEditingController emailController = TextEditingController();
 
   Future<void> inserimentoRiuscito() async {
-    final SelezionatoreProvider selezionatoreProvider =
-        Provider.of<SelezionatoreProvider>(context, listen: false);
-    await selezionatoreProvider.getSelezionatori();
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    Navigator.pushNamedAndRemoveUntil(context, SelezionatoreScreen.routeName, (route) => false);
   }
 
   @override

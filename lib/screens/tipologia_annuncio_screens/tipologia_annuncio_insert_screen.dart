@@ -4,6 +4,7 @@ import 'package:solving_recruitment_flutter/common.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 import 'package:solving_recruitment_flutter/models/tipologia_annuncio.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/tipologia_annuncio.dart';
 
 class TipologiaAnnuncioInsertScreen extends StatefulWidget {
   const TipologiaAnnuncioInsertScreen({super.key});
@@ -16,11 +17,7 @@ class TipologiaAnnuncioInsertScreen extends StatefulWidget {
 class _TipologiaAnnuncioInsertState
     extends State<TipologiaAnnuncioInsertScreen> {
   Future<void> inserimentoRiuscito() async {
-    final TipologiaAnnuncioProvider tipologiaAnnuncioProvider =
-        Provider.of<TipologiaAnnuncioProvider>(context, listen: false);
-    await tipologiaAnnuncioProvider.getTipologiaAnnuncio();
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    Navigator.pushNamedAndRemoveUntil(context, TipologiaAnnuncioScreen.routeName, (route) => false);
   }
 final formKey = GlobalKey<FormState>();
   @override

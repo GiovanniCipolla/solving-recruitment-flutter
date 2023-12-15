@@ -8,6 +8,7 @@ import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 
 class AnnuncioInsertScreen extends StatefulWidget {
   const AnnuncioInsertScreen({super.key});
@@ -45,11 +46,7 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
   }
 
   Future<void> inserimentoRiuscito() async {
-    final AnnuncioProvider annuncioProvider =
-        Provider.of<AnnuncioProvider>(context, listen: false);
-    await annuncioProvider.getAnnunci();
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    Navigator.pushNamedAndRemoveUntil(context, AnnuncioScreen.routeName, (route) => false);
   }
 
   @override
