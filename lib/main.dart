@@ -19,13 +19,11 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 
 // --------------------------------- TODO
 
-// Aspettare l'aggionrmaneto backend e configuare l'invio email
-// Implementare Academy , screen e tutta la logica
-// Configurare le delete, attendere il backend
-// Soluzione se ci sono errori , che avvisi dare
-// Impostare solo schermata verticale
-// Lista candidati in annuncio , da tutti anche quelli eliminati
-// Caricamento grafici iniziali statistiche
+// 1) -- Aspettare l'aggionrmaneto backend e configuare l'invio email
+// 2) -- Implementare Academy , screen e tutta la logica
+// 3) -- Soluzione se ci sono errori , che avvisi dare
+// 4) -- Lista candidati in annuncio , da tutti anche quelli eliminati
+// 5) -- Caricamento grafici iniziali statistiche
 
 // ---------------------------------  TODO EXTRA
 // Nei filtri aggiungere parametri
