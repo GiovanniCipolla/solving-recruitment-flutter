@@ -29,6 +29,7 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 
 // ---------------------------------  TODO EXTRA
 // Nei filtri aggiungere parametri
+// Quando si fa l'update , bisogna ritornare nel details del candidato stesso
 
 // --------------------------------- PROBLEMI
 // Problema flutter nel download del cv, per cprreggere aspettare il run del remoto!!
