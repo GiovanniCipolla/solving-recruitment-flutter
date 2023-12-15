@@ -41,16 +41,6 @@ class TipologiaAnnuncioItem extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    Text(
-                      tipologiaAnnuncio.countAnnunci != null
-                          ? tipologiaAnnuncio.countAnnunci! == 1
-                              ? '${tipologiaAnnuncio.countAnnunci} annuncio con questa tipologia'
-                              : '${tipologiaAnnuncio.countAnnunci} annunci con questa tipologia'
-                          : 'Nessun annuncio in corso',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
                   ],
                 ),
               ),

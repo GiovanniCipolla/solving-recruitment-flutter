@@ -23,12 +23,17 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 // Implementare Academy , screen e tutta la logica
 // Configurare le delete, attendere il backend
 // Soluzione se ci sono errori , che avvisi dare
+// Impostare solo schermata verticale
+// Lista candidati in annuncio , da tutti anche quelli eliminati
+// Caricamento grafici iniziali statistiche
 
 // ---------------------------------  TODO EXTRA
 // Nei filtri aggiungere parametri
 
 // --------------------------------- PROBLEMI
-// IL CV è una get , ma in flutter è un bel problema !!!!
+// Problema flutter nel download del cv, per cprreggere aspettare il run del remoto!!
+// Lista candidati in annuncio , da tutti anche quelli eliminati
+
 
 final kColorScheme = ColorScheme.fromSwatch(
   primarySwatch: const MaterialColor(
@@ -49,8 +54,9 @@ final kColorScheme = ColorScheme.fromSwatch(
 );
 
 void main() {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
