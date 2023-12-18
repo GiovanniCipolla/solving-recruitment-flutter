@@ -192,34 +192,35 @@ class ColloquioDetailScreen extends StatelessWidget {
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () async {
-                   showLoadingDialog(context);
-try {
-  final SelezionatoreProvider selezionatoreProvider =
-      Provider.of<SelezionatoreProvider>(context, listen: false);
-  await selezionatoreProvider.getSelezionatori();
-  // ignore: use_build_context_synchronously
-  Navigator.of(context).pop();
-  // ignore: use_build_context_synchronously
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => ColloquioUpdateScreen(colloquio: colloquio),
-    ),
-  );
-} catch (error) {
-  // ignore: use_build_context_synchronously
-  Navigator.pop(context);
-  // ignore: use_build_context_synchronously
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text(
-        'Si è verificato un errore durante il caricamento dei selezionatori',
-        style: TextStyle(color: Colors.red),
-      ),
-    ),
-  );
-}
-
+                    showLoadingDialog(context);
+                    try {
+                      final SelezionatoreProvider selezionatoreProvider =
+                          Provider.of<SelezionatoreProvider>(context,
+                              listen: false);
+                      await selezionatoreProvider.getSelezionatori();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pop();
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ColloquioUpdateScreen(colloquio: colloquio),
+                        ),
+                      );
+                    } catch (error) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Si è verificato un errore durante il caricamento dei selezionatori',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      );
+                    }
                   },
                   child: const Row(
                     children: [
@@ -238,32 +239,32 @@ try {
                     backgroundColor: Colors.red,
                     foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  onPressed:  () async {
-                              final result = await  Provider.of<ColloquioProvider>(context, listen: false).deleteColloquio(colloquio.id);
-                              if (result) {
-                                // ignore: use_build_context_synchronously
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        "Colloquio eliminato correttamente"),
-                                  ),
-                                );
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  ColloquioScreen.routeName,
-                                  (route) => false,
-                                );
-                              } else {
-                                // ignore: use_build_context_synchronously
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                        Text('Colloquio non cancellato'),
-                                  ),
-                                );
-                              }
-                            },
+                  onPressed: () async {
+                    final result = await Provider.of<ColloquioProvider>(context,
+                            listen: false)
+                        .deleteColloquio(colloquio.id);
+                    if (result) {
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Colloquio eliminato correttamente"),
+                        ),
+                      );
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        ColloquioScreen.routeName,
+                        (route) => false,
+                      );
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Colloquio non cancellato'),
+                        ),
+                      );
+                    }
+                  },
                   child: const Row(
                     children: [
                       Text('Elimina Colloquio'),

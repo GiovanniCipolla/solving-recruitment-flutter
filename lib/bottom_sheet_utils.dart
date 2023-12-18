@@ -2,49 +2,88 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/costants.dart';
+import 'package:solving_recruitment_flutter/dialog_utilies.dart';
 import 'package:solving_recruitment_flutter/models/annuncio.dart';
 import 'package:solving_recruitment_flutter/models/candidato.dart';
 import 'package:solving_recruitment_flutter/models/colloquio.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
+import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_detail_screen.dart';
+import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_detail_screen.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_detail_screen.dart';
 
 class BottomSheetUtils {
-  static Widget _buildInfoCandidati(Candidato candidato) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                candidato.nome ?? "Nome mancante",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                candidato.cognome ?? "Cognome mancante",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const Spacer(),
-              Text(candidato.email ?? "Email mancante",
+  static Widget _buildInfoCandidati(Candidato candidato, BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        showLoadingDialog(context);
+        try {
+          Candidato candidatoDetail =
+              await Provider.of<CandidatoProvider>(context, listen: false)
+                  .getCandidato(candidato.id);
+          // // ignore: use_build_context_synchronously
+          // await Provider.of<AreaProvider>(context, listen: false).getAreas();
+          // // ignore: use_build_context_synchronously
+          // await Provider.of<AnnuncioProvider>(context, listen: false)
+          //     .getAnnunci();
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CandidatoDetailScreen(candidato: candidatoDetail),
+            ),
+          );
+        } catch (error) {
+          print('Errore durante il caricamento del candidato: $error');
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+            ' si è verificato un errore durante il caricamento',
+            style: TextStyle(color: Colors.red),
+          )));
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  candidato.nome ?? "Nome mancante",
                   style: const TextStyle(
-                    fontSize: 14,
-                  ))
-            ],
-          ),
-          const Divider(
-            thickness: 0.5,
-          )
-        ],
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  candidato.cognome ?? "Cognome mancante",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const Spacer(),
+                Text(candidato.email ?? "Email mancante",
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ))
+              ],
+            ),
+            const Divider(
+              thickness: 0.5,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -52,7 +91,11 @@ class BottomSheetUtils {
   static Widget _buildInfoAnnuncio(Annuncio annuncio, BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => AnnuncioDetailScreen(annuncio: annuncio)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    AnnuncioDetailScreen(annuncio: annuncio)));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
@@ -72,7 +115,9 @@ class BottomSheetUtils {
                   width: 5,
                 ),
                 const Spacer(),
-                Text(DateFormat('yyyy-MM-dd').format(annuncio.dataInizio ?? DateTime.now()),
+                Text(
+                    DateFormat('yyyy-MM-dd')
+                        .format(annuncio.dataInizio ?? DateTime.now()),
                     style: const TextStyle(
                       fontSize: 14,
                     ))
@@ -86,39 +131,74 @@ class BottomSheetUtils {
       ),
     );
   }
-  static Widget _buildInfoColloquio(Colloquio colloquio) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                tipologiaMap[colloquio.tipologia] ?? "Errore",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+
+  static Widget _buildInfoColloquio(Colloquio colloquio, BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        showLoadingDialog(context);
+        try {
+          final colloquioToSend =
+              await Provider.of<ColloquioProvider>(context, listen: false)
+                  .getColloquioById(colloquio.id!);
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ColloquioDetailScreen(colloquio: colloquioToSend),
+            ),
+          );
+        } catch (error) {
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Si è verificato un errore durante il caricamento del colloquio',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          );
+          print('Errore durante il caricamento del colloquio: $error');
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  tipologiaMap[colloquio.tipologia] ?? "Errore",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const Spacer(),
-              Text(feedbackLabelMap[colloquio.feedback] ?? "Da dare feedback",
-                  style:  TextStyle(
-                    fontSize: 14,
-                    color: feedbackColorMap[colloquio.feedback],
-                  ))
-            ],
-          ),
-          const Divider(
-            thickness: 0.5,
-          )
-        ],
+                const SizedBox(
+                  width: 5,
+                ),
+                const Spacer(),
+                Text(feedbackLabelMap[colloquio.feedback] ?? "Da dare feedback",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: feedbackColorMap[colloquio.feedback],
+                    ))
+              ],
+            ),
+            const Divider(
+              thickness: 0.5,
+            )
+          ],
+        ),
       ),
     );
   }
+
   static Widget _buildInfoRow(String label, String? value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
@@ -249,39 +329,39 @@ class BottomSheetUtils {
                       ? calculateAge(candidato.dataDiNascita!)
                       : '',
                 ),
-               Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'E-Mail',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Flexible(
-                child: Text(
-                  candidato.email ?? '',
-                  style: const TextStyle(
-                    fontSize: 16,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'E-Mail',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Flexible(
+                            child: Text(
+                              candidato.email ?? '',
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(
+                        thickness: 0.5,
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          const Divider(
-            thickness: 0.5,
-          )
-        ],
-      ),
-    ),
                 _buildInfoRow('Luogo di Nascita', candidato.luogoDiNascita),
                 _buildInfoRow(
                   'Data di Nascita',
@@ -387,16 +467,14 @@ class BottomSheetUtils {
               // _buildInfoRow(
               //     'Percorso Academy', candidato.percorsoAcademy! ? 'SI' : 'No'),
               _buildInfoRow('Annuncio', candidato.annuncio!.titolo),
-              _buildInfoRow('Area di riferimento',
-                  candidato.area!.denominazione),
+              _buildInfoRow(
+                  'Area di riferimento', candidato.area!.denominazione),
             ],
           ),
         );
       },
     );
   }
-
-
 
   static void showCompetenze(BuildContext context, Candidato candidato) {
     showModalBottomSheet(
@@ -433,23 +511,22 @@ class BottomSheetUtils {
               _buildInfoRowForList('Soft Skills', candidato.softSkills),
               _buildInfoRowForList(
                   'Altre Competenze', candidato.altreCompetenzeMaturate),
-                  Row(
-                    children: [
-                      const Text('CV'),
-                      IconButton(
-                        onPressed: () {
-                          Provider.of<CandidatoProvider>(context, listen: false).getCV(candidato);
-                        },
-                        icon: const Icon(Icons.newspaper),
-                      )
-                    ]
-                  )
-      //              ListTile(
-      //   title: Text('CV'),
-      //   onTap: () {
-      //     Provider.of<CandidatoProvider>(context, listen: false).getCV(candidato.id!);
-      //   },
-      // ),
+              Row(children: [
+                const Text('CV'),
+                IconButton(
+                  onPressed: () {
+                    Provider.of<CandidatoProvider>(context, listen: false)
+                        .getCV(candidato);
+                  },
+                  icon: const Icon(Icons.newspaper),
+                )
+              ])
+              //              ListTile(
+              //   title: Text('CV'),
+              //   onTap: () {
+              //     Provider.of<CandidatoProvider>(context, listen: false).getCV(candidato.id!);
+              //   },
+              // ),
             ],
           ),
         );
@@ -483,19 +560,21 @@ class BottomSheetUtils {
                 thickness: 2,
               ),
               // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
-             candidati.isEmpty
-                ? const Text('Nessun candidato trovato', style: TextStyle(fontSize: 20))
-                : Column(
-                    children: candidati.map((Candidato candidato) {
-                      return _buildInfoCandidati(candidato);
-                    }).toList(),
-                  ),
+              candidati.isEmpty
+                  ? const Text('Nessun candidato trovato',
+                      style: TextStyle(fontSize: 20))
+                  : Column(
+                      children: candidati.map((Candidato candidato) {
+                        return _buildInfoCandidati(candidato, context);
+                      }).toList(),
+                    ),
             ],
           ),
         );
       },
     );
   }
+
   static void showListAnnunci(
     BuildContext context,
     String title,
@@ -523,18 +602,20 @@ class BottomSheetUtils {
               ),
               // Costruisci la lista utilizzando _buildInfoRow per ogni candidato
               annunci.isEmpty
-                ? const Text('Nessun annuncio trovato', style: TextStyle(fontSize: 20))
-                : Column(
-                    children: annunci.map((Annuncio annuncio) {
-                      return _buildInfoAnnuncio(annuncio, context);
-                    }).toList(),
-                  ),
+                  ? const Text('Nessun annuncio trovato',
+                      style: TextStyle(fontSize: 20))
+                  : Column(
+                      children: annunci.map((Annuncio annuncio) {
+                        return _buildInfoAnnuncio(annuncio, context);
+                      }).toList(),
+                    ),
             ],
           ),
         );
       },
     );
   }
+
   static void showListColloqui(
     BuildContext context,
     String title,
@@ -560,13 +641,14 @@ class BottomSheetUtils {
                 color: Theme.of(context).colorScheme.primary,
                 thickness: 2,
               ),
-             colloqui.isEmpty
-                ? const Text('Nessun colloquio trovato', style: TextStyle(fontSize: 20))
-                : Column(
-                    children: colloqui.map((Colloquio colloquio) {
-                      return _buildInfoColloquio(colloquio);
-                    }).toList(),
-                  ),
+              colloqui.isEmpty
+                  ? const Text('Nessun colloquio trovato',
+                      style: TextStyle(fontSize: 20))
+                  : Column(
+                      children: colloqui.map((Colloquio colloquio) {
+                        return _buildInfoColloquio(colloquio, context);
+                      }).toList(),
+                    ),
             ],
           ),
         );

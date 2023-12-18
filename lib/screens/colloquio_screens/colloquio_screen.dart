@@ -75,7 +75,7 @@ class ColloquioScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(2),
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.red,
+                            color: Colors.green,
                           ),
                           child: const Icon(
                             Icons.brightness_1,
