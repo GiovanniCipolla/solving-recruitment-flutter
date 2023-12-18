@@ -32,15 +32,15 @@ class AnnuncioScreen extends StatelessWidget {
         body: Column(
           children: [
             SizedBox(
-              height: heightSize(context) * 0.02,
+              height: heightSize(context) * 0.005,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: () {
                     final annuncioFiltro =
@@ -52,7 +52,11 @@ class AnnuncioScreen extends StatelessWidget {
                     children: [
                       const Row(
                         children: [
-                          Text('Applica filtri'),
+                          Text('Applica filtri',
+                              style: TextStyle(fontSize: 18)),
+                          SizedBox(
+                            width: 15,
+                          ),
                           Icon(
                             Icons.filter_list,
                           )
@@ -85,7 +89,10 @@ class AnnuncioScreen extends StatelessWidget {
             ),
             Expanded(
                 child: FutureBuilder(
-                    future: activeFilter ? annuncioProvider.getAnnunciByFilter(annuncioProvider.annuncioFiltro) : annuncioProvider.getAnnunci(),
+                    future: activeFilter
+                        ? annuncioProvider
+                            .getAnnunciByFilter(annuncioProvider.annuncioFiltro)
+                        : annuncioProvider.getAnnunci(),
                     builder: (context, snapshot) {
                       final annunci = annuncioProvider.annunci;
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -95,14 +102,14 @@ class AnnuncioScreen extends StatelessWidget {
                       } else if (snapshot.hasError) {
                         return Text(snapshot.error.toString());
                       } else if (annunci.isEmpty) {
-                        return  Column(
-                                children: [
-                                  SizedBox(
-                                    height: heightSize(context) * 0.3,
-                                  ),
-                                  const CustomEmptyItems(text: 'Nessun annuncio'),
-                                ],
-                              );
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: heightSize(context) * 0.3,
+                            ),
+                            const CustomEmptyItems(text: 'Nessun annuncio'),
+                          ],
+                        );
                       } else {
                         return GridView.builder(
                           gridDelegate:
@@ -124,10 +131,12 @@ class AnnuncioScreen extends StatelessWidget {
                 descrizioneShowDialog:
                     'Sicuro di voler aggiungere un annuncio?',
                 metodoShowDialog: () async {
-                  await Provider.of<TipologiaAnnuncioProvider>(context, listen: false)
+                  await Provider.of<TipologiaAnnuncioProvider>(context,
+                          listen: false)
                       .getTipologiaAnnuncio();
                   // ignore: use_build_context_synchronously
-                  await Provider.of<AreaProvider>(context, listen: false).getAreas();
+                  await Provider.of<AreaProvider>(context, listen: false)
+                      .getAreas();
                   // ignore: use_build_context_synchronously
                   Navigator.push(
                       context,

@@ -59,9 +59,11 @@ class AnnuncioDetailScreen extends StatelessWidget {
               )),
               child: Column(
                 children: [
-                  SingleChildScrollView(
-                    child: Text(
-                      annuncio.descrizione ?? "Descrizione mancante",
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Text(
+                        annuncio.descrizione ?? "Descrizione mancante",
+                      ),
                     ),
                   ),
                   const Spacer(),

@@ -168,6 +168,10 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
                             cognomeController, 'Cognome')),
                   ],
                 ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
+                ),
                 Row(children: [
                   Expanded(
                     child: TextFormField(
@@ -262,6 +266,10 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
                         )),
                   ),
                 ]),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -417,8 +425,9 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
                     labelText: 'Annuncio',
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
                 ),
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -545,48 +554,26 @@ class _CandidatoUpdateScreenState extends State<CandidatoUpdateScreen> {
                       }
                       return null;
                     }),
-                DropdownButtonFormField<Seniority>(
-                  value: senioritySelezionata,
-                  items: Seniority.values.map((Seniority value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(seniorityMap[value] ?? ''),
-                    );
-                  }).toList(),
-                  onChanged: (Seniority? value) {
-                    if (value != null) {
-                      setState(() {
-                        senioritySelezionata = value;
-                      });
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Seniority',
-                  ),
-                ),
-                DropdownButtonFormField<DisponibilitaLavoro>(
-                  value: disponibilitaLavoroSelezionata,
-                  items: DisponibilitaLavoro.values
-                      .map((DisponibilitaLavoro value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(disponibilitaLavoroMap[value] ?? ''),
-                    );
-                  }).toList(),
-                  onChanged: (DisponibilitaLavoro? value) {
-                    if (value != null) {
-                      setState(() {
-                        disponibilitaLavoroSelezionata = value;
-                      });
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Disponibilità Lavoro',
-                  ),
-                ),
                 customTextFormFieldWithoutValidator(
                     posizioneController, 'Posizione'),
-                customTextFormFieldWithoutValidator(noteController, 'Note'),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
+                ),
+                TextFormField(
+                  controller: noteController,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    labelText: 'Note',
+                  ),
+                  keyboardType: TextInputType
+                      .multiline, // Imposta il tipo di tastiera a multiline
+                  textInputAction: TextInputAction
+                      .newline, // Imposta l'azione di input a newline
+                  onEditingComplete: () {
+                    // Gestisci l'invio (newline) qui se necessario
+                  },
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {

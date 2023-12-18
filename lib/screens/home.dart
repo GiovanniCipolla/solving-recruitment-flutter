@@ -55,9 +55,7 @@ class Home extends StatelessWidget {
                 future: annuncioProvider.getStatsAnnuncio(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return Container();
                   } else if (snapshot.hasError) {
                     return Column(
                       children: [
@@ -66,9 +64,6 @@ class Home extends StatelessWidget {
                     );
                   } else {
                     final statsAnnuncio = snapshot.data!;
-                    final totale = statsAnnuncio.annuncioStaffTecnico! +
-                        statsAnnuncio.annuncioStaffInterno! +
-                        statsAnnuncio.annuncioAltro!;
                     return Container(
                       margin: const EdgeInsets.all(15),
                       child: Column(

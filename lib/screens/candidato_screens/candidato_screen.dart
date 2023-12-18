@@ -33,15 +33,16 @@ class CandidatoScreen extends StatelessWidget {
         body: Column(
           children: [
             SizedBox(
-              height: heightSize(context) * 0.02,
+              height: heightSize(context) * 0.005,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    
                   ),
                   onPressed: () {
                     final candidatoFiltro =
@@ -53,7 +54,10 @@ class CandidatoScreen extends StatelessWidget {
                     children: [
                       const Row(
                         children: [
-                          Text('Applica filtri'),
+                          Text('Applica filtri', style: TextStyle(fontSize: 18)),
+                          SizedBox(
+                            width: 15,
+                          ),
                           Icon(
                             Icons.filter_list,
                           )

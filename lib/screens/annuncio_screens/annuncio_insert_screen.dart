@@ -56,7 +56,7 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
     final areas = Provider.of<AreaProvider>(context).aree;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inserisci Candidato',
+        title: Text('Inserisci Annuncio',
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -85,8 +85,16 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                     return null;
                     }
                 ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
                 customTextFormFieldWithValidator(
                     descrizioneController, 'Descrizione'),
+                    Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
                 TextFormField(
                   controller: dataInizioController,
                   decoration: const InputDecoration(
@@ -104,6 +112,10 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                         }
                         return null;
                   },
+                ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
                 ),
                 DropdownButtonFormField<int>(
                   value: tipologiaAnnuncioSelezionata?.id,
@@ -131,6 +143,10 @@ class _AnnuncioInsertScreenState extends State<AnnuncioInsertScreen> {
                     }
                     return null;
                   },
+                ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
                 ),
                 DropdownButtonFormField<int>(
                   value: areaSelezionata?.id,

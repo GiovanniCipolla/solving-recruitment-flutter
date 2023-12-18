@@ -76,172 +76,190 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            DropdownButtonFormField<Tipologia>(
-              value: tipologiaColloquioSelezionata,
-              items: Tipologia.values.map((Tipologia value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(tipologiaMap[value] ?? ''),
-                );
-              }).toList(),
-              onChanged: (Tipologia? value) {
-                if (value != null) {
-                  setState(() {
-                    tipologiaColloquioSelezionata = value;
-                  });
-                }
-              },
-              decoration: const InputDecoration(
-                labelText: 'Tipologia',
-              ),
-              validator: (value) {
-                if (value == null) {
-                  return 'Seleziona una tipologia';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: dataColloquioController,
-              decoration: const InputDecoration(
-                labelText: 'Data Colloquio',
-              ),
-              onTap: () {
-                _selectDate(context, dataColloquioController, dataColloquio);
-              },
-            ),
-            AutoCompleteTextField<Candidato>(
-              controller: candidatoController,
-              key: GlobalKey(),
-              clearOnSubmit: false,
-              itemBuilder: (context, suggestion) => ListTile(
-                title: Text('${suggestion.nome} ${suggestion.cognome}'),
-              ),
-              itemFilter: (item, query) {
-                return (item.nome!
-                        .toLowerCase()
-                        .contains(query.toLowerCase()) ||
-                    item.cognome!.toLowerCase().contains(query.toLowerCase()));
-              },
-              itemSorter: (a, b) {
-                return (a.nome! + a.cognome!).compareTo(b.nome! + b.cognome!);
-              },
-              itemSubmitted: (item) async {
-                await candidatoSelezionato(item.id);
-                setState(() {
-                  candidatoController.text = '${item.nome} ${item.cognome}';
-                });
-              },
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.go,
-              suggestions: candidatoProvider.candidati,
-              textChanged: (value) async {
-                // Effettua la chiamata solo se il testo ha almeno tre caratteri
-                if (value.length >= 1) {
-                  await candidatoProvider
-                      .getCandidatiFiltratiAutoComplete(value);
-                }
-              },
-              decoration: const InputDecoration(
-                labelText: 'Candidato',
-              ),
-              onFocusChanged: (hasFocus) async {
-                if (hasFocus && candidatoProvider.candidati.isEmpty) {
-                  await candidatoProvider.getCandidatiFiltratiAutoComplete('');
-                }
-              },
-            ),
-            DropdownButtonFormField<int>(
-              value: selezionatoreSelezionato?.id,
-              items: [
-                // Aggiungi un elemento vuoto all'inizio della lista
-                const DropdownMenuItem<int>(
-                  value: 0,
-                  child: Text(' - '),
-                ),
-                // Aggiungi gli altri elementi
-                ...selezionatori.map((Selezionatore selezionatore) {
-                  return DropdownMenuItem<int>(
-                    value: selezionatore.id,
-                    child: Row(
-                      children: [
-                        Text(selezionatore.nome ?? 'errore'),
-                        const SizedBox(width: 8),
-                        Text(selezionatore.cognome ?? 'errore'),
-                      ],
-                    ),
+              SingleChildScrollView(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                            DropdownButtonFormField<Tipologia>(
+                value: tipologiaColloquioSelezionata,
+                items: Tipologia.values.map((Tipologia value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(tipologiaMap[value] ?? ''),
                   );
                 }).toList(),
-              ],
-              onChanged: (int? value) {
-                setState(() {
-                  // Gestisci il caso in cui il valore è 0 (opzione vuota)
-                  if (value == 0) {
-                    selezionatoreSelezionato = null;
-                  } else {
-                    selezionatoreSelezionato = selezionatori.firstWhere(
-                        (selezionatore) => selezionatore.id == value);
+                onChanged: (Tipologia? value) {
+                  if (value != null) {
+                    setState(() {
+                      tipologiaColloquioSelezionata = value;
+                    });
                   }
-                });
-              },
-              decoration: const InputDecoration(
-                labelText: 'Selezionatore',
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Tipologia',
+                ),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Seleziona una tipologia';
+                  }
+                  return null;
+                },
+                            ),
+                            Divider(
+                    color: Theme.of(context).primaryColor,
+                    thickness: 1,
+                  ),
+                            TextFormField(
+                controller: dataColloquioController,
+                decoration: const InputDecoration(
+                  labelText: 'Data Colloquio',
+                ),
+                onTap: () {
+                  _selectDate(context, dataColloquioController, dataColloquio);
+                },
+                            ),
+                            Divider(
+                    color: Theme.of(context).primaryColor,
+                    thickness: 1,
+                  ),
+                            AutoCompleteTextField<Candidato>(
+                controller: candidatoController,
+                key: GlobalKey(),
+                clearOnSubmit: false,
+                itemBuilder: (context, suggestion) => ListTile(
+                  title: Text('${suggestion.nome} ${suggestion.cognome}'),
+                ),
+                itemFilter: (item, query) {
+                  return (item.nome!
+                          .toLowerCase()
+                          .contains(query.toLowerCase()) ||
+                      item.cognome!.toLowerCase().contains(query.toLowerCase()));
+                },
+                itemSorter: (a, b) {
+                  return (a.nome! + a.cognome!).compareTo(b.nome! + b.cognome!);
+                },
+                itemSubmitted: (item) async {
+                  await candidatoSelezionato(item.id);
+                  setState(() {
+                    candidatoController.text = '${item.nome} ${item.cognome}';
+                  });
+                },
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.go,
+                suggestions: candidatoProvider.candidati,
+                textChanged: (value) async {
+                  // Effettua la chiamata solo se il testo ha almeno tre caratteri
+                  if (value.isNotEmpty) {
+                    await candidatoProvider
+                        .getCandidatiFiltratiAutoComplete(value);
+                  }
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Candidato',
+                ),
+                onFocusChanged: (hasFocus) async {
+                  if (hasFocus && candidatoProvider.candidati.isEmpty) {
+                    await candidatoProvider.getCandidatiFiltratiAutoComplete('');
+                  }
+                },
+                            ),
+                            Divider(
+                    color: Theme.of(context).primaryColor,
+                    thickness: 1,
+                  ),
+                            DropdownButtonFormField<int>(
+                value: selezionatoreSelezionato?.id,
+                items: [
+                  // Aggiungi un elemento vuoto all'inizio della lista
+                  const DropdownMenuItem<int>(
+                    value: 0,
+                    child: Text(' - '),
+                  ),
+                  // Aggiungi gli altri elementi
+                  ...selezionatori.map((Selezionatore selezionatore) {
+                    return DropdownMenuItem<int>(
+                      value: selezionatore.id,
+                      child: Row(
+                        children: [
+                          Text(selezionatore.nome ?? 'errore'),
+                          const SizedBox(width: 8),
+                          Text(selezionatore.cognome ?? 'errore'),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ],
+                onChanged: (int? value) {
+                  setState(() {
+                    // Gestisci il caso in cui il valore è 0 (opzione vuota)
+                    if (value == 0) {
+                      selezionatoreSelezionato = null;
+                    } else {
+                      selezionatoreSelezionato = selezionatori.firstWhere(
+                          (selezionatore) => selezionatore.id == value);
+                    }
+                  });
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Selezionatore',
+                ),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Seleziona un selezionatore';
+                  }
+                  return null;
+                },
+                            ),
+                            Divider(
+                    color: Theme.of(context).primaryColor,
+                    thickness: 1,
+                  ),
+                            TextFormField(
+                controller: noteController,
+                decoration: const InputDecoration(
+                  labelText: 'Note',
+                ),
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                            ),
+                            ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate() && candidato != null) {
+                    final colloquio = Colloquio(
+                      tipologia: tipologiaColloquioSelezionata,
+                      data: (dataColloquioController.text.isNotEmpty)
+                          ? DateFormat('dd/MM/yyyy')
+                              .parse(dataColloquioController.text)
+                          : null,
+                      candidato: candidato,
+                      selezionatore: selezionatoreSelezionato,
+                      note: noteController != null ? noteController!.text : null,
+                    );
+                    final colloquioProvider =
+                        Provider.of<ColloquioProvider>(context, listen: false);
+                    final bool result =
+                        await colloquioProvider.createColloquio(colloquio);
+                    // ignore: use_build_context_synchronously
+                    result
+                        ? inserimentoRiuscito()
+                        // ignore: use_build_context_synchronously
+                        : ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                content: Text(
+                            'Errore durante l\'inserimento del colloquio',
+                          )));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                      'Seleziona un candidato !',
+                        )
+                    ));
+                  }
+                },
+                child: const Text('Inserisci'),
+                            )
+                          ]),
               ),
-              validator: (value) {
-                if (value == null) {
-                  return 'Seleziona un selezionatore';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: noteController,
-              decoration: const InputDecoration(
-                labelText: 'Note',
-              ),
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate() && candidato != null) {
-                  final colloquio = Colloquio(
-                    tipologia: tipologiaColloquioSelezionata,
-                    data: (dataColloquioController.text.isNotEmpty)
-                        ? DateFormat('dd/MM/yyyy')
-                            .parse(dataColloquioController.text)
-                        : null,
-                    candidato: candidato,
-                    selezionatore: selezionatoreSelezionato,
-                    note: noteController != null ? noteController!.text : null,
-                  );
-                  final colloquioProvider =
-                      Provider.of<ColloquioProvider>(context, listen: false);
-                  final bool result =
-                      await colloquioProvider.createColloquio(colloquio);
-                  // ignore: use_build_context_synchronously
-                  result
-                      ? inserimentoRiuscito()
-                      // ignore: use_build_context_synchronously
-                      : ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(
-                              content: Text(
-                          'Errore durante l\'inserimento del colloquio',
-                        )));
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                    'Seleziona un candidato !',
-                      )
-                  ));
-                }
-              },
-              child: const Text('Inserisci'),
-            )
-          ]),
         ),
       ),
     );

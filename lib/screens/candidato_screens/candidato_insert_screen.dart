@@ -59,7 +59,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: type ?? DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1960),
       lastDate: DateTime(2101),
     );
     if (picked != null && picked != type) {
@@ -111,6 +111,10 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                         child: customTextFormFieldWithValidator(
                             cognomeController, 'Cognome')),
                   ],
+                ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
                 ),
                 Row(children: [
                   Expanded(
@@ -206,6 +210,10 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                         )),
                   ),
                 ]),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
+                ),
                 Row(children: [
                   Expanded(
                     child: DropdownButtonFormField<Seniority>(
@@ -331,8 +339,9 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                     labelText: 'Annuncio',
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
                 ),
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -448,7 +457,24 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                       }
                       return null;
                     }),
-                customTextFormFieldWithoutValidator(noteController, 'Note'),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 4,
+                ),
+                TextFormField(
+                  controller: noteController,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    labelText: 'Note',
+                  ),
+                  keyboardType: TextInputType
+                      .multiline, // Imposta il tipo di tastiera a multiline
+                  textInputAction: TextInputAction
+                      .newline, // Imposta l'azione di input a newline
+                  onEditingComplete: () {
+                    // Gestisci l'invio (newline) qui se necessario
+                  },
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {
@@ -481,6 +507,7 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                                     .parse(dataPrimoContattoController.text)
                                 : null,
                         posizione: posizioneController.text,
+                        stato: Stato.IN_ATTESA,
                         note: noteController.text,
                         area: areaSelezionata,
                         annuncio: annuncioSelezionato,
@@ -516,13 +543,10 @@ class _CandidatoInsertScreenState extends State<CandidatoInsertScreen> {
                               },
                             );
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
                         'Errore nella validazione, controlla i campi',
-                      )
-                    )
-                  );
+                      )));
                     }
                   },
                   child: const Text('Inserisci'),

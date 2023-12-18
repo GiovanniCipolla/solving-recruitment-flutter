@@ -89,178 +89,196 @@ class _ColloquioUpdateScreenState extends State<ColloquioUpdateScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  DropdownButtonFormField<int>(
-                    value: selezionatoreSelezionato?.id,
-                    items: [
-                      // Aggiungi un elemento vuoto all'inizio della lista
-                      const DropdownMenuItem<int>(
-                        value: 0,
-                        child: Text(' - '),
+            child: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    DropdownButtonFormField<int>(
+                      value: selezionatoreSelezionato?.id,
+                      items: [
+                        // Aggiungi un elemento vuoto all'inizio della lista
+                        const DropdownMenuItem<int>(
+                          value: 0,
+                          child: Text(' - '),
+                        ),
+                        ...selezionatori.map((Selezionatore selezionatore) {
+                          return DropdownMenuItem<int>(
+                            value: selezionatore.id,
+                            child: Row(
+                              children: [
+                                Text(selezionatore.nome ?? 'errore'),
+                                const SizedBox(width: 8),
+                                Text(selezionatore.cognome ?? 'errore'),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ],
+                      onChanged: (int? value) {
+                        setState(() {
+                          if (value == 0) {
+                            selezionatoreSelezionato = null;
+                          } else {
+                            selezionatoreSelezionato = selezionatori.firstWhere(
+                                (selezionatore) => selezionatore.id == value);
+                          }
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value == 0) {
+                          return 'Seleziona un selezionatore';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Selezionatore',
                       ),
-                      ...selezionatori.map((Selezionatore selezionatore) {
-                        return DropdownMenuItem<int>(
-                          value: selezionatore.id,
-                          child: Row(
-                            children: [
-                              Text(selezionatore.nome ?? 'errore'),
-                              const SizedBox(width: 8),
-                              Text(selezionatore.cognome ?? 'errore'),
-                            ],
-                          ),
+                    ),
+                    Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
+                    DropdownButtonFormField<Tipologia>(
+                      value: tipologiaSelezionata,
+                      items: Tipologia.values.map((Tipologia value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(tipologiaMap[value] ?? ''),
                         );
                       }).toList(),
-                    ],
-                    onChanged: (int? value) {
-                      setState(() {
-                        if (value == 0) {
-                          selezionatoreSelezionato = null;
-                        } else {
-                          selezionatoreSelezionato = selezionatori.firstWhere(
-                              (selezionatore) => selezionatore.id == value);
+                      onChanged: (Tipologia? value) {
+                        if (value != null) {
+                          setState(() {
+                            tipologiaSelezionata = value;
+                          });
                         }
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value == 0) {
-                        return 'Seleziona un selezionatore';
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Selezionatore',
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Tipologia',
+                      ),
                     ),
-                  ),
-                  DropdownButtonFormField<Tipologia>(
-                    value: tipologiaSelezionata,
-                    items: Tipologia.values.map((Tipologia value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Text(tipologiaMap[value] ?? ''),
-                      );
-                    }).toList(),
-                    onChanged: (Tipologia? value) {
-                      if (value != null) {
-                        setState(() {
-                          tipologiaSelezionata = value;
-                        });
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Tipologia',
-                    ),
-                  ),
-                  DropdownButtonFormField<FeedBackColloquio>(
-                    value: feedbackSelezionato,
-                    items:
-                        FeedBackColloquio.values.map((FeedBackColloquio value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Text(feedbackLabelMap[value] ?? ''),
-                      );
-                    }).toList(),
-                    onChanged: (FeedBackColloquio? value) {
-                      if (value != null) {
-                        setState(() {
-                          feedbackSelezionato = value;
-                        });
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'FeedBack',
-                    ),
-                  ),
-                  AutoCompleteTextField<Candidato>(
-                    controller: candidatoController,
-                    key: GlobalKey(),
-                    clearOnSubmit: false,
-                    itemBuilder: (context, suggestion) => ListTile(
-                      title: Text('${suggestion.nome} ${suggestion.cognome}'),
-                    ),
-                    itemFilter: (item, query) {
-                      return (item.nome!
-                              .toLowerCase()
-                              .contains(query.toLowerCase()) ||
-                          item.cognome!
-                              .toLowerCase()
-                              .contains(query.toLowerCase()));
-                    },
-                    itemSorter: (a, b) {
-                      return (a.nome! + a.cognome!)
-                          .compareTo(b.nome! + b.cognome!);
-                    },
-                    itemSubmitted: (item) async {
-                      await candidatoSelezionato(item.id);
-                      setState(() {
-                        candidatoController.text =
-                            '${item.nome} ${item.cognome}';
-                      });
-                    },
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.go,
-                    suggestions: candidatoProvider.candidati,
-                    textChanged: (value) async {
-                      if (value.isNotEmpty) {
-                        await candidatoProvider
-                            .getCandidatiFiltratiAutoComplete(value);
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Candidato',
-                    ),
-                    onFocusChanged: (hasFocus) async {
-                      if (hasFocus && candidatoProvider.candidati.isEmpty) {
-                        await candidatoProvider
-                            .getCandidatiFiltratiAutoComplete('');
-                      }
-                    },
-                  ),
-                  TextFormField(
-                    controller: noteController,
-                    decoration: const InputDecoration(
-                      labelText: 'Note',
-                    ),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        final colloquio = Colloquio(
-                          id: widget.colloquio.id,
-                          note: noteController == null
-                              ? null
-                              : noteController!.text,
-                          data: (dataController.text.isNotEmpty && data != null)
-                              ? DateFormat('dd/MM/yyyy')
-                                  .parse(dataController.text)
-                              : null,
-                          selezionatore: selezionatoreSelezionato,
-                          tipologia: tipologiaSelezionata,
-                          feedback: feedbackSelezionato,
-                          candidato: candidato,
+                    Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
+                    DropdownButtonFormField<FeedBackColloquio>(
+                      value: feedbackSelezionato,
+                      items:
+                          FeedBackColloquio.values.map((FeedBackColloquio value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          child: Text(feedbackLabelMap[value] ?? ''),
                         );
-                        final colloquioProvider =
-                            Provider.of<ColloquioProvider>(context,
-                                listen: false);
-                        final bool result =
-                            await colloquioProvider.updateColloquio(colloquio);
-                        if (result) {
-                          modificaRiuscita(colloquio);
-                        } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                                  content: Text(
-                            'Errore durante la modifica del colloquio',
-                          )));
+                      }).toList(),
+                      onChanged: (FeedBackColloquio? value) {
+                        if (value != null) {
+                          setState(() {
+                            feedbackSelezionato = value;
+                          });
                         }
-                      }
-                    },
-                    child: const Text('Modifica'),
-                  )
-                ]),
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'FeedBack',
+                      ),
+                    ),
+                    Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
+                    AutoCompleteTextField<Candidato>(
+                      controller: candidatoController,
+                      key: GlobalKey(),
+                      clearOnSubmit: false,
+                      itemBuilder: (context, suggestion) => ListTile(
+                        title: Text('${suggestion.nome} ${suggestion.cognome}'),
+                      ),
+                      itemFilter: (item, query) {
+                        return (item.nome!
+                                .toLowerCase()
+                                .contains(query.toLowerCase()) ||
+                            item.cognome!
+                                .toLowerCase()
+                                .contains(query.toLowerCase()));
+                      },
+                      itemSorter: (a, b) {
+                        return (a.nome! + a.cognome!)
+                            .compareTo(b.nome! + b.cognome!);
+                      },
+                      itemSubmitted: (item) async {
+                        await candidatoSelezionato(item.id);
+                        setState(() {
+                          candidatoController.text =
+                              '${item.nome} ${item.cognome}';
+                        });
+                      },
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.go,
+                      suggestions: candidatoProvider.candidati,
+                      textChanged: (value) async {
+                        if (value.isNotEmpty) {
+                          await candidatoProvider
+                              .getCandidatiFiltratiAutoComplete(value);
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Candidato',
+                      ),
+                      onFocusChanged: (hasFocus) async {
+                        if (hasFocus && candidatoProvider.candidati.isEmpty) {
+                          await candidatoProvider
+                              .getCandidatiFiltratiAutoComplete('');
+                        }
+                      },
+                    ),
+                    Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
+                    TextFormField(
+                      controller: noteController,
+                      decoration: const InputDecoration(
+                        labelText: 'Note',
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final colloquio = Colloquio(
+                            id: widget.colloquio.id,
+                            note: noteController == null
+                                ? null
+                                : noteController!.text,
+                            data: (dataController.text.isNotEmpty && data != null)
+                                ? DateFormat('dd/MM/yyyy')
+                                    .parse(dataController.text)
+                                : null,
+                            selezionatore: selezionatoreSelezionato,
+                            tipologia: tipologiaSelezionata,
+                            feedback: feedbackSelezionato,
+                            candidato: candidato,
+                          );
+                          final colloquioProvider =
+                              Provider.of<ColloquioProvider>(context,
+                                  listen: false);
+                          final bool result =
+                              await colloquioProvider.updateColloquio(colloquio);
+                          if (result) {
+                            modificaRiuscita(colloquio);
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                    content: Text(
+                              'Errore durante la modifica del colloquio',
+                            )));
+                          }
+                        }
+                      },
+                      child: const Text('Modifica'),
+                    )
+                  ]),
+            ),
           ),
         ));
   }

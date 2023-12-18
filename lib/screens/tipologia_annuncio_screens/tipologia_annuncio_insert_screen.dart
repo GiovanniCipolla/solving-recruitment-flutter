@@ -26,7 +26,11 @@ final formKey = GlobalKey<FormState>();
     final TextEditingController descrizioneController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inserisci Tipologia Annuncio'),
+        title:  Text('Inserisci Tipologia Annuncio',  style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.primary,
+          ),),
       ),
       body: Form(
         key: formKey,

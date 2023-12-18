@@ -19,18 +19,16 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 
 // --------------------------------- TODO
 
-// 1) -- Aspettare l'aggionrmaneto backend e configuare l'invio email
 // 2) -- Implementare Academy , screen e tutta la logica
 // 3) -- Soluzione se ci sono errori , che avvisi dare
 // 4) -- Lista candidati in annuncio , da tutti anche quelli eliminati
-// 5) -- Caricamento grafici iniziali statistiche
 
 // ---------------------------------  TODO EXTRA
 // Nei filtri aggiungere parametri
 // Quando si fa l'update , bisogna ritornare nel details del candidato stesso
 
 // --------------------------------- PROBLEMI
-// Problema flutter nel download del cv, per cprreggere aspettare il run del remoto!!
+// Problema flutter nel download del cv, per correggere aspettare il run del remoto!!
 // Lista candidati in annuncio , da tutti anche quelli eliminati
 
 

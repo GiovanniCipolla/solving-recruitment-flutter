@@ -205,8 +205,8 @@ class _FilterModalState extends State<FilterModal> {
                         });
                       },
                       validator: (value) {
-                        if ( value != null) {
-                          if (int.tryParse(value) != null) {
+                        if ( value != null && value != '') {
+                          if (int.tryParse(value) == null) {
                             return 'Valore non valido';
                           }
                         }
@@ -230,8 +230,8 @@ class _FilterModalState extends State<FilterModal> {
                         });
                       },
                       validator: (value) {
-                        if ( value != null) {
-                          if (int.tryParse(value) != null) {
+                        if ( value != null && value != '') {
+                          if (int.tryParse(value) == null) {
                             return 'Valore non valido';
                           }
                         }

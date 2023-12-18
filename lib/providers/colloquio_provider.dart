@@ -117,7 +117,9 @@ class ColloquioProvider extends ChangeNotifier {
         'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(colloquio.toJson()),
+      
     );
+    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {

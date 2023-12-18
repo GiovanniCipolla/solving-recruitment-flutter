@@ -95,8 +95,16 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 customTextFormFieldWithValidator(titoloController, 'Titolo'),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
                 customTextFormFieldWithValidator(
                     descrizioneController, 'Descrizione'),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
                 TextFormField(
                   controller: dataInizioController,
                   decoration: const InputDecoration(
@@ -114,6 +122,10 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
                     }
                     return null;
                   },
+                ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
                 ),
                 DropdownButtonFormField<int>(
                   value: tipologiaAnnuncioSelezionata?.id,
@@ -136,6 +148,10 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
                     labelText: 'Tipologia Annuncio',
                   ),
                 ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
                 DropdownButtonFormField<int>(
                   value: areaSelezionata?.id,
                   items: areas.map((Area area) {
@@ -156,8 +172,13 @@ class _AnnuncioUpdateScreenState extends State<AnnuncioUpdateScreen> {
                     labelText: 'Area',
                   ),
                 ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 1,
+                ),
                 if( attivo != null)
                 SwitchListTile(
+                  inactiveTrackColor: Colors.red,
       title: const Text('Attivo'),
       value: attivo!,
       onChanged: (bool value) {
