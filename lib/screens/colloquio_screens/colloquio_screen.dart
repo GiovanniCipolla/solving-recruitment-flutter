@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solving_recruitment_flutter/common.dart';
@@ -36,6 +38,20 @@ class ColloquioScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () {
+                   colloquiProvider.checkFindDaFare();
+                 Navigator.pushNamedAndRemoveUntil(context, ColloquioScreen.routeName, (route) => false);
+                }, child:  Row(
+                  children: [
+                    Text( colloquiProvider.findDaFare ? 'Tutti' : 'Da fare', style: const TextStyle(fontSize: 15)),
+                    const Icon(Icons.touch_app)
+                  ],
+                )),
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -97,7 +113,7 @@ class ColloquioScreen extends StatelessWidget {
                 future: activeFilter
                     ? colloquiProvider
                         .getCandidatiByFilter(colloquiProvider.colloquioFiltro)
-                    : colloquiProvider.getColloqui(),
+                    : colloquiProvider.findDaFare ? colloquiProvider.getAllColloquiByFeedbackNull() : colloquiProvider.getColloqui(),
                 builder: (context, snapshot) {
                   final colloqui = colloquiProvider.colloqui;
 

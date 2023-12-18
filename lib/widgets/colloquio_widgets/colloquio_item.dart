@@ -142,7 +142,7 @@ class ColloquioItem extends StatelessWidget {
               height: heightSize(context) * 0.017,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(dateFormatter.format(colloquio.data!),
+              Text( colloquio.data != null ? dateFormatter.format(colloquio.data!) : 'Da impostare',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   )),

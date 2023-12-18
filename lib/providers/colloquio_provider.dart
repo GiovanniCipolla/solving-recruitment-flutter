@@ -12,6 +12,7 @@ class ColloquioProvider extends ChangeNotifier {
   ColloquioProvider({required this.authProvider, required this.colloqui});
   bool filterActive = false;
   ColloquioFiltro colloquioFiltro = ColloquioFiltro();
+  bool findDaFare = false;
 
   Future<void> getColloqui() async {
     String url = '$urlAPI/colloquio/getMobile';
@@ -22,6 +23,7 @@ class ColloquioProvider extends ChangeNotifier {
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       filterActive = false;
+      findDaFare = false;
       List<Colloquio> colloqui = [];
       for (var item in jsonData) {
         colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
@@ -108,6 +110,36 @@ class ColloquioProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> getAllColloquiByFeedbackNull() async {
+    String url = '$urlAPI/colloquio/getMobileFeedbackNull';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      filterActive = false;
+      List<Colloquio> colloqui = [];
+      for (var item in jsonData) {
+        colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
+      }
+      this.colloqui.clear();
+      this.colloqui.addAll(colloqui);
+      findDaFare = true;
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
+      );
+    }
+  }
+
+  void checkFindDaFare() {
+    findDaFare = !findDaFare;
+  }
+
   Future<bool> createColloquio(colloquio) async {
     String url = '$urlAPI/colloquio';
     final response = await http.post(
@@ -117,7 +149,6 @@ class ColloquioProvider extends ChangeNotifier {
         'Authorization': 'Bearer ${authProvider!.token}',
       },
       body: json.encode(colloquio.toJson()),
-      
     );
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -145,7 +176,7 @@ class ColloquioProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> deleteColloquio(id)async {
+  Future<bool> deleteColloquio(id) async {
     String url = '$urlAPI/colloquio/delete/$id';
     final response = await http.delete(
       Uri.parse(url),
@@ -176,6 +207,7 @@ class ColloquioProvider extends ChangeNotifier {
       final jsonData = json.decode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         checkFilterActive(filtro);
+        findDaFare = false;
         List<Colloquio> colloqui = [];
         for (var item in jsonData['content']) {
           colloqui.add(Colloquio.fromJsonGetAllColloqui(item));
