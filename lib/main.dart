@@ -147,7 +147,7 @@ class MyApp extends StatelessWidget {
                     const SelezionatoreScreen(),
                 TipologiaAnnuncioScreen.routeName: (ctx) =>
                     const TipologiaAnnuncioScreen(),
-                Home.routeName: (ctx) => Home(),
+                Home.routeName: (ctx) => const Home(),
               });
         },
       ),

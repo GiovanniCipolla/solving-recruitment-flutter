@@ -649,6 +649,7 @@ class BottomSheetUtils {
                         return _buildInfoColloquio(colloquio, context);
                       }).toList(),
                     ),
+                    
             ],
           ),
         );

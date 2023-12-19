@@ -148,7 +148,7 @@ class ColloquioScreen extends StatelessWidget {
               await selezionatoreProvider.getSelezionatori();
               // ignore: use_build_context_synchronously
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const ColloquioInsertScreen();
+                return  const ColloquioInsertScreen();
               }));
             },
           )

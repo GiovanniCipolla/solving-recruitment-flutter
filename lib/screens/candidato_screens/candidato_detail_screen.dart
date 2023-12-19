@@ -10,6 +10,7 @@ import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_update_screen.dart';
+import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_insert_screen.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_card_item.dart';
 import 'package:solving_recruitment_flutter/widgets/candidato_widgets/candidato_detail_colloqui_item.dart';
 import 'package:solving_recruitment_flutter/widgets/custom/wrapped_text.dart';
@@ -185,8 +186,27 @@ class CandidatoDetailScreen extends StatelessWidget {
                 tipologia: 'FINALE',
               ))
             ]),
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context, MaterialPageRoute(
+                        builder: (context) {
+                          return ColloquioInsertScreen(
+                            candidatoToRecieve: candidato,
+                          );
+                        }
+                      )
+                    );
+                  },
+                  child: const Row(children: [
+                    Text('Aggiungi Colloquio'),
+                    SizedBox(width: 5),
+                    Icon(Icons.add)
+                  ]))
+            ]),
             SizedBox(
-              height: heightSize(context) * 0.02,
+              height: heightSize(context) * 0.002,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

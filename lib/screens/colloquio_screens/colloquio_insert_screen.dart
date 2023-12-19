@@ -12,7 +12,9 @@ import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dar
 import 'package:solving_recruitment_flutter/screens/colloquio_screens/colloquio_screen.dart';
 
 class ColloquioInsertScreen extends StatefulWidget {
-  const ColloquioInsertScreen({super.key});
+   const ColloquioInsertScreen({super.key,  this.candidatoToRecieve });
+
+     final Candidato? candidatoToRecieve;
 
   @override
   State<StatefulWidget> createState() => _ColloquioInsertScreenState();
@@ -56,9 +58,21 @@ class _ColloquioInsertScreenState extends State<ColloquioInsertScreen> {
     Navigator.pushNamedAndRemoveUntil(
         context, ColloquioScreen.routeName, (route) => false);
   }
+   
+@override
+  void initState() {
+      super.initState();
+      candidato = widget.candidatoToRecieve;
+      widget.candidatoToRecieve != null ?
+      candidatoController.text =
+        '${widget.candidatoToRecieve!.nome ?? ''} ${widget.candidatoToRecieve!.cognome ?? ''}' : null;
+    }
 
   @override
   Widget build(BuildContext context) {
+
+    
+    
     final CandidatoProvider candidatoProvider =
         Provider.of<CandidatoProvider>(context, listen: false);
     final SelezionatoreProvider selezionatoreProvider =
