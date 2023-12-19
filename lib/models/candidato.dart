@@ -82,6 +82,10 @@ class Candidato {
   final String? titoloAnnuncio;
   final String? cvObjectKey;
 
+
+ 
+
+
   factory Candidato.fromJson(Map<String, dynamic> json) {
     Stato? stato = json['stato'] != null
         ? Stato.values.firstWhere(
@@ -202,7 +206,9 @@ class Candidato {
           ? dataPrimoContatto!.toIso8601String()
           : null,
       'posizione': posizione ,
-      'percorsoAcademy': percorsoAcademy,
+       'percorsoAcademy': percorsoAcademy != null
+          ? percorsoAcademy!.toString().split('.').last
+          : PercorsoAcademy.ND.toString().split('.').last,
       'dareRiscontro': dareRiscontro,
       'riscontroInviato': riscontroInviato,
       'annuncio': annuncio != null ? annuncio!.toJson() : null,
