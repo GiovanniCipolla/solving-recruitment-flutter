@@ -30,7 +30,6 @@ class AnnuncioProvider extends ChangeNotifier {
       'Authorization': 'Bearer ${authProvider!.token}',
     });
     final jsonData = json.decode(response.body);
-    print(jsonData);
     if (response.statusCode == 200 || response.statusCode == 201) {
       filterActive = false;
       List<Annuncio> annunci = [];
@@ -55,7 +54,6 @@ class AnnuncioProvider extends ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${authProvider!.token}',
     });
-    print(response.body);
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       filterActive = false;
@@ -122,6 +120,7 @@ class AnnuncioProvider extends ChangeNotifier {
       },
       body: json.encode(annuncio.toJson()),
     );
+    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       notifyListeners();
       return true;

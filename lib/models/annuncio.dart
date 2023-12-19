@@ -29,7 +29,6 @@ class Annuncio {
   final bool? attivo;
 
   factory Annuncio.fromJson(Map<String, dynamic> json) {
-    print(json);
     return Annuncio(
       id: json['id'] != null ? json['id'] as int : null,
       titolo: json['titolo'] != null ? json['titolo'] as String : null,

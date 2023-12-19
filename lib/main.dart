@@ -50,6 +50,7 @@ final kColorScheme = ColorScheme.fromSwatch(
   ),
 );
 
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
