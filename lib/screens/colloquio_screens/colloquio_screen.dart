@@ -39,19 +39,22 @@ class ColloquioScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                ),
-                onPressed: () {
-                   colloquiProvider.checkFindDaFare();
-                 Navigator.pushNamedAndRemoveUntil(context, ColloquioScreen.routeName, (route) => false);
-                }, child:  Row(
-                  children: [
-                    Text( colloquiProvider.findDaFare ? 'Tutti' : 'Da fare', style: const TextStyle(fontSize: 15)),
-                    const Icon(Icons.touch_app)
-                  ],
-                )),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  onPressed: () {
+                    colloquiProvider.checkFindDaFare();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, ColloquioScreen.routeName, (route) => false);
+                  },
+                  child: Row(
+                    children: [
+                      Text(colloquiProvider.findDaFare ? 'Tutti' : 'Da fare',
+                          style: const TextStyle(fontSize: 15)),
+                      const Icon(Icons.touch_app)
+                    ],
+                  )),
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -113,7 +116,9 @@ class ColloquioScreen extends StatelessWidget {
                 future: activeFilter
                     ? colloquiProvider
                         .getCandidatiByFilter(colloquiProvider.colloquioFiltro)
-                    : colloquiProvider.findDaFare ? colloquiProvider.getAllColloquiByFeedbackNull() : colloquiProvider.getColloqui(),
+                    : colloquiProvider.findDaFare
+                        ? colloquiProvider.getAllColloquiByFeedbackNull()
+                        : colloquiProvider.getColloqui(),
                 builder: (context, snapshot) {
                   final colloqui = colloquiProvider.colloqui;
 
@@ -147,9 +152,14 @@ class ColloquioScreen extends StatelessWidget {
                   Provider.of<SelezionatoreProvider>(context, listen: false);
               await selezionatoreProvider.getSelezionatori();
               // ignore: use_build_context_synchronously
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return  const ColloquioInsertScreen();
-              }));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const ColloquioInsertScreen();
+                  },
+                ),
+              );
             },
           )
         ]),

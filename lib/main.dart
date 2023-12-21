@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/providers/academy.provider.dart';
 import 'package:solving_recruitment_flutter/providers/annuncio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/area_provider.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
@@ -8,6 +9,7 @@ import 'package:solving_recruitment_flutter/providers/candidato_provider.dart';
 import 'package:solving_recruitment_flutter/providers/colloquio_provider.dart';
 import 'package:solving_recruitment_flutter/providers/selezionatore_provider.dart';
 import 'package:solving_recruitment_flutter/providers/tipologia_annuncio_provider.dart';
+import 'package:solving_recruitment_flutter/screens/academy_screens/academy_screen.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
@@ -19,9 +21,9 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 
 // --------------------------------- TODO
 
-// 2) -- Implementare Academy , screen e tutta la logica
-// 3) -- Soluzione se ci sono errori , che avvisi dare
-// 4) -- Lista candidati in annuncio , da tutti anche quelli eliminati
+// 1) -- Implementare Academy , screen e tutta la logica
+// 2) -- Soluzione se ci sono errori , che avvisi dare
+// 3) -- Lista candidati in annuncio , da tutti anche quelli eliminati
 
 // ---------------------------------  TODO EXTRA
 // Nei filtri aggiungere parametri
@@ -30,7 +32,6 @@ import 'package:solving_recruitment_flutter/screens/tipologia_annuncio_screens/t
 // --------------------------------- PROBLEMI
 // Problema flutter nel download del cv, per correggere aspettare il run del remoto!!
 // Lista candidati in annuncio , da tutti anche quelli eliminati
-
 
 final kColorScheme = ColorScheme.fromSwatch(
   primarySwatch: const MaterialColor(
@@ -49,7 +50,6 @@ final kColorScheme = ColorScheme.fromSwatch(
     },
   ),
 );
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -108,7 +108,11 @@ class MyApp extends StatelessWidget {
           update: (ctx, authProvider, previous) => TipologiaAnnuncioProvider(
               authProvider: authProvider,
               tipologiaAnnuncio: previous!.tipologiaAnnuncio),
-        )
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, AcademyProvider>(
+            create: (ctx) => AcademyProvider(authProvider: null, academies: []),
+            update: (ctx, authProvider, previous) => AcademyProvider(
+                authProvider: authProvider, academies: previous!.academies))
       ],
       child: Consumer<AuthProvider>(
         builder: (ctx, authProvider, child) {
@@ -147,6 +151,7 @@ class MyApp extends StatelessWidget {
                     const SelezionatoreScreen(),
                 TipologiaAnnuncioScreen.routeName: (ctx) =>
                     const TipologiaAnnuncioScreen(),
+                AcademyScreen.routeName: (ctx) => const AcademyScreen(),
                 Home.routeName: (ctx) => const Home(),
               });
         },

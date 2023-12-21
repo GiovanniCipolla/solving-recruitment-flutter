@@ -52,6 +52,7 @@ class StatsBar extends StatelessWidget {
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     _buildChartBar(a, Colors.orange),
                     _buildChartBar(b, Colors.blue),

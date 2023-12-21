@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solving_recruitment_flutter/providers/academy.provider.dart';
 import 'package:solving_recruitment_flutter/providers/auth_provider.dart';
+import 'package:solving_recruitment_flutter/screens/academy_screens/academy_screen.dart';
 import 'package:solving_recruitment_flutter/screens/annuncio_screens/annuncio_screen.dart';
 import 'package:solving_recruitment_flutter/screens/area_screens/area_screen.dart';
 import 'package:solving_recruitment_flutter/screens/candidato_screens/candidato_screen.dart';
@@ -84,18 +86,18 @@ final List<Map<String, dynamic>> drawerItems = [
     'divider': true,
     'thickness': 2.0,
   },
-  // {
-  //   'icon': Icons.school,
-  //   'title': 'Gestione Academy',
-  //   'onTap': (context) {
-  //     // Provider.of<AnnuncioProvider>(context, listen: false).getAnnunci();
-  //     // Navigator.pushNamed(context, AreaScreen.routeName);
-  //   },
-  // },
-  // {
-  //   'divider': true,
-  //   'thickness': 2.0,
-  // },
+  {
+    'icon': Icons.school,
+    'title': 'Gestione Academy',
+    'onTap': (context) {
+      Provider.of<AcademyProvider>(context, listen: false).getAcademies();
+      Navigator.pushNamed(context, AcademyScreen.routeName);
+    },
+  },
+  {
+    'divider': true,
+    'thickness': 2.0,
+  },
   {
     'icon': Icons.work,
     'title': 'Gestione Tipologia Annunci',

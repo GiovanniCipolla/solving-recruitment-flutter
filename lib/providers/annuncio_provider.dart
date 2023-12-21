@@ -20,6 +20,7 @@ class AnnuncioProvider extends ChangeNotifier {
   Area? area;
   bool filterActive = false;
   AnnuncioFiltro annuncioFiltro = AnnuncioFiltro();
+  bool listActive = false;
 
   final AuthProvider? authProvider;
 
@@ -31,6 +32,33 @@ class AnnuncioProvider extends ChangeNotifier {
     });
     final jsonData = json.decode(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      listActive = false;
+      filterActive = false;
+      List<Annuncio> annunci = [];
+      for (var item in jsonData) {
+        annunci.add(Annuncio.fromJsonGetAllAnnunci(item));
+      }
+      this.annunci.clear();
+      this.annunci.addAll(annunci);
+      notifyListeners();
+    } else {
+      throw HttpException(
+        statusCode: response.statusCode,
+        title: jsonData['error'] ?? 'Errore',
+        description: jsonData['trace'] ?? 'Errore sconosciuto',
+      );
+    }
+  }
+
+  Future<void> getAnnunciAtivi() async {
+    String url = '$urlAPI/annuncio/getAnnunciAttiviMobile';
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${authProvider!.token}',
+    });
+    final jsonData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      listActive = true;
       filterActive = false;
       List<Annuncio> annunci = [];
       for (var item in jsonData) {
@@ -120,7 +148,6 @@ class AnnuncioProvider extends ChangeNotifier {
       },
       body: json.encode(annuncio.toJson()),
     );
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       notifyListeners();
       return true;
@@ -215,5 +242,9 @@ class AnnuncioProvider extends ChangeNotifier {
         description: jsonData['description'],
       );
     }
+  }
+
+  void checkListActive() {
+    listActive = !listActive;
   }
 }

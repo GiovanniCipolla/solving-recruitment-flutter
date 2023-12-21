@@ -38,6 +38,26 @@ class AnnuncioScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    onPressed: () {
+                      annuncioProvider.checkListActive();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AnnuncioScreen.routeName, (route) => false);
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                            annuncioProvider.listActive
+                                ? 'Tutti'
+                                : 'Cerca Attivi',
+                            style: const TextStyle(fontSize: 15)),
+                        const Icon(Icons.touch_app)
+                      ],
+                    )),
+                TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.onPrimary,
                     foregroundColor: Theme.of(context).colorScheme.primary,
@@ -92,7 +112,9 @@ class AnnuncioScreen extends StatelessWidget {
                     future: activeFilter
                         ? annuncioProvider
                             .getAnnunciByFilter(annuncioProvider.annuncioFiltro)
-                        : annuncioProvider.getAnnunci(),
+                        : annuncioProvider.listActive
+                            ? annuncioProvider.getAnnunciAtivi()
+                            : annuncioProvider.getAnnunci(),
                     builder: (context, snapshot) {
                       final annunci = annuncioProvider.annunci;
                       if (snapshot.connectionState == ConnectionState.waiting) {
