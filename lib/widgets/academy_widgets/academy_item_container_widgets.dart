@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
 
 class AcademyItemContainerWidgets extends StatelessWidget {
-  const AcademyItemContainerWidgets({super.key, required this.title});
+  const AcademyItemContainerWidgets({super.key, required this.title,});
   final String title;
 
   @override
@@ -10,9 +10,9 @@ class AcademyItemContainerWidgets extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: double.infinity,
           margin: EdgeInsets.all(widthSize(context) * 0.05),
           padding: const EdgeInsets.all(10),
+          width: widthSize(context) * 0.75,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
@@ -20,7 +20,7 @@ class AcademyItemContainerWidgets extends StatelessWidget {
               width: 2.0, // Larghezza del bordo
             ),
           ),
-          child: Column(children: [
+          child: const Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -51,20 +51,20 @@ class AcademyItemContainerWidgets extends StatelessWidget {
               ],
             ),
             Column(children: [
-              Text('13', style: TextStyle(color: Colors.red, fontSize: 25)),
+              Text('13', style: TextStyle(color: Colors.red, fontSize: 16)),
               Text(
                 'Candidati',
-                style: TextStyle(color: Colors.black, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 13),
               )
             ]),
-            const SizedBox(height: 20),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image(
                     image: AssetImage('assets/images/logo.png'),
-                    width: 40,
-                    height: 40),
+                    width: 25,
+                    height: 25),
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   Text('Alberto Multari'),
                   SizedBox(
