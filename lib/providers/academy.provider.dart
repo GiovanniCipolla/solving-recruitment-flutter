@@ -16,7 +16,7 @@ class AcademyProvider extends ChangeNotifier {
   AcademyProvider({required this.academies, required this.authProvider});
 
   Future<void> getAcademies() async {
-    String url = '$urlAPI/academy';
+    String url = '$urlAPI/academy/getAcademyMobile';
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${authProvider!.token}',

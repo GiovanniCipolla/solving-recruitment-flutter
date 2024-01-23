@@ -43,7 +43,7 @@ class SelezionatoreItem extends StatelessWidget {
                                   width: widthSize(context) * 0.05,
                                 ),
                                 Text(
-                                  selezionatore.nome ?? "Nome mancante",
+                                  selezionatore.nome == null ? "Nome mancante" : selezionatore.nome!.length > 15 ? '${selezionatore.nome!.substring(0, 15)}...' : "${selezionatore.nome!} ",
                                   style: TextStyle(
                                     fontSize: 20,
                                     color:
@@ -59,7 +59,7 @@ class SelezionatoreItem extends StatelessWidget {
                                   width: widthSize(context) * 0.2,
                                 ),
                                 Text(
-                                  selezionatore.cognome ?? "Cognome mancante",
+                                  selezionatore.cognome == null ? "Cognome mancante" : selezionatore.cognome!.length > 15 ? '${selezionatore.cognome!.substring(0, 15)}...' : "${selezionatore.cognome!} ",
                                   style: TextStyle(
                                     fontSize: 20,
                                     color:

@@ -7,7 +7,9 @@ class Academy {
       this.dataInizio,
       this.dataFine,
       this.attiva,
-      this.insegnante});
+      this.insegnante
+      ,this.countCandidati
+      });
 
   final int? id;
   final String? denominazione;
@@ -15,6 +17,7 @@ class Academy {
   final DateTime? dataFine;
   final bool? attiva;
   final String? insegnante;
+  final int? countCandidati;
 
   factory Academy.fromJson(Map<String, dynamic> json) {
     return Academy(
@@ -30,6 +33,7 @@ class Academy {
       attiva: json['attiva'] != null ? json['attiva'] as bool : null,
       insegnante:
           json['insegnante'] != null ? json['insegnante'] as String : null,
+      countCandidati: json['countCandidati'] != null ? json['countCandidati'] as int : null,
     );
   }
 
@@ -40,7 +44,8 @@ class Academy {
       'dataInizio': dataInizio != null ? dataInizio!.toIso8601String() : null,
       'dataFine': dataFine != null ? dataFine!.toIso8601String() : null,
       'attiva': attiva,
-      'insegnante': insegnante
+      'insegnante': insegnante,
+      'countCandidati': countCandidati
     };
   }
 }

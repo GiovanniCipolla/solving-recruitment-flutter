@@ -70,8 +70,8 @@ class CandidatoItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    WrappedText(text: candidato.nome ?? '', limit: 10),
-                    WrappedText(text: candidato.cognome ?? '', limit: 10),
+                    WrappedText(text: candidato.nome ?? '', limit: 8),
+                    WrappedText(text: candidato.cognome ?? '', limit: 8),
                   ],
                 ),
                 const Spacer(),
@@ -94,7 +94,7 @@ class CandidatoItem extends StatelessWidget {
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [WrappedText(text: candidato.email, limit: 20)],
+              children: [WrappedText(text: candidato.email, limit: 15)],
             )
           ],
         ),

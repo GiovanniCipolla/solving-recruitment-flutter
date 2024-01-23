@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:solving_recruitment_flutter/data/size.dart';
+import 'package:solving_recruitment_flutter/models/academy.dart';
 
 class AcademyItemContainerWidgets extends StatelessWidget {
-  const AcademyItemContainerWidgets({super.key, required this.title,});
-  final String title;
+   AcademyItemContainerWidgets({super.key, required this.academy,});
+  final Academy academy;
+
+
+
+  final dateFormatter = DateFormat('yyyy-MM-dd');
 
   @override
   Widget build(BuildContext context) {
@@ -20,38 +26,42 @@ class AcademyItemContainerWidgets extends StatelessWidget {
               width: 2.0, // Larghezza del bordo
             ),
           ),
-          child: const Column(children: [
+          child:  Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       'Inizio ',
                       style: TextStyle(color: Colors.red, fontSize: 14),
                     ),
                     Text(
-                      ' 02/02/20223',
-                      style: TextStyle(fontSize: 14),
+               academy.dataInizio != null
+                              ? dateFormatter.format(academy.dataInizio!)
+                              : 'Errore',
+                      
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       'Fine ',
                       style: TextStyle(color: Colors.red, fontSize: 14),
                     ),
                     Text(
-                      ' 02/05/20223',
-                      style: TextStyle(fontSize: 14),
+                      academy.dataFine != null
+                              ? dateFormatter.format(academy.dataFine!)
+                              : 'Errore',
+                      style: const TextStyle(fontSize: 14),
                     ),
                   ],
                 ),
               ],
             ),
             Column(children: [
-              Text('13', style: TextStyle(color: Colors.red, fontSize: 16)),
+              Text(academy.countCandidati.toString(), style: TextStyle(color: Colors.red, fontSize: 16)),
               Text(
                 'Candidati',
                 style: TextStyle(color: Colors.black, fontSize: 13),
@@ -66,7 +76,7 @@ class AcademyItemContainerWidgets extends StatelessWidget {
                     width: 25,
                     height: 25),
                 Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Text('Alberto Multari'),
+                  Text(academy.insegnante!),
                   SizedBox(
                     width: 5,
                   ),
@@ -89,7 +99,7 @@ class AcademyItemContainerWidgets extends StatelessWidget {
           top: -widthSize(context) * 0.01,
           left: widthSize(context) * 0.02,
           child: Text(
-            title,
+            academy.denominazione as String,
             style: const TextStyle(color: Colors.red, fontSize: 16),
           ),
         ),
